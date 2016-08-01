@@ -1,0 +1,69 @@
+<form action="" ng-submit="page2()">
+  <div class="note">
+    <p>Please take some time to complete the following questions.  If you get stuck at any point, don't hesitate to reach out to hello@digitalcrafts.com or (770) 858-5806 for assistance.
+      After you submit your application, a member from our admissions team will be in touch to make an introduction, answer any questions, and discuss next steps.  We want to ensure our students' experience is parallel to none, and that begins right now.
+
+      Please note: you will not be able to save your answers and return later, so make sure you block off 15-30 minutes to complete the application in its entirety.</p>
+    </div>
+    <div class="form-group">
+      <label for="firstname">First Name:</label>
+      <input type="text" name="firstname" class="form-control" ng-model="firstname">
+    </div>
+    <div class="form-group">
+      <label for="lastname">Last Name:</label>
+      <input type="text" name="lastname" class="form-control" ng-model="lastname">
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone Number:</label>
+      <input type="tel" name="phone" class="form-control" ng-model="phone">
+    </div>
+    <div class="form-group">
+      <label for="birthday">Birthday:</label>
+      <input type="date" name="birthday" class="form-control" ng-model="birthday">
+    </div>
+    <div class="form-group">
+      <label for="address">Address:</label>
+      <input type="text" name="address" class="form-control" ng-model="address">
+    </div>
+    <label for="hear">How did you hear about DigitalCrafts?</label>
+    <div class="checkbox"><input type="checkbox" name="friends" value="friends">Friends/Family</div>
+    <div class="checkbox"><input type="checkbox" name="Advertiment" value="Advertisment">Advertisment</div>
+    <div class="checkbox"><input type="checkbox" name="google" value="google">Google Search</div>
+    <div class="checkbox"><input type="checkbox" name="course" value="course">Course Report</div>
+    <div class="checkbox"><input type="checkbox" name="switchup" value="switchup">SwitchUp</div>
+    <div class="checkbox"><input type="checkbox" name="facebook" value="facebook">Facebook</div>
+    <div class="checkbox"><input type="checkbox" name="Quora" value="Quora">Quora</div>
+    <div class="checkbox"><input type="checkbox" name="meetup" value="meetup">MeetUp</div>
+    <div class="checkbox"><input type="checkbox" name="workshop" value="workshop">Workshop or Event</div>
+    <div class="checkbox"><input type="checkbox" name="atv" value="atv">Atlanta Tech Village</div>
+    <div class="checkbox"><input type="checkbox" name="article" value="article">Article/Family</div>
+    <div class="checkbox"><input type="checkbox" name="other" value="other">Other</div>
+
+    <h3>Which campus will you be attending?</h3>
+    <label class="radio-inline">
+      <input type="radio" name="city" value="atlanta">Atlanta
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="city" value="Houston">Houston
+    </label>
+
+    <h3>For which cohort are you applying?</h3>
+    <label class="radio">
+      <input type="radio" name="cohort" value="oct31">October 31st 2016 - Feb 3rd, 2017
+    </label>
+    <label class="radio">
+      <input type="radio" name="cohort" value="mar20">March 20th, 2017 - July 7th, 2017
+    </label>
+    <label class="radio">
+      <input type="radio" name="cohort" value="future">Future Date
+    </label>
+
+    <h3>Will you be relocating to {{ city }} for our program?</h3>
+    <label class="radio">
+      <input type="radio" name="relocating" value="yes">Yes
+    </label>
+    <label class="radio">
+      <input type="radio" name="relocating" value="no">No
+    </label>
+    <button type="submit" class="btn btn-primary">Continue</button>
+  </form>
