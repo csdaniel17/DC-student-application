@@ -4,6 +4,7 @@ var cors = require('cors');
 var Busboy = require('busboy');
 var bodyParser = require('body-parser');
 var bcrypt = require('my-bcrypt');
+var randtoken = require('rand-token');
 
 
 mongoose.connect('mongodb://localhost/dc-app');
@@ -15,6 +16,7 @@ app.use(cors());
 // use body parser with JSON
 app.use(bodyParser.json());
 
+// handle signup requests
 app.post('/signup', function(req, res) {
   var userInfo = req.body;
   bcrypt.hash(userInfo.password, 10, function(err, hash) {
@@ -42,6 +44,34 @@ app.post('/signup', function(req, res) {
   });
 });
 
+// handle login requests
+app.post('/login', function(req, res) {
+  email = req.body.email;
+  password = req.body.password;
+  User.findOne({ email: email }, function(user) {
+    if (!user) {
+      return res.status(400).json({ status: "fail", "message": "Incorrect username or password."});
+    }
+    bcrypt.compare(password, user.password, function(matched) {
+      if (matched) {
+        // login successfull
+        var token = randtoken.generate(64);
+        // set token to expire in 10 days
+        user.authenticationTokens.push({ token: token, expiration: Date.now() + 1000 * 60 * 60 * 24 * 10 });
+        user.save(function(err) {
+          if (err) {
+            console.log('Error saving auth token.');
+          }
+          res.status(200).json({ status: "ok", "token": token });
+        });
+      } else {
+        res.status(400).json({ status: "fail", message: "Incorrect username or password."});
+      }
+    });
+  });
+});
+
+// handle resume upload
 app.post('/upload', function(req, res) {
   var bufs = [];
   var busboy = new Busboy({ headers: req.headers });
@@ -75,6 +105,7 @@ app.post('/upload', function(req, res) {
   req.pipe(busboy);
 });
 
+// save user answers to the database
 app.post('/save', function(req, res) {
   console.log(req.body);
 });
