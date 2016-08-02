@@ -48,11 +48,20 @@ app.post('/signup', function(req, res) {
 app.post('/login', function(req, res) {
   email = req.body.email;
   password = req.body.password;
-  User.findOne({ email: email }, function(user) {
+  User.findOne({ email: email }, function(err, user) {
+    if (err) {
+      return res.status(400).json({ status: "fail", "message": "System error. Please try again."});
+    }
     if (!user) {
       return res.status(400).json({ status: "fail", "message": "Incorrect username or password."});
     }
-    bcrypt.compare(password, user.password, function(matched) {
+    console.log('user.password is ', user.password);
+    bcrypt.compare(password, user.password, function(err, matched) {
+      if (err) {
+        console.log(err);
+        res.status(400).json({ status: "fail" });
+      }
+      console.log('matched is: ', matched);
       if (matched) {
         // login successfull
         var token = randtoken.generate(64);
