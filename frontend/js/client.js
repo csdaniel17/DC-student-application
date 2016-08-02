@@ -1,11 +1,14 @@
-var app = angular.module('DigitalCrafts', ['ngRoute', 'ngFileUpload']);
+var app = angular.module('DigitalCrafts', ['ngRoute', 'ngFileUpload', 'ngCookies']);
+
+// backend running on port 8000
+var API = "http://localhost:8000";
 
 // configure routes
 app.config(function($routeProvider) {
   $routeProvider
     .when('/', {
       templateUrl: 'html/login.html',
-      controller: 'MainController'
+      controller: 'LoginController'
     })
     .when('/page2', {
       templateUrl: 'html/2.html',
@@ -21,7 +24,7 @@ app.config(function($routeProvider) {
     })
     .when('/signup', {
       templateUrl: 'html/signup.html',
-      controller: 'MainController'
+      controller: 'SignupController'
     })
     .otherwise({redirectTo: '/'});
 });
@@ -49,6 +52,48 @@ app.run(function($rootScope, $location, $cookies) {
   });
 });
 
+// login controller
+app.controller('LoginController', function($scope, $http, $location, $rootScope, $cookies) {
+  $scope.login = function() {
+    $http.post(API + '/login', { email: $scope.email, password: $scope.password })
+      .then(function(response) {
+        // if login is a success, redirect
+        if (response.status === 200) {
+          $scope.loginFailed = false;
+          // set a cookie with the token from the database response
+          $cookies.put('token', response.data.token);
+          // redirect to the page they were trying to go to
+          $location.path('/' + $rootScope.goHere);
+        }
+      })
+      .catch(function(err) {
+        // tell user login wasn't successful
+        $scope.loginFailed = true;
+      });
+  };
+  $scope.registration = function(){
+    $location.path("/signup");
+  };
+});
+
+// signup controller
+app.controller('SignupController', function($scope, $location, $http, $timeout) {
+  $scope.signUp = function() {
+    $http.post(API + '/signup', { email: $scope.email, password: $scope.password })
+      .then(function(response) {
+        if (response.status === 200) {
+          // user successfully created
+          $scope.registered = true;
+          $timeout(function() {
+            $location.path('/login');
+          }, 3000);
+        }
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+  };
+});
 
 // main controller
 app.controller('MainController', function($scope, User, $location, Upload, $timeout, $http, backend) {

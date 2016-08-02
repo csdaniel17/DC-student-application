@@ -1,5 +1,5 @@
-<form ng-submit="signUp()" name="emailForm" novalidate>
-  <div class="form-group" ng-class="{ 'has-success': emailForm.email.$valid && !emailForm.email.$pristine, 'has-error': emailForm.email.$invalid && !emailForm.email.$pristine}">
+<form ng-submit="signUp()" name="signupForm" novalidate>
+  <div class="form-group" ng-class="{ 'has-success': signupForm.email.$valid && !signupForm.email.$pristine, 'has-error': signupForm.email.$invalid && !signupForm.email.$pristine}">
     <label for="email">Please enter your email address to get started:</label>
     <input ng-model="email" type="email" name="email" class="form-control" required>
   </div>
@@ -7,6 +7,7 @@
     <label for="password">Please enter a password to get started:</label>
     <input ng-model="paswword" type="password" name="password" class="form-control" required>
   </div>
-  <div class="alert alert-danger" ng-show="emailForm.email.$error.email && emailForm.email.$dirty">Please enter a valid email address.</div>
-  <button type="submit" class="btn btn-primary" ng-disabled="emailForm.$invalid">Continue</button>
+  <div class="alert alert-danger" ng-show="signupForm.email.$error.email && signupForm.email.$dirty">Please enter a valid email address.</div>
+  <div class="alert alert-success" ng-show="registered">You've successfully registered. Redirecting to login page...</div>
+  <button type="submit" class="btn btn-primary" ng-disabled="signupForm.$invalid">Continue</button>
 </form>
