@@ -2,25 +2,25 @@
   <h3>If you have a Github account, please provide the link here.</h3>
   <h6>Example: https://github.com/alan-turing</h6>
   <div class="form-group">
-    <input type="url" name="github" class="form-control">
+    <input type="url" name="github" class="form-control" ng-model="github">
   </div>
 
   <h3>If you have a LinkedIn account, please provide the link here.</h3>
   <h6>Example: https://www.linkedin.com/in/alan-turing</h6>
   <div class="form-group">
-    <input type="url" name="linkedin" class="form-control">
+    <input type="url" name="linkedin" class="form-control" ng-model="linkedin">
   </div>
 
   <h3>If you have any other URL you would like us to consider along with your application, please enter it here.</h3>
   <h6>This could include an online portfolio, a website you've built, or even a short video you've created. <br>Example: https://www.alanturing.com/portfolio</h6>
   <div class="form-group">
-    <input type="url" name="portfolio" class="form-control">
+    <input type="url" name="portfolio" class="form-control" ng-model="portfolio">
   </div>
 
   <h3>If you have a resume, please attach it here.</h3>
   <h6>While a resume is not required, the more information you can provide the better for our admissions team.<br>File Types: Microsoft Word (.doc) or .PDF</h6>
   <div class="form-group">
-    <input type="file" name="resume" class="form-control">
+    <input type="file" name="resume" class="form-control" ng-model="resume">
   </div>
 
   <h3>Acknowledgements:</h3>
@@ -31,19 +31,19 @@
   </ul>
   <h6>Do you understand and acknowledge the items above?</h6>
   <div class="radio">
-    <label><input type="radio" name="understand" value="yes" required>Yes</label>
+    <label><input type="radio" name="understand" value="yes" ng-model="understand" required>Yes</label>
   </div>
   <div class="radio">
-    <label><input type="radio" name="understand" value="no" required>No</label>
+    <label><input type="radio" name="understand" value="no" ng-model="understand" required>No</label>
   </div>
 
   <h3>Very important:  While we will do everything in our power to help you achieve your professional goals quickly, persistence in the job market is ultimately up to you, and there are no guarantees in this world.  <strong>Are you comfortably able to make this level of financial and time commitment?</strong></h3>
   <h6>We take this question very seriously.  If your goal is to launch a career as a developer, be prepared to put in tremendous time and effort both during and after our program.  A successful job search might take 3 weeks or it might take 6+ months.  The last thing we want to do is enroll a student who is not able to comfortably endure this reality.</h6>
   <div class="radio">
-    <label><input type="radio" name="veryimportant" value="yes" required>Yes</label>
+    <label><input type="radio" name="effortagree" value="yes" ng-model="effortagree" required>Yes</label>
   </div>
   <div class="radio">
-    <label><input type="radio" name="veryimportant" value="no" required>No</label>
+    <label><input type="radio" name="effortagree" value="no" ng-model="effortagree" required>No</label>
   </div>
-  <button type="submit" class="btn btn-primary" ng-disabled="p4Form.$invalidate">Complete</button>
+  <button type="submit" class="btn btn-primary" ng-disabled="p4Form.$invalid">Complete</button>
 </form>
