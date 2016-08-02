@@ -28,12 +28,15 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
   $scope.page1 = function() {
     User.saveData({ email: $scope.email });
     var theData = User.getData();
-    backend.saveData(theData);
+    console.log('theData in page1 function is ', theData);
+    backend.sendData(theData);
     $location.path('/page2');
   };
 
   $scope.page2 = function() {
+    console.log('in page2 function');
     var theData = User.getData();
+    console.log('theData is: ', theData);
     theData.firstname = $scope.firstname;
     theData.lastname = $scope.lastname;
     theData.phone = $scope.phone;
@@ -42,6 +45,7 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
     theData.city = $scope.city;
     theData.cohort = $scope.cohort;
     theData.relocating = $scope.relocating;
+    console.log('theData is: ', theData);
     User.saveData(theData);
     backend.sendData(theData);
     $location.path('/page3');
@@ -77,23 +81,24 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
  };
 });
 
+// saves user answers to the mongodb database
 app.factory('backend', function($http) {
-  return{
+  return {
     sendData: function(data) {
       return $http({
         method: 'POST',
-        url: 'http://localhost:8000/upload',
+        url: 'http://localhost:8000/save',
         data: data
       });
     }
   };
 });
+
 // service to store user answers throughout application process
 app.service('User', function() {
-  var userAnswers = {};
+  this.userAnswers = {};
   this.saveData = function(data) {
     this.userAnswers = data;
-
   };
   this.getData = function() {
     return this.userAnswers;

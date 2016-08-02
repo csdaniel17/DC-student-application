@@ -2,6 +2,8 @@ var app = require('express')();
 var mongoose = require('mongoose');
 var cors = require('cors');
 var Busboy = require('busboy');
+var bodyParser = require('body-parser');
+
 
 mongoose.connect('mongodb://localhost/dc-app');
 
@@ -10,7 +12,7 @@ var User = require("./dcmodel");
 app.use(cors());
 
 // use body parser with JSON
-//app.use(bodyParser.urlencoded({ extended: false}));
+app.use(bodyParser.json());
 
 app.post('/upload', function(req, res) {
 
@@ -46,9 +48,10 @@ app.post('/upload', function(req, res) {
   req.pipe(busboy);
 });
 
-app.post('/userData', function(req, res) {
-
+app.post('/save', function(req, res) {
+  console.log(req.body);
 });
+
 app.listen(8000, function() {
   console.log('Listening on port 8000');
 });
