@@ -23,7 +23,7 @@ app.config(function($routeProvider) {
 });
 
 // main controller
-app.controller('MainController', function($scope, User, $location, Upload, $timeout) {
+app.controller('MainController', function($scope, User, $location, Upload, $timeout, $http) {
 
   $scope.page1 = function() {
     User.saveData({ email: $scope.email });
@@ -40,25 +40,27 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
   };
 
   $scope.page4 = function() {
-    // save data to database
-    if ($scope.form.file.$valid && $scope.file) {
-      $scope.upload($scope.file);
-    }
+    //if ($scope.form.file.$valid && $scope.file) {
+      //$scope.upload($scope.file);
+      $http.post('http://localhost:8000/upload', {data: $scope.file});
+    //}
   };
 
 
  // upload on file select or drop
  $scope.upload = function (file) {
      Upload.upload({
-         url: 'upload/url',
-         data: {file: file}
+         url: 'http://localhost:8000/upload',
+         //data: {file: file}
+         data: file
      }).then(function (resp) {
-         console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+         console.log('Success uploaded. Response: ' + resp.data);
      }, function (resp) {
          console.log('Error status: ' + resp.status);
      }, function (evt) {
-         var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-         console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+         //var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+         //console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+         console.log('progress:...');
      });
  };
 });
