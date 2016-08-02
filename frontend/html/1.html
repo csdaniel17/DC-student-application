@@ -1,7 +1,8 @@
-<form ng-submit="page1()">
-  <div class="form-group">
+<form ng-submit="page1()" name="emailForm" novalidate>
+  <div class="form-group" ng-class="{ 'has-success': emailForm.email.$valid && !emailForm.email.$pristine, 'has-error': emailForm.email.$invalid && !emailForm.email.$pristine}">
     <label for="email">Please enter your email address to get started:</label>
-    <input ng-model="email" type="email" name="email" class="form-control">
+    <input ng-model="email" type="email" name="email" class="form-control" required>
   </div>
-  <button type="submit" class="btn btn-primary">Continue</button>
+  <div class="alert alert-danger" ng-show="emailForm.email.$error.email && emailForm.email.$dirty && emailForm.email.$touched">Please enter a valid email address.</div>
+  <button type="submit" class="btn btn-primary" ng-disabled="emailForm.$invalid">Continue</button>
 </form>
