@@ -4,7 +4,7 @@ var app = angular.module('DigitalCrafts', ['ngRoute', 'ngFileUpload']);
 app.config(function($routeProvider) {
   $routeProvider
     .when('/', {
-      templateUrl: 'html/1.html',
+      templateUrl: 'html/login.html',
       controller: 'MainController'
     })
     .when('/page2', {
@@ -17,6 +17,10 @@ app.config(function($routeProvider) {
     })
     .when('/page4', {
       templateUrl: 'html/4.html',
+      controller: 'MainController'
+    })
+    .when('/signup', {
+      templateUrl: 'html/signup.html',
       controller: 'MainController'
     })
     .otherwise({redirectTo: '/'});

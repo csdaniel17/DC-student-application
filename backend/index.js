@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var cors = require('cors');
 var Busboy = require('busboy');
 var bodyParser = require('body-parser');
+var bcrypt = require('my-bcrypt');
 
 
 mongoose.connect('mongodb://localhost/dc-app');
@@ -14,8 +15,34 @@ app.use(cors());
 // use body parser with JSON
 app.use(bodyParser.json());
 
-app.post('/upload', function(req, res) {
+app.post('/signup', function(req, res) {
+  var userInfo = req.body;
+  bcrypt.hash(userInfo.password, 10, function(err, hash) {
+    if (err) {
+      console.log(err.message);
+      return;
+    }
+    var user = new User({
+      email: userInfo.email,
+      password: hash
+    });
+    user.save(function(err){
+      if (err) {
+        console.log(err.message);
+        res.status(409).json({
+          status: 'fail',
+          message: "Username has been taken"
+        });
+        return;
+      }
+      res.json({
+        status: "OK"
+      });
+    });
+  });
+});
 
+app.post('/upload', function(req, res) {
   var bufs = [];
   var busboy = new Busboy({ headers: req.headers });
   busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
