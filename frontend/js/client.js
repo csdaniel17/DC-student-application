@@ -26,6 +26,30 @@ app.config(function($routeProvider) {
     .otherwise({redirectTo: '/'});
 });
 
+app.run(function($rootScope, $location, $cookies) {
+  // on every location change start, see where the user is attempting to go
+  $rootScope.$on('$locationChangeStart', function(event, nextUrl, currentUrl) {
+    // get path from url
+    var path = nextUrl.split('/')[4];
+    // if user is going to a restricted area and doesn't have a token stored in a cookie, redirect to the login page
+    var token = $cookies.get('token');
+    if (!token && (path === 'page2' || path === 'plage3' || path === 'page4')) {
+      $rootScope.goHere = path;
+      $location.path('/login');
+    }
+
+    // is the user logged in? used to display login, logout and signup links
+    $rootScope.isLoggedIn = function() {
+      return $cookies.get('token');
+    };
+
+    $rootScope.logout = function() {
+      $cookies.remove('token');
+    };
+  });
+});
+
+
 // main controller
 app.controller('MainController', function($scope, User, $location, Upload, $timeout, $http, backend) {
 
