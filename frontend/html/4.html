@@ -1,4 +1,4 @@
-<form ng-submit="page4()">
+<form ng-submit="page4()" novalidate name="p4Form">
   <h3>If you have a Github account, please provide the link here.</h3>
   <h6>Example: https://github.com/alan-turing</h6>
   <div class="form-group">
@@ -31,19 +31,19 @@
   </ul>
   <h6>Do you understand and acknowledge the items above?</h6>
   <div class="radio">
-    <label><input type="radio" name="understand" value="yes">Yes</label>
+    <label><input type="radio" name="understand" value="yes" required>Yes</label>
   </div>
   <div class="radio">
-    <label><input type="radio" name="understand" value="no">No</label>
+    <label><input type="radio" name="understand" value="no" required>No</label>
   </div>
 
   <h3>Very important:  While we will do everything in our power to help you achieve your professional goals quickly, persistence in the job market is ultimately up to you, and there are no guarantees in this world.  <strong>Are you comfortably able to make this level of financial and time commitment?</strong></h3>
   <h6>We take this question very seriously.  If your goal is to launch a career as a developer, be prepared to put in tremendous time and effort both during and after our program.  A successful job search might take 3 weeks or it might take 6+ months.  The last thing we want to do is enroll a student who is not able to comfortably endure this reality.</h6>
   <div class="radio">
-    <label><input type="radio" name="veryimportant" value="yes">Yes</label>
+    <label><input type="radio" name="veryimportant" value="yes" required>Yes</label>
   </div>
   <div class="radio">
-    <label><input type="radio" name="veryimportant" value="no">No</label>
+    <label><input type="radio" name="veryimportant" value="no" required>No</label>
   </div>
-  <button type="submit" class="btn btn-primary">Complete</button>
+  <button type="submit" class="btn btn-primary" ng-disabled="p4Form.$invalidate">Complete</button>
 </form>

@@ -1,49 +1,55 @@
-<form ng-submit="page3()">
+<form ng-submit="page3()" name="p3Form" novalidate>
   <h3>Highest level of education achieved?</h3>
   <h6>Please include the name of the instituation as well!</h6>
-  <div class="form-group">
-    <textarea name="education" rows="8" cols="40" class="form-control"></textarea>
+  <div class="form-group" ng-class="{ 'has-success': p3Form.education.$valid && !p3Form.education.$pristine, 'has-error': p3Form.education.$invalid && !p3Form.education.$pristine}">
+    <textarea name="education" rows="8" cols="40" class="form-control" required ng-model="education"></textarea>
+    <div class="alert alert-danger" ng-show="p3Form.education.$invalid && p3Form.education.$touched">Please enter your education.</div>
   </div>
 
   <h3>Current Employment</h3>
   <h6>Please describe your current employment situation.  If unemployed, please describe your most recent position.</h6>
-  <div class="form-group">
-    <textarea name="employment" rows="8" cols="40" class="form-control"></textarea>
+  <div class="form-group" ng-class="{ 'has-success': p3Form.employment.$valid && !p3Form.employment.$pristine, 'has-error': p3Form.employment.$invalid && !p3Form.employment.$pristine}">
+    <textarea name="employment" rows="8" cols="40" class="form-control" required ng-model="employment"></textarea>
+    <div class="alert alert-danger" ng-show="p3Form.employment.$invalid && p3Form.employment.$touched">Please enter your employment.</div>
   </div>
 
   <h3>Will you require a loan from one of our financing partners?</h3>
   <h6>If you're not sure at the moment, you can always decide later in the process.  Just reach out to learn more about financing your tuition.</h6>
   <div class="radio">
-    <label><input type="radio" name="loan" value="yes">Yes</label>
+    <label><input type="radio" name="loan" value="yes" required ng-model="loan">Yes</label>
   </div>
   <div class="radio">
-    <label><input type="radio" name="loan" value="no">No</label>
+    <label><input type="radio" name="loan" value="no" required ng-model="loan">No</label>
   </div>
   <div class="radio">
-    <label><input type="radio" name="loan" value="notsure">Not sure</label>
+    <label><input type="radio" name="loan" value="notsure" required ng-model="loan">Not sure</label>
   </div>
 
   <h3>Briefly explain any programming experience to date.</h3>
   <h6>True beginner?  Tackled some Codecademy lessons?  Computer Science degree?  It's okay if you're just getting started, just let us know where you stand today.</h6>
-  <div class="form-group">
-    <textarea name="programming" rows="8" cols="40" class="form-control"></textarea>
+  <div class="form-group" ng-class="{ 'has-success': p3Form.programming.$valid && !p3Form.programming.$pristine, 'has-error': p3Form.programming.$invalid && !p3Form.programming.$pristine}">
+    <textarea name="programming" rows="8" cols="40" class="form-control" required ng-model="programming"></textarea>
+    <div class="alert alert-danger" ng-show="p3Form.programming.$invalid && p3Form.programming.$touched">Please enter your programming experience.</div>
   </div>
 
   <h3>Why are you interested in learning web development?  Where does your motivation come from?</h3>
   <h6>We receive more applications than there are seats available. Use this opportunity to tell us why one of those seats should be yours!</h6>
-  <div class="form-group">
-    <textarea name="programming" rows="8" cols="40" class="form-control"></textarea>
+  <div class="form-group" ng-class="{ 'has-success': p3Form.interest.$valid && !p3Form.interest.$pristine, 'has-error': p3Form.interest.$invalid && !p3Form.interest.$pristine}">
+    <textarea name="interest" rows="8" cols="40" class="form-control" required ng-model="interest"></textarea>
+    <div class="alert alert-danger" ng-show="p3Form.interest.$invalid && p3Form.interest.$touched">Please explain your interests.</div>
   </div>
 
   <h3>What do you plan to do after graduating?</h3>
   <h6>Launching a new career?  A new business?  Just eager to learn?  We try to tailor our career services to each student, so it's important to understand your goals.</h6>
-  <div class="form-group">
-    <textarea name="plan" rows="8" cols="40" class="form-control"></textarea>
+  <div class="form-group" ng-class="{ 'has-success': p3Form.plan.$valid && !p3Form.plan.$pristine, 'has-error': p3Form.plan.$invalid && !p3Form.plan.$pristine}">
+    <textarea name="plan" rows="8" cols="40" class="form-control" required ng-model="plan"></textarea>
+    <div class="alert alert-danger" ng-show="p3Form.plan.$invalid && p3Form.plan.$touched">Please tell us what your plan is after graduating.</div>
   </div>
 
   <h3>Tell us why DigitalCrafts is the right program for you?</h3>
-  <div class="form-group">
-    <textarea name="why" rows="8" cols="40" class="form-control"></textarea>
+  <div class="form-group" ng-class="{ 'has-success': p3Form.why.$valid && !p3Form.why.$pristine, 'has-error': p3Form.why.$invalid && !p3Form.why.$pristine}">
+    <textarea name="why" rows="8" cols="40" class="form-control" required ng-model="why"></textarea>
+    <div class="alert alert-danger" ng-show="p3Form.why.$invalid && p3Form.why.$touched">Please tell us why DigitalCrafts is right for you!</div>
   </div>
-  <button type="submit" class="btn btn-primary">Continue</button>
+  <button type="submit" class="btn btn-primary" ng-disabled="p3Form.$invalid">Continue</button>
 </form>

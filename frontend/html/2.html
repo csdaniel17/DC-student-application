@@ -52,14 +52,13 @@
     <div class="checkbox"><label><input type="checkbox" name="other" value="other">Other</label></div>
 
     <h3>Which campus will you be attending?</h3>
-    <div class="form-group" ng-class="{ 'has-success': p2Form.city.$valid && !p2Form.city.$pristine, 'has-error': p2Form.city.$invalid && !p2Form.city.$pristine}">
+    <div class="form-group">
       <label class="radio-inline">
         <input type="radio" name="city" value="Atlanta" ng-model="city" required>Atlanta
       </label>
       <label class="radio-inline">
         <input type="radio" name="city" value="Houston" ng-model="city" required>Houston
       </label>
-      <div class="alert alert-danger" ng-show="p2Form.city.$error.required && p2Form.city.$touched">Please choose a campus.</div>
     </div>
 
 
@@ -80,10 +79,10 @@
     <h3>Will you be relocating to {{ city }} for our program?</h3>
     <div class="form-group">
       <div class="radio">
-        <label><input type="radio" name="relocating" value="yes">Yes</label>
+        <label><input type="radio" name="relocating" value="yes" ng-model="relocating" required>Yes</label>
       </div>
       <div class="radio">
-        <label><input type="radio" name="relocating" value="no">No</label>
+        <label><input type="radio" name="relocating" value="no" ng-model="relocating" required>No</label>
       </div>
     </div>
 
