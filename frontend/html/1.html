@@ -3,6 +3,6 @@
     <label for="email">Please enter your email address to get started:</label>
     <input ng-model="email" type="email" name="email" class="form-control" required>
   </div>
-  <div class="alert alert-danger" ng-show="emailForm.email.$error.email && emailForm.email.$dirty && emailForm.email.$touched">Please enter a valid email address.</div>
+  <div class="alert alert-danger" ng-show="emailForm.email.$error.email && emailForm.email.$dirty">Please enter a valid email address.</div>
   <button type="submit" class="btn btn-primary" ng-disabled="emailForm.$invalid">Continue</button>
 </form>
