@@ -1,4 +1,4 @@
-var app = angular.module('DigitalCrafts', ['ngRoute']);
+var app = angular.module('DigitalCrafts', ['ngRoute', 'ngFileUpload']);
 
 // configure routes
 app.config(function($routeProvider) {
@@ -23,7 +23,7 @@ app.config(function($routeProvider) {
 });
 
 // main controller
-app.controller('MainController', function($scope, User, $location) {
+app.controller('MainController', function($scope, User, $location, Upload, $timeout) {
 
   $scope.page1 = function() {
     User.saveData({ email: $scope.email });
@@ -41,8 +41,26 @@ app.controller('MainController', function($scope, User, $location) {
 
   $scope.page4 = function() {
     // save data to database
+    if ($scope.form.file.$valid && $scope.file) {
+      $scope.upload($scope.file);
+    }
   };
 
+
+ // upload on file select or drop
+ $scope.upload = function (file) {
+     Upload.upload({
+         url: 'upload/url',
+         data: {file: file}
+     }).then(function (resp) {
+         console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+     }, function (resp) {
+         console.log('Error status: ' + resp.status);
+     }, function (evt) {
+         var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+         console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+     });
+ };
 });
 
 // service to store user answers throughout application process
