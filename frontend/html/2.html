@@ -26,18 +26,18 @@
       <input type="text" name="address" class="form-control" ng-model="address">
     </div>
     <label for="hear">How did you hear about DigitalCrafts?</label>
-    <div class="checkbox"><input type="checkbox" name="friends" value="friends">Friends/Family</div>
-    <div class="checkbox"><input type="checkbox" name="Advertiment" value="Advertisment">Advertisment</div>
-    <div class="checkbox"><input type="checkbox" name="google" value="google">Google Search</div>
-    <div class="checkbox"><input type="checkbox" name="course" value="course">Course Report</div>
-    <div class="checkbox"><input type="checkbox" name="switchup" value="switchup">SwitchUp</div>
-    <div class="checkbox"><input type="checkbox" name="facebook" value="facebook">Facebook</div>
-    <div class="checkbox"><input type="checkbox" name="Quora" value="Quora">Quora</div>
-    <div class="checkbox"><input type="checkbox" name="meetup" value="meetup">MeetUp</div>
-    <div class="checkbox"><input type="checkbox" name="workshop" value="workshop">Workshop or Event</div>
-    <div class="checkbox"><input type="checkbox" name="atv" value="atv">Atlanta Tech Village</div>
-    <div class="checkbox"><input type="checkbox" name="article" value="article">Article/Family</div>
-    <div class="checkbox"><input type="checkbox" name="other" value="other">Other</div>
+    <div class="checkbox"><label><input type="checkbox" name="friends" value="friends">Friends/Family</label></div>
+    <div class="checkbox"><label><input type="checkbox" name="Advertiment" value="Advertisment">Advertisment</label></div>
+    <div class="checkbox"><label><input type="checkbox" name="google" value="google">Google Search</label></div>
+    <div class="checkbox"><label><input type="checkbox" name="course" value="course">Course Report</label></div>
+    <div class="checkbox"><label><input type="checkbox" name="switchup" value="switchup">SwitchUp</label></div>
+    <div class="checkbox"><label><input type="checkbox" name="facebook" value="facebook">Facebook</label></div>
+    <div class="checkbox"><label><input type="checkbox" name="Quora" value="Quora">Quora</label></div>
+    <div class="checkbox"><label><input type="checkbox" name="meetup" value="meetup">MeetUp</label></div>
+    <div class="checkbox"><label><input type="checkbox" name="workshop" value="workshop">Workshop or Event</label></div>
+    <div class="checkbox"><label><input type="checkbox" name="atv" value="atv">Atlanta Tech Village</label></div>
+    <div class="checkbox"><label><input type="checkbox" name="article" value="article">Article/Family</label></div>
+    <div class="checkbox"><label><input type="checkbox" name="other" value="other">Other</label></div>
 
     <h3>Which campus will you be attending?</h3>
     <label class="radio-inline">
@@ -48,22 +48,22 @@
     </label>
 
     <h3>For which cohort are you applying?</h3>
-    <label class="radio">
-      <input type="radio" name="cohort" value="oct31">October 31st 2016 - Feb 3rd, 2017
-    </label>
-    <label class="radio">
-      <input type="radio" name="cohort" value="mar20">March 20th, 2017 - July 7th, 2017
-    </label>
-    <label class="radio">
-      <input type="radio" name="cohort" value="future">Future Date
-    </label>
+    <div class="radio">
+      <label><input type="radio" name="cohort" value="oct31">October 31st 2016 - Feb 3rd, 2017</label>
+    </div>
+    <div class="radio">
+      <label><input type="radio" name="cohort" value="mar20">March 20th, 2017 - July 7th, 2017</label>
+    </div>
+    <div class="radio">
+      <label><input type="radio" name="cohort" value="future">Future Date</label>
+    </div>
 
     <h3>Will you be relocating to {{ city }} for our program?</h3>
-    <label class="radio">
-      <input type="radio" name="relocating" value="yes">Yes
-    </label>
-    <label class="radio">
-      <input type="radio" name="relocating" value="no">No
-    </label>
+    <div class="radio">
+      <label><input type="radio" name="relocating" value="yes">Yes</label>
+    </div>
+    <div class="radio">
+      <label><input type="radio" name="relocating" value="no">No</label>
+    </div>
     <button type="submit" class="btn btn-primary">Continue</button>
   </form>
