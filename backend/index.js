@@ -27,6 +27,12 @@ app.post('/upload', function(req, res) {
       console.log('File [' + fieldname + '] Finished');
       var buf = Buffer.concat(bufs);
       console.log('DONE: BUF IS: ', buf, ' and buf.length is: ', buf.length);
+      var user = new User({resume: buf});
+      user.save(function(err){
+        if (err) {
+          console.log(err);
+        }
+      });
     });
   });
   busboy.on('field', function(fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) {
@@ -40,6 +46,9 @@ app.post('/upload', function(req, res) {
   req.pipe(busboy);
 });
 
+app.post('/userData', function(req, res) {
+
+});
 app.listen(8000, function() {
   console.log('Listening on port 8000');
 });
