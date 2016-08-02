@@ -1,7 +1,7 @@
 var app = require('express')();
 var mongoose = require('mongoose');
-var bodyParser = require('body-parser');
 var cors = require('cors');
+var Busboy = require('busboy');
 
 mongoose.connect('mongodb://localhost/dc-app');
 
@@ -10,16 +10,34 @@ var User = require("./dcmodel");
 app.use(cors());
 
 // use body parser with JSON
-app.use(bodyParser.urlencoded({ extended: false}));
+//app.use(bodyParser.urlencoded({ extended: false}));
 
 app.post('/upload', function(req, res) {
-  //console.log('req.body is :', req.data);
-  console.log(req);
-  console.log(req.body.file);
-  console.log(req.body.data);
-  var file = req.data.file;
-  console.log(file);
-  res.status(200).json({"status": "ok", "data": file});
+
+  var bufs = [];
+  var busboy = new Busboy({ headers: req.headers });
+  busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
+    console.log('File [' + fieldname + ']: filename: ' + filename + ', encoding: ' + encoding + ', mimetype: ' + mimetype);
+    file.on('data', function(data) {
+      console.log('File [' + fieldname + '] got ' + data.length + ' bytes');
+      console.log('data: ', data);
+      bufs.push(data);
+    });
+    file.on('end', function() {
+      console.log('File [' + fieldname + '] Finished');
+      var buf = Buffer.concat(bufs);
+      console.log('DONE: BUF IS: ', buf, ' and buf.length is: ', buf.length);
+    });
+  });
+  busboy.on('field', function(fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) {
+    console.log('Field [' + fieldname + ']: value: ' + inspect(val));
+  });
+  busboy.on('finish', function() {
+    console.log('Done parsing form!');
+    res.writeHead(303, { Connection: 'close', Location: '/' });
+    res.end();
+  });
+  req.pipe(busboy);
 });
 
 app.listen(8000, function() {

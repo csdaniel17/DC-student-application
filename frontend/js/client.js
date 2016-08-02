@@ -43,7 +43,6 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
     //if ($scope.form.file.$valid && $scope.file) {
       $scope.upload($scope.file);
       console.log($scope.file);
-      // $http.post('http://localhost:8000/upload', {data: $scope.file});
     //}
   };
 
