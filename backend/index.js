@@ -10,12 +10,12 @@ var User = require("./dcmodel");
 app.use(cors());
 
 // use body parser with JSON
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false}));
 
 app.post('/upload', function(req, res) {
   //console.log('req.body is :', req.data);
-  //console.log(req);
-  console.log(req.body);
+  console.log(req);
+  console.log(req.body.file);
   console.log(req.body.data);
   var file = req.data.file;
   console.log(file);

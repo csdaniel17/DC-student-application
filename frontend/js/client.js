@@ -41,8 +41,9 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
 
   $scope.page4 = function() {
     //if ($scope.form.file.$valid && $scope.file) {
-      //$scope.upload($scope.file);
-      $http.post('http://localhost:8000/upload', {data: $scope.file});
+      $scope.upload($scope.file);
+      console.log($scope.file);
+      // $http.post('http://localhost:8000/upload', {data: $scope.file});
     //}
   };
 
@@ -51,8 +52,8 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
  $scope.upload = function (file) {
      Upload.upload({
          url: 'http://localhost:8000/upload',
-         //data: {file: file}
-         data: file
+         data: {file: file}
+        //  data: file
      }).then(function (resp) {
          console.log('Success uploaded. Response: ' + resp.data);
      }, function (resp) {
