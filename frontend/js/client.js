@@ -39,6 +39,10 @@ app.controller('MainController', function($scope, User, $location) {
     $location.path('/page4');
   };
 
+  $scope.page4 = function() {
+    // save data to database
+  };
+
 });
 
 // service to store user answers throughout application process
