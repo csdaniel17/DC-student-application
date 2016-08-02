@@ -25,12 +25,9 @@ app.config(function($routeProvider) {
 // main controller
 app.controller('MainController', function($scope, User, $location) {
 
-  // $scope.email = "TESTING";
-  // console.log("outside function", $scope.email);
   $scope.page1 = function() {
-    console.log('$scope.email is : ', $scope.email);
     User.saveData({ email: $scope.email });
-    console.log(User.getData());
+    $location.path('/page2');
   };
 
 });
