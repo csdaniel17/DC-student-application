@@ -30,6 +30,11 @@ app.controller('MainController', function($scope, User, $location) {
     $location.path('/page2');
   };
 
+  $scope.page2 = function() {
+    //User.saveData({});
+    $location.path('/page3');
+  };
+
 });
 
 // service to store user answers throughout application process
