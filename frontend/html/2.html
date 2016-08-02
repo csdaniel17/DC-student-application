@@ -1,29 +1,41 @@
-<form action="" ng-submit="page2()">
+<form ng-submit="page2()" name="p2Form" novalidate>
   <div class="note">
     <p>Please take some time to complete the following questions.  If you get stuck at any point, don't hesitate to reach out to hello@digitalcrafts.com or (770) 858-5806 for assistance.
       After you submit your application, a member from our admissions team will be in touch to make an introduction, answer any questions, and discuss next steps.  We want to ensure our students' experience is parallel to none, and that begins right now.
 
       Please note: you will not be able to save your answers and return later, so make sure you block off 15-30 minutes to complete the application in its entirety.</p>
     </div>
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-success': p2Form.firstname.$valid && !p2Form.firstname.$pristine, 'has-error': p2Form.firstname.$invalid && !p2Form.firstname.$pristine}">
       <label for="firstname">First Name:</label>
-      <input type="text" name="firstname" class="form-control" ng-model="firstname">
+      <input type="text" name="firstname" class="form-control" ng-model="firstname" required>
+      <div class="alert alert-danger" ng-show="p2Form.firstname.$invalid && p2Form.firstname.$touched">Please enter your first name.</div>
     </div>
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-success': p2Form.lastname.$valid && !p2Form.lastname.$pristine, 'has-error': p2Form.lastname.$invalid && !p2Form.lastname.$pristine}">
       <label for="lastname">Last Name:</label>
-      <input type="text" name="lastname" class="form-control" ng-model="lastname">
+      <input type="text" name="lastname" class="form-control" ng-model="lastname" required>
+      <div class="alert alert-danger" ng-show="p2Form.lastname.$invalid && p2Form.lastname.$touched">Please enter your last name.</div>
     </div>
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-success': p2Form.phone.$valid && !p2Form.phone.$pristine, 'has-error': p2Form.phone.$invalid && !p2Form.phone.$pristine}">
       <label for="phone">Phone Number:</label>
-      <input type="tel" name="phone" class="form-control" ng-model="phone">
+      <input type="tel"
+             name="phone"
+             class="form-control"
+             ng-model="phone"
+             ng-minlength="10"
+             ng-maxlength="12"
+             required>
+      <div class="alert alert-danger" ng-show="p2Form.phone.$error.required && p2Form.phone.$touched">Please enter your phone number.</div>
+      <div class="alert alert-danger" ng-show="(p2Form.phone.$error.minlength || p2Form.$error.maxlength) && p2Form.phone.$touched">Please enter a valid phone number.</div>
     </div>
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-success': p2Form.birthday.$valid && !p2Form.birthday.$pristine, 'has-error': p2Form.birthday.$invalid && !p2Form.birthday.$pristine}">
       <label for="birthday">Birthday:</label>
-      <input type="date" name="birthday" class="form-control" ng-model="birthday">
+      <input type="date" name="birthday" class="form-control" ng-model="birthday" required>
+      <div class="alert alert-danger" ng-show="p2Form.birthday.$error.required && p2Form.birthday.$touched">Please enter your birthday.</div>
     </div>
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-success': p2Form.address.$valid && !p2Form.address.$pristine, 'has-error': p2Form.address.$invalid && !p2Form.address.$pristine}">
       <label for="address">Address:</label>
-      <input type="text" name="address" class="form-control" ng-model="address">
+      <input type="text" name="address" class="form-control" ng-model="address" required>
+      <div class="alert alert-danger" ng-show="p2Form.address.$error.required && p2Form.address.$touched">Please enter your address.</div>
     </div>
     <label for="hear">How did you hear about DigitalCrafts?</label>
     <div class="checkbox"><label><input type="checkbox" name="friends" value="friends">Friends/Family</label></div>
@@ -40,30 +52,40 @@
     <div class="checkbox"><label><input type="checkbox" name="other" value="other">Other</label></div>
 
     <h3>Which campus will you be attending?</h3>
-    <label class="radio-inline">
-      <input type="radio" name="city" value="atlanta">Atlanta
-    </label>
-    <label class="radio-inline">
-      <input type="radio" name="city" value="Houston">Houston
-    </label>
+    <div class="form-group" ng-class="{ 'has-success': p2Form.city.$valid && !p2Form.city.$pristine, 'has-error': p2Form.city.$invalid && !p2Form.city.$pristine}">
+      <label class="radio-inline">
+        <input type="radio" name="city" value="Atlanta" ng-model="city" required>Atlanta
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="city" value="Houston" ng-model="city" required>Houston
+      </label>
+      <div class="alert alert-danger" ng-show="p2Form.city.$error.required && p2Form.city.$touched">Please choose a campus.</div>
+    </div>
+
 
     <h3>For which cohort are you applying?</h3>
-    <div class="radio">
-      <label><input type="radio" name="cohort" value="oct31">October 31st 2016 - Feb 3rd, 2017</label>
-    </div>
-    <div class="radio">
-      <label><input type="radio" name="cohort" value="mar20">March 20th, 2017 - July 7th, 2017</label>
-    </div>
-    <div class="radio">
-      <label><input type="radio" name="cohort" value="future">Future Date</label>
+    <div class="form-group">
+      <div class="radio">
+        <label><input type="radio" name="cohort" value="oct31" ng-model="cohort" required>October 31st 2016 - Feb 3rd, 2017</label>
+      </div>
+      <div class="radio">
+        <label><input type="radio" name="cohort" value="mar20" ng-model="cohort" required>March 20th, 2017 - July 7th, 2017</label>
+      </div>
+      <div class="radio">
+        <label><input type="radio" name="cohort" value="future" ng-model="cohort" required>Future Date</label>
+      </div>
     </div>
 
+
     <h3>Will you be relocating to {{ city }} for our program?</h3>
-    <div class="radio">
-      <label><input type="radio" name="relocating" value="yes">Yes</label>
+    <div class="form-group">
+      <div class="radio">
+        <label><input type="radio" name="relocating" value="yes">Yes</label>
+      </div>
+      <div class="radio">
+        <label><input type="radio" name="relocating" value="no">No</label>
+      </div>
     </div>
-    <div class="radio">
-      <label><input type="radio" name="relocating" value="no">No</label>
-    </div>
-    <button type="submit" class="btn btn-primary">Continue</button>
+
+    <button type="submit" class="btn btn-primary" ng-disabled="p2Form.$invalid">Continue</button>
   </form>
