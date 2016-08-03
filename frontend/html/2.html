@@ -29,8 +29,8 @@
       <div class="alert alert-danger" ng-show="(p2Form.phone.$error.minlength || p2Form.$error.maxlength) && p2Form.phone.$touched">Please enter a valid phone number.</div>
     </div>
     <div class="form-group" ng-class="{ 'has-success': p2Form.birthday.$valid && !p2Form.birthday.$pristine, 'has-error': p2Form.birthday.$invalid && !p2Form.birthday.$pristine}">
-      <label for="birthday">Birthday:</label>
-      <input type="date" name="birthday" class="form-control input-lg" ng-model="birthday" required>
+      <label for="birthday">Birthday: Please use this format: 07/04/1776</label>
+      <input type="text" name="birthday" class="form-control input-lg" ng-model="birthday" required>
       <div class="alert alert-danger" ng-show="p2Form.birthday.$error.required && p2Form.birthday.$touched">Please enter your birthday.</div>
     </div>
     <div class="form-group" ng-class="{ 'has-success': p2Form.address.$valid && !p2Form.address.$pristine, 'has-error': p2Form.address.$invalid && !p2Form.address.$pristine}">

@@ -108,12 +108,33 @@ app.controller('SignupController', function($scope, $location, $http, $timeout) 
 });
 
 // main controller
-app.controller('MainController', function($scope, User, $location, Upload, $timeout, $http, backend, $cookies) {
+app.controller('MainController', function($scope, User, $location, Upload, $timeout, $http, backend, $cookies, $filter) {
 
   // load data from backend
-  // var savedData = backend.getData($cookies.get('token'));
-  // console.log(savedData);
-  console.log($cookies.get('token'));
+  var userToken = $cookies.get('token');
+  backend.getData(userToken).then(function(userData) {
+    $scope.firstname = userData.data.message.firstname;
+    $scope.lastname = userData.data.message.lastname;
+    $scope.phone = userData.data.message.phone;
+    // $scope.birthday = userData.data.message.birthday;
+    $scope.address = userData.data.message.address;
+    $scope.city = userData.data.message.city;
+    $scope.cohort = userData.data.message.cohort;
+    $scope.relocating = userData.data.message.relocating;
+    $scope.education = userData.data.message.education;
+    $scope.employment = userData.data.message.employment;
+    $scope.loan = userData.data.message.loan;
+    $scope.programming = userData.data.message.programming;
+    $scope.interest = userData.data.message.interest;
+    $scope.plan = userData.data.message.plan;
+    $scope.why = userData.data.message.why;
+    $scope.github = userData.data.message.github;
+    $scope.linkedin = userData.data.message.linkedin;
+    $scope.portfolio = userData.data.message.portfolio;
+    var date = userData.data.message.birthday;
+    $scope.birthday = $filter('date')(date, 'MM/dd/yyyy');
+    console.log($filter('date')(date, 'yyyy-MM-dd'));
+  });
 
   $scope.page2 = function() {
     var theData = User.getData();
@@ -204,7 +225,7 @@ app.factory('backend', function($http) {
       return $http({
         method: 'POST',
         url: API + '/getdata',
-        data: token
+        data: {token: token}
       });
     }
   };

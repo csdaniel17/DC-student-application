@@ -182,15 +182,14 @@ app.post('/save', function(req, res) {
 });
 
 app.post('/getdata', function(req, res) {
-  // var userToken = req.body.token;
-  // console.log(userToken);
+  var userToken = req.body.token;
   // find user by the token and get data
-  // User.findOne({ authenticationTokens: { $elemMatch: { token: userToken } } }, ['-resume'], function(err, user) {
-  //   if (err) {
-  //     return res.status(400).json({ status: 'fail', message: 'Unable to retrieve data'});
-  //   }
-  //   res.status(200).json({ status: 'ok', message: user });
-  // });
+  User.findOne({ authenticationTokens: { $elemMatch: { token: userToken } } }, '-resume -password -authenticationTokens', function(err, user) {
+    if (err) {
+      return res.status(400).json({ status: 'fail', message: 'Unable to retrieve data'});
+    }
+    res.status(200).json({ status: 'ok', message: user });
+  });
 });
 
 app.listen(8000, function() {
