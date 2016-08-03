@@ -12,7 +12,14 @@ var User = mongoose.model('User', {
   address: String,
   city: String,
   cohort: String,
-  relocating: String
+  relocating: String,
+  education: String,
+  employment: String,
+  loan: String,
+  programming: String,
+  interest: String,
+  plan: String,
+  why: String
 });
 
 module.exports = User;

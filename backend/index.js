@@ -104,6 +104,8 @@ app.post('/upload', function(req, res) {
       console.log('File [' + fieldname + '] Finished');
       var buf = Buffer.concat(bufs);
       console.log('DONE: BUF IS: ', buf, ' and buf.length is: ', buf.length);
+
+      // LOOK UP USER INSTEAD OF CREATING A NEW MODEL
       var user = new User({resume: buf});
       user.save(function(err){
         if (err) {
@@ -129,7 +131,43 @@ app.post('/upload', function(req, res) {
 
 // save user answers to the database
 app.post('/save', function(req, res) {
-  console.log(req.body);
+  var userToken = req.body.token;
+  var userInfo = req.body;
+  var setQuery;
+
+  if (userInfo.page === 2) {
+    setQuery = {
+      firstname: userInfo.firstname,
+      lastname: userInfo.lastname,
+      phone: userInfo.phone,
+      birthday: userInfo.birthday,
+      address: userInfo.address,
+      city: userInfo.city,
+      cohort: userInfo.cohort,
+      relocating: userInfo.relocating
+    };
+  } else if (userInfo.page === 3) {
+    setQuery = {
+      education: userInfo.education,
+      employment: userInfo.employment,
+      loan: userInfo.loan,
+      programming: userInfo.programming,
+      interest: userInfo.interest,
+      plan: userInfo.plan,
+      why: userInfo.why
+    };
+  } else if (userInfo.page === 4) {
+    setQuery = {};
+  }
+  User.update({ authenticationTokens: { $elemMatch: { token: userToken } } }, {
+    $set: setQuery
+  }, function(err, response) {
+    console.log(response);
+    if (err) {
+      return res.status(400).json({ status: 'fail', message: 'failed to save user info' });
+    }
+    res.status(200).json({ status: 'ok' });
+  });
 });
 
 app.listen(8000, function() {

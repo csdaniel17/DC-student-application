@@ -108,18 +108,10 @@ app.controller('SignupController', function($scope, $location, $http, $timeout) 
 });
 
 // main controller
-app.controller('MainController', function($scope, User, $location, Upload, $timeout, $http, backend) {
+app.controller('MainController', function($scope, User, $location, Upload, $timeout, $http, backend, $cookies) {
 
-  $scope.page1 = function() {
-    User.saveData({ email: $scope.email });
-    var theData = User.getData();
-    console.log('theData in page1 function is ', theData);
-    backend.sendData(theData);
-    $location.path('/page2');
-  };
 
   $scope.page2 = function() {
-    console.log('in page2 function');
     var theData = User.getData();
     console.log('theData is: ', theData);
     theData.firstname = $scope.firstname;
@@ -130,6 +122,8 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
     theData.city = $scope.city;
     theData.cohort = $scope.cohort;
     theData.relocating = $scope.relocating;
+    theData.token = $cookies.get('token');
+    theData.page = 2;
     console.log('theData is: ', theData);
     User.saveData(theData);
     backend.sendData(theData);
@@ -137,6 +131,19 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
   };
 
   $scope.page3 = function() {
+     var theData = User.getData();
+     console.log('before: ', theData);
+     theData.education = $scope.education;
+     theData.employment = $scope.employment;
+     theData.loan = $scope.loan;
+     theData.programming = $scope.programming;
+     theData.interest = $scope.interest;
+     theData.plan = $scope.plan;
+     theData.why = $scope.why;
+     theData.page = 3;
+     console.log('after: ', theData);
+     User.saveData(theData);
+     backend.sendData(theData);
     $location.path('/page4');
   };
 

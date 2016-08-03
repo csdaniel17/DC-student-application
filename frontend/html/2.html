@@ -7,6 +7,7 @@
     </div>
     <div class="form-group" ng-class="{ 'has-success': p2Form.firstname.$valid && !p2Form.firstname.$pristine, 'has-error': p2Form.firstname.$invalid && !p2Form.firstname.$pristine}">
       <label for="firstname">First Name:</label>
+      <!-- <h3>First Name:</h3> -->
       <input type="text" name="firstname" class="form-control input-lg" ng-model="firstname" required>
       <div class="alert alert-danger" ng-show="p2Form.firstname.$invalid && p2Form.firstname.$touched">Please enter your first name.</div>
     </div>
