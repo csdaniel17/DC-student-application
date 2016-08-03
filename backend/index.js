@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var cors = require('cors');
 var Busboy = require('busboy');
 var bodyParser = require('body-parser');
-var bcrypt = require('my-bcrypt');
+var bcrypt = require('bcrypt');
 var randtoken = require('rand-token');
 
 
@@ -21,13 +21,14 @@ app.post('/signup', function(req, res) {
   var userInfo = req.body;
   bcrypt.hash(userInfo.password, 10, function(err, hash) {
     if (err) {
-      console.log(err.message);
+      console.log('error in bcrypt hash:', err.message);
       return;
     }
     var user = new User({
       email: userInfo.email,
       password: hash
     });
+
     user.save(function(err){
       if (err) {
         console.log(err.message);
@@ -48,6 +49,7 @@ app.post('/signup', function(req, res) {
 app.post('/login', function(req, res) {
   email = req.body.email;
   password = req.body.password;
+  console.log('entered email & password:', email, password);
   User.findOne({ email: email }, function(err, user) {
     if (err) {
       return res.status(400).json({ status: "fail", "message": "System error. Please try again."});
@@ -55,7 +57,7 @@ app.post('/login', function(req, res) {
     if (!user) {
       return res.status(400).json({ status: "fail", "message": "Incorrect username or password."});
     }
-    console.log('user.password is ', user.password);
+
     bcrypt.compare(password, user.password, function(err, matched) {
       if (err) {
         console.log(err);

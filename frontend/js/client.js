@@ -62,8 +62,8 @@ app.controller('LoginController', function($scope, $http, $location, $rootScope,
           $scope.loginFailed = false;
           // set a cookie with the token from the database response
           $cookies.put('token', response.data.token);
-          // redirect to the page they were trying to go to
-          $location.path('/' + $rootScope.goHere);
+          // redirect to beginning of application
+          $location.path('/page2');
         }
       })
       .catch(function(err) {
