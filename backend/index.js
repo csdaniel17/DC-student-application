@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var cors = require('cors');
 var Busboy = require('busboy');
 var bodyParser = require('body-parser');
-var bcrypt = require('bcrypt');
+var bcrypt = require('my-bcrypt');
 var randtoken = require('rand-token');
 
 
