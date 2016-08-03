@@ -9,11 +9,10 @@
   <body ng-app="DigitalCrafts">
 
     <div class="container">
-
       <div class="nav">
         <ul class="nav nav-pills" style="float:right; margin-bottom: 10px;">
-          <li><a href="" ng-click="login()" ng-hide="isLoggedIn()">Login</a></li>
-          <li><a href="" ng-click="signup()" ng-hide="isLoggedIn()">Register</a></li>
+          <li><a href="" ng-click="login()" ng-hide="isLoggedIn() || currentPage == ''">Login</a></li>
+          <li><a href="" ng-click="signup()" ng-hide="isLoggedIn() || currentPage == 'signup'">Register</a></li>
           <li><a href="" ng-click="logout()" ng-show="isLoggedIn()">Logout</a></li>
         </ul>
       </div>
