@@ -33,7 +33,7 @@ app.run(function($rootScope, $location, $cookies) {
   // on every location change start, see where the user is attempting to go
   $rootScope.$on('$locationChangeStart', function(event, nextUrl, currentUrl) {
     // get path from url
-    var path = nextUrl.split('/')[5]; // WILL NEED TO CHANGE AFTER DEV[4];
+    var path = nextUrl.split('/')[5]; // WILL NEED TO CHANGE AFTER DEV - [4];
     $rootScope.currentPage = path;
 
     // if user is going to a restricted area and doesn't have a token stored in a cookie, redirect to the login page

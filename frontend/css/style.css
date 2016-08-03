@@ -16,3 +16,13 @@ form {
 .alert {
   margin-top: 20px;
 }
+
+.logo {
+  max-width: 125px;
+  float: left;
+}
+
+.nav-pills {
+  float: right;
+  margin-bottom: 10px;
+}
