@@ -34,11 +34,12 @@ app.run(function($rootScope, $location, $cookies) {
   $rootScope.$on('$locationChangeStart', function(event, nextUrl, currentUrl) {
     // get path from url
     var path = nextUrl.split('/')[4];
+    $rootScope.goHere = path;
+
     // if user is going to a restricted area and doesn't have a token stored in a cookie, redirect to the login page
     var token = $cookies.get('token');
     if (!token && (path === 'page2' || path === 'plage3' || path === 'page4')) {
-      $rootScope.goHere = path;
-      $location.path('/login');
+      $location.path('/');
     }
 
     // is the user logged in? used to display login, logout and signup links
@@ -48,7 +49,17 @@ app.run(function($rootScope, $location, $cookies) {
 
     $rootScope.logout = function() {
       $cookies.remove('token');
+      $location.path('/');
     };
+
+    $rootScope.login = function() {
+      $location.path('/');
+    };
+
+    $rootScope.signup = function() {
+      $location.path('/signup');
+    };
+
   });
 });
 
@@ -85,7 +96,7 @@ app.controller('SignupController', function($scope, $location, $http, $timeout) 
           // user successfully created
           $scope.registered = true;
           $timeout(function() {
-            $location.path('/login');
+            $location.path('/');
           }, 3000);
         }
       })

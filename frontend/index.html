@@ -9,6 +9,14 @@
   <body ng-app="DigitalCrafts">
 
     <div class="container">
+      <div class="nav">
+        <ul class="nav nav-pills" style="float:right; margin-bottom: 10px;">
+          <li><a href="" ng-click="login()" ng-hide="isLoggedIn() || goHere == '#'">Login - {{goHere}}</a></li>
+          <li><a href="" ng-click="signup()" ng-hide="isLoggedIn()">Register</a></li>
+          <li><a href="" ng-click="logout()" ng-show="isLoggedIn()">Logout</a></li>
+        </ul>
+      </div>
+
       <div class="row">
         <div class="col col-xs-12 col-sm-8 col-sm-offset-2">
           <ng-view></ng-view>
