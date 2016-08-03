@@ -18,7 +18,9 @@ app.use(bodyParser.json());
 
 // handle signup requests
 app.post('/signup', function(req, res) {
+
   var userInfo = req.body;
+
   bcrypt.hash(userInfo.password, 10, function(err, hash) {
     if (err) {
       console.log('error in bcrypt hash:', err.message);
@@ -47,9 +49,10 @@ app.post('/signup', function(req, res) {
 
 // handle login requests
 app.post('/login', function(req, res) {
+
   email = req.body.email;
   password = req.body.password;
-  console.log('entered email & password:', email, password);
+
   User.findOne({ email: email }, function(err, user) {
     if (err) {
       return res.status(400).json({ status: "fail", "message": "System error. Please try again."});
@@ -59,11 +62,12 @@ app.post('/login', function(req, res) {
     }
 
     bcrypt.compare(password, user.password, function(err, matched) {
+
       if (err) {
         console.log(err);
         res.status(400).json({ status: "fail" });
       }
-      console.log('matched is: ', matched);
+
       if (matched) {
         // login successfull
         var token = randtoken.generate(64);
@@ -78,14 +82,17 @@ app.post('/login', function(req, res) {
       } else {
         res.status(400).json({ status: "fail", message: "Incorrect username or password."});
       }
+
     });
   });
 });
 
 // handle resume upload
 app.post('/upload', function(req, res) {
+
   var bufs = [];
   var busboy = new Busboy({ headers: req.headers });
+
   busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
     console.log('File [' + fieldname + ']: filename: ' + filename + ', encoding: ' + encoding + ', mimetype: ' + mimetype);
     file.on('data', function(data) {
@@ -105,15 +112,19 @@ app.post('/upload', function(req, res) {
       });
     });
   });
+
   busboy.on('field', function(fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) {
     console.log('Field [' + fieldname + ']: value: ' + inspect(val));
   });
+
   busboy.on('finish', function() {
     console.log('Done parsing form!');
     res.writeHead(303, { Connection: 'close', Location: '/' });
     res.end();
   });
+
   req.pipe(busboy);
+
 });
 
 // save user answers to the database
