@@ -64,7 +64,7 @@ app.run(function($rootScope, $location, $cookies) {
 });
 
 // login controller
-app.controller('LoginController', function($scope, $http, $location, $rootScope, $cookies) {
+app.controller('LoginController', function($scope, $http, $location, $rootScope, $cookies, backend) {
   $scope.login = function() {
     $http.post(API + '/login', { email: $scope.email, password: $scope.password })
       .then(function(response) {
@@ -110,6 +110,10 @@ app.controller('SignupController', function($scope, $location, $http, $timeout) 
 // main controller
 app.controller('MainController', function($scope, User, $location, Upload, $timeout, $http, backend, $cookies) {
 
+  // load data from backend
+  // var savedData = backend.getData($cookies.get('token'));
+  // console.log(savedData);
+  console.log($cookies.get('token'));
 
   $scope.page2 = function() {
     var theData = User.getData();
@@ -160,8 +164,6 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
     theData.portfolio = $scope.portfolio;
     theData.understand = $scope.understand;
     theData.effortagree = $scope.effortagree;
-    // remove token here
-    theData.token = '1xGgHBnIdzG3G9GkBXa2qRrDLnJLMttJ4UnKevJedJOMg7zUj1cQiSejLBpIF5aD';
     theData.page = 4;
     User.saveData(theData);
     backend.sendData(theData);
@@ -194,8 +196,15 @@ app.factory('backend', function($http) {
     sendData: function(data) {
       return $http({
         method: 'POST',
-        url: 'http://localhost:8000/save',
+        url: API + '/save',
         data: data
+      });
+    },
+    getData: function(token) {
+      return $http({
+        method: 'POST',
+        url: API + '/getdata',
+        data: token
       });
     }
   };
