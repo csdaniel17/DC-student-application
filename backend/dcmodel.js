@@ -19,7 +19,12 @@ var User = mongoose.model('User', {
   programming: String,
   interest: String,
   plan: String,
-  why: String
+  why: String,
+  github: String,
+  linkedin: String,
+  portfolio: String,
+  understand: String,
+  effortagree: String
 });
 
 module.exports = User;

@@ -160,6 +160,7 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
     theData.portfolio = $scope.portfolio;
     theData.understand = $scope.understand;
     theData.effortagree = $scope.effortagree;
+    theData.page = 4;
     User.saveData(theData);
     backend.sendData(theData);
     console.log('after: ', theData);
@@ -170,7 +171,7 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
  $scope.upload = function (file) {
      Upload.upload({
          url: 'http://localhost:8000/upload',
-         data: {file: file}
+         data: {file: file, 'token': $cookies.get('token')}
         //  data: file
      }).then(function (resp) {
          console.log('Success uploaded. Response: ' + resp.data);

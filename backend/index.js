@@ -91,8 +91,10 @@ app.post('/login', function(req, res) {
 app.post('/upload', function(req, res) {
 
   var bufs = [];
+  console.log(req);
+  console.log(req.headers);
+  var userToken = req.headers;
   var busboy = new Busboy({ headers: req.headers });
-
   busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
     console.log('File [' + fieldname + ']: filename: ' + filename + ', encoding: ' + encoding + ', mimetype: ' + mimetype);
     file.on('data', function(data) {
@@ -106,23 +108,26 @@ app.post('/upload', function(req, res) {
       console.log('DONE: BUF IS: ', buf, ' and buf.length is: ', buf.length);
 
       // LOOK UP USER INSTEAD OF CREATING A NEW MODEL
-      var user = new User({resume: buf});
-      user.save(function(err){
+      User.update({ authenticationTokens: { $elemMatch: { token: userToken } } }, {
+        $set: { resume: buf}
+      }, function(err, response) {
+        console.log(response);
         if (err) {
-          console.log(err);
+          return res.status(400).json({ status: 'fail', message: 'failed to save user info' });
         }
+        res.status(200).json({ status: 'ok' });
       });
     });
   });
 
-  busboy.on('field', function(fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) {
-    console.log('Field [' + fieldname + ']: value: ' + inspect(val));
-  });
+  // busboy.on('field', function(fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) {
+  //   console.log('Field [' + fieldname + ']: value: ' + inspect(val));
+  // });
 
   busboy.on('finish', function() {
     console.log('Done parsing form!');
-    res.writeHead(303, { Connection: 'close', Location: '/' });
-    res.end();
+    // res.writeHead(303, { Connection: 'close', Location: '/' });
+    // res.end();
   });
 
   req.pipe(busboy);
@@ -157,7 +162,13 @@ app.post('/save', function(req, res) {
       why: userInfo.why
     };
   } else if (userInfo.page === 4) {
-    setQuery = {};
+    setQuery = {
+      github: userInfo.github,
+      linkedin: userInfo.linkedin,
+      portfolio: userInfo.portfolio,
+      understand: userInfo.understand,
+      effortagree: userInfo.effortagree
+    };
   }
   User.update({ authenticationTokens: { $elemMatch: { token: userToken } } }, {
     $set: setQuery
