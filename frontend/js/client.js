@@ -113,27 +113,26 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
   // load data from backend
   var userToken = $cookies.get('token');
   backend.getData(userToken).then(function(userData) {
-    $scope.firstname = userData.data.message.firstname;
-    $scope.lastname = userData.data.message.lastname;
-    $scope.phone = userData.data.message.phone;
-    // $scope.birthday = userData.data.message.birthday;
-    $scope.address = userData.data.message.address;
-    $scope.city = userData.data.message.city;
-    $scope.cohort = userData.data.message.cohort;
-    $scope.relocating = userData.data.message.relocating;
-    $scope.education = userData.data.message.education;
-    $scope.employment = userData.data.message.employment;
-    $scope.loan = userData.data.message.loan;
-    $scope.programming = userData.data.message.programming;
-    $scope.interest = userData.data.message.interest;
-    $scope.plan = userData.data.message.plan;
-    $scope.why = userData.data.message.why;
-    $scope.github = userData.data.message.github;
-    $scope.linkedin = userData.data.message.linkedin;
-    $scope.portfolio = userData.data.message.portfolio;
-    var date = userData.data.message.birthday;
+    var data = userData.data.message;
+    $scope.firstname = data.firstname;
+    $scope.lastname = data.lastname;
+    $scope.phone = data.phone;
+    $scope.address = data.address;
+    $scope.city = data.city;
+    $scope.cohort = data.cohort;
+    $scope.relocating = data.relocating;
+    $scope.education = data.education;
+    $scope.employment = data.employment;
+    $scope.loan = data.loan;
+    $scope.programming = data.programming;
+    $scope.interest = data.interest;
+    $scope.plan = data.plan;
+    $scope.why = data.why;
+    $scope.github = data.github;
+    $scope.linkedin = data.linkedin;
+    $scope.portfolio = data.portfolio;
+    var date = data.birthday;
     $scope.birthday = $filter('date')(date, 'MM/dd/yyyy');
-    console.log($filter('date')(date, 'yyyy-MM-dd'));
   });
 
   $scope.page2 = function() {
