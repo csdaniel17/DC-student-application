@@ -8,6 +8,7 @@
     <input ng-model="password" type="password" name="password" class="form-control" required>
   </div>
   <div class="alert alert-danger" ng-show="signupForm.email.$error.email && signupForm.email.$dirty">Please enter a valid email address.</div>
+  <div class="alert alert-danger" ng-show="emailTaken">Email is already registered in our system. Please login.</div>
   <div class="alert alert-success" ng-show="registered">You've successfully registered. Redirecting to login page...</div>
   <button type="submit" class="btn btn-primary" ng-disabled="signupForm.$invalid">Continue</button>
 </form>

@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User', {
   resume: { type: Buffer},
   authenticationTokens: [{ token: String, expiration: Date }],
-  email: String,
+  email: { type: String, unique: true },
   password: String,
   firstname: String,
   lastname: String,

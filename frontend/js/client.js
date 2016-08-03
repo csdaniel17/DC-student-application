@@ -101,6 +101,7 @@ app.controller('SignupController', function($scope, $location, $http, $timeout) 
         }
       })
       .catch(function(err) {
+        $scope.emailTaken = true;
         console.log(err);
       });
   };
