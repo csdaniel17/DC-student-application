@@ -4,8 +4,15 @@ DigitalCrafts colors:
   blue: #5697CF
   orange: #F8941D
 */
+body {
+  margin-top: 20px;
+}
 
 form {
   border: 1px solid #d4cfcf;
   padding: 15px;
+}
+
+.alert {
+  margin-top: 20px;
 }

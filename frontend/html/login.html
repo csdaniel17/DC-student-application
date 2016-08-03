@@ -7,7 +7,7 @@
     <label for="password">Password:</label>
     <input ng-model="password" type="password" name="password" class="form-control" required>
   </div>
-  <div class="alert alert-info">Don't have an account? <button class="btn btn-primary" ng-click="registration()">Register</button></div>
   <div ng-show="loginFailed" class="alert alert-danger">Incorrect Username or Password.</div>
   <button type="submit" class="btn btn-primary" ng-disabled="loginForm.$invalid">Login</button>
+  <div class="alert alert-info">Don't have an account? <button class="btn btn-primary" ng-click="registration()">Register</button></div>
 </form>
