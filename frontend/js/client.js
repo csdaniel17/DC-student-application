@@ -148,10 +148,21 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
   };
 
   $scope.page4 = function() {
-    //if ($scope.form.file.$valid && $scope.file) {
+    if ($scope.file) {
       $scope.upload($scope.file);
       console.log($scope.file);
-    //}
+    }
+
+    var theData = User.getData();
+    console.log('before: ', theData);
+    theData.github = $scope.github;
+    theData.linkedin = $scope.linkedin;
+    theData.portfolio = $scope.portfolio;
+    theData.understand = $scope.understand;
+    theData.effortagree = $scope.effortagree;
+    User.saveData(theData);
+    backend.sendData(theData);
+    console.log('after: ', theData);
   };
 
 
