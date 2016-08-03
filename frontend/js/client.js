@@ -127,14 +127,24 @@ app.controller('Page2Controller', function($scope, User, $location, Upload, $tim
 
   // load "How did you hear about us?" options
   backend.getHowDidYouHear().then(function(options) {
-    $scope.howDidYouHear = options.data.message.how_did_you_hear;
-    console.log(options);
+    howDidYouHear = [];
+    var optionsList = options.data.message.how_did_you_hear;
+    angular.forEach(optionsList, function(option) {
+      howDidYouHear.push({ name: option });
+    });
+    $scope.options = howDidYouHear;
   });
 
   $scope.page2 = function() {
-    console.log($scope.howhear);
+
+    var optionsSelected = [];
+    angular.forEach($scope.options, function(option) {
+      if (option.selected) {
+        optionsSelected.push(option.name);
+      }
+    });
+    console.log(optionsSelected);
     var theData = User.getData();
-    console.log('theData is: ', theData);
     theData.firstname = $scope.firstname;
     theData.lastname = $scope.lastname;
     theData.phone = $scope.phone;
@@ -144,8 +154,9 @@ app.controller('Page2Controller', function($scope, User, $location, Upload, $tim
     theData.cohort = $scope.cohort;
     theData.relocating = $scope.relocating;
     theData.token = $cookies.get('token');
+    theData.optionsSelected = optionsSelected;
     theData.page = 2;
-    console.log('theData is: ', theData);
+
     User.saveData(theData);
     backend.sendData(theData);
     $location.path('/page3');
@@ -184,7 +195,6 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
 
   $scope.page3 = function() {
      var theData = User.getData();
-     console.log('before: ', theData);
      theData.education = $scope.education;
      theData.employment = $scope.employment;
      theData.loan = $scope.loan;
@@ -193,7 +203,7 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
      theData.plan = $scope.plan;
      theData.why = $scope.why;
      theData.page = 3;
-     console.log('after: ', theData);
+
      User.saveData(theData);
      backend.sendData(theData);
     $location.path('/page4');
@@ -202,20 +212,18 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
   $scope.page4 = function() {
     if ($scope.file) {
       $scope.upload($scope.file);
-      console.log($scope.file);
     }
 
     var theData = User.getData();
-    console.log('before: ', theData);
     theData.github = $scope.github;
     theData.linkedin = $scope.linkedin;
     theData.portfolio = $scope.portfolio;
     theData.understand = $scope.understand;
     theData.effortagree = $scope.effortagree;
     theData.page = 4;
+
     User.saveData(theData);
     backend.sendData(theData);
-    console.log('after: ', theData);
   };
 
 
@@ -224,16 +232,12 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
      Upload.upload({
          url: 'http://localhost:8000/upload',
          data: {file: file, 'token': $cookies.get('token')}
-         //data: {file: file},
-         //'token': $cookies.get('token')
      }).then(function (resp) {
          console.log('Success uploaded. Response: ' + resp.data);
      }, function (resp) {
          console.log('Error status: ' + resp.status);
      }, function (evt) {
-         //var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-         //console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
-         console.log('progress:...');
+         //do nothin
      });
  };
 });

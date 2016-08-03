@@ -9,6 +9,7 @@ var User = mongoose.model('User', {
   lastname: String,
   phone: String,
   birthday: Date,
+  howDidYouHear: [String],
   address: String,
   city: String,
   cohort: String,

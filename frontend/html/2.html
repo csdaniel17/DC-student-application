@@ -39,7 +39,7 @@
       <div class="alert alert-danger" ng-show="p2Form.address.$error.required && p2Form.address.$touched">Please enter your address.</div>
     </div>
     <label for="hear">How did you hear about DigitalCrafts?</label>
-    <div class="checkbox" ng-repeat="option in howDidYouHear"><label><input type="checkbox" name="{{ option }}">{{ option }}</label></div>
+    <div class="checkbox" ng-repeat="option in options"><label><input type="checkbox" ng-model="option.selected" value="{{option.name}}" >{{ option.name }}</label></div>
 
     <h3>Which campus will you be attending?</h3>
     <div class="form-group">

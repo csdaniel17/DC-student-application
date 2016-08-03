@@ -150,8 +150,10 @@ app.post('/save', function(req, res) {
       address: userInfo.address,
       city: userInfo.city,
       cohort: userInfo.cohort,
-      relocating: userInfo.relocating
+      relocating: userInfo.relocating,
+      howDidYouHear: userInfo.optionsSelected
     };
+    console.log(setQuery);
   } else if (userInfo.page === 3) {
     setQuery = {
       education: userInfo.education,
@@ -171,6 +173,7 @@ app.post('/save', function(req, res) {
       effortagree: userInfo.effortagree
     };
   }
+  
   User.update({ authenticationTokens: { $elemMatch: { token: userToken } } }, {
     $set: setQuery
   }, function(err, response) {
