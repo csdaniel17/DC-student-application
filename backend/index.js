@@ -10,6 +10,7 @@ var randtoken = require('rand-token');
 mongoose.connect('mongodb://localhost/dc-app');
 
 var User = require("./dcmodel");
+var Setting = mongoose.model('Setting', {});
 
 app.use(cors());
 
@@ -189,6 +190,16 @@ app.post('/getdata', function(req, res) {
       return res.status(400).json({ status: 'fail', message: 'Unable to retrieve data'});
     }
     res.status(200).json({ status: 'ok', message: user });
+  });
+});
+
+// get options for "How did you hear about DigitalCrafts?"
+app.post('/getHearOptions', function(req, res) {
+  Setting.findById('57a24198bed744ac55120057', function(err, options) {
+    if (err) {
+      return res.status(400).json({ status: 'fail', message: 'Unable to retrieve options'});
+    }
+    res.status(200).json({ status: 'ok', message: options });
   });
 });
 

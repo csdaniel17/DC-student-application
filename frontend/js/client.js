@@ -12,7 +12,7 @@ app.config(function($routeProvider) {
     })
     .when('/page2', {
       templateUrl: 'html/2.html',
-      controller: 'MainController'
+      controller: 'Page2Controller'
     })
     .when('/page3', {
       templateUrl: 'html/3.html',
@@ -107,6 +107,53 @@ app.controller('SignupController', function($scope, $location, $http, $timeout) 
   };
 });
 
+app.controller('Page2Controller', function($scope, User, $location, Upload, $timeout, $http, backend, $cookies, $filter) {
+
+  // load data from backend
+  var userToken = $cookies.get('token');
+  backend.getData(userToken).then(function(userData) {
+    var data = userData.data.message;
+    $scope.firstname = data.firstname;
+    $scope.lastname = data.lastname;
+    $scope.phone = data.phone;
+    $scope.address = data.address;
+    $scope.city = data.city;
+    $scope.cohort = data.cohort;
+    $scope.relocating = data.relocating;
+    var date = data.birthday;
+    $scope.birthday = $filter('date')(date, 'MM/dd/yyyy');
+  });
+
+
+  // load "How did you hear about us?" options
+  backend.getHowDidYouHear().then(function(options) {
+    $scope.howDidYouHear = options.data.message.how_did_you_hear;
+    console.log(options);
+  });
+
+  $scope.page2 = function() {
+    console.log($scope.howhear);
+    var theData = User.getData();
+    console.log('theData is: ', theData);
+    theData.firstname = $scope.firstname;
+    theData.lastname = $scope.lastname;
+    theData.phone = $scope.phone;
+    theData.birthday = $scope.birthday;
+    theData.address = $scope.address;
+    theData.city = $scope.city;
+    theData.cohort = $scope.cohort;
+    theData.relocating = $scope.relocating;
+    theData.token = $cookies.get('token');
+    theData.page = 2;
+    console.log('theData is: ', theData);
+    User.saveData(theData);
+    backend.sendData(theData);
+    $location.path('/page3');
+  };
+
+});
+
+
 // main controller
 app.controller('MainController', function($scope, User, $location, Upload, $timeout, $http, backend, $cookies, $filter) {
 
@@ -134,25 +181,6 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
     var date = data.birthday;
     $scope.birthday = $filter('date')(date, 'MM/dd/yyyy');
   });
-
-  $scope.page2 = function() {
-    var theData = User.getData();
-    console.log('theData is: ', theData);
-    theData.firstname = $scope.firstname;
-    theData.lastname = $scope.lastname;
-    theData.phone = $scope.phone;
-    theData.birthday = $scope.birthday;
-    theData.address = $scope.address;
-    theData.city = $scope.city;
-    theData.cohort = $scope.cohort;
-    theData.relocating = $scope.relocating;
-    theData.token = $cookies.get('token');
-    theData.page = 2;
-    console.log('theData is: ', theData);
-    User.saveData(theData);
-    backend.sendData(theData);
-    $location.path('/page3');
-  };
 
   $scope.page3 = function() {
      var theData = User.getData();
@@ -225,6 +253,12 @@ app.factory('backend', function($http) {
         method: 'POST',
         url: API + '/getdata',
         data: {token: token}
+      });
+    },
+    getHowDidYouHear: function() {
+      return $http({
+        method: 'POST',
+        url: API + '/getHearOptions'
       });
     }
   };

@@ -39,18 +39,7 @@
       <div class="alert alert-danger" ng-show="p2Form.address.$error.required && p2Form.address.$touched">Please enter your address.</div>
     </div>
     <label for="hear">How did you hear about DigitalCrafts?</label>
-    <div class="checkbox"><label><input type="checkbox" name="friends" value="friends">Friends/Family</label></div>
-    <div class="checkbox"><label><input type="checkbox" name="Advertiment" value="Advertisment">Advertisment</label></div>
-    <div class="checkbox"><label><input type="checkbox" name="google" value="google">Google Search</label></div>
-    <div class="checkbox"><label><input type="checkbox" name="course" value="course">Course Report</label></div>
-    <div class="checkbox"><label><input type="checkbox" name="switchup" value="switchup">SwitchUp</label></div>
-    <div class="checkbox"><label><input type="checkbox" name="facebook" value="facebook">Facebook</label></div>
-    <div class="checkbox"><label><input type="checkbox" name="Quora" value="Quora">Quora</label></div>
-    <div class="checkbox"><label><input type="checkbox" name="meetup" value="meetup">MeetUp</label></div>
-    <div class="checkbox"><label><input type="checkbox" name="workshop" value="workshop">Workshop or Event</label></div>
-    <div class="checkbox"><label><input type="checkbox" name="atv" value="atv">Atlanta Tech Village</label></div>
-    <div class="checkbox"><label><input type="checkbox" name="article" value="article">Article/Family</label></div>
-    <div class="checkbox"><label><input type="checkbox" name="other" value="other">Other</label></div>
+    <div class="checkbox" ng-repeat="option in howDidYouHear"><label><input type="checkbox" name="{{ option }}">{{ option }}</label></div>
 
     <h3>Which campus will you be attending?</h3>
     <div class="form-group">
