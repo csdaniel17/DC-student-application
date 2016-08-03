@@ -91,43 +91,43 @@ app.post('/login', function(req, res) {
 app.post('/upload', function(req, res) {
 
   var bufs = [];
-  console.log(req);
-  console.log(req.headers);
-  var userToken = req.headers;
+  var buf;
+  var userToken;
+
+
   var busboy = new Busboy({ headers: req.headers });
+
   busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
-    console.log('File [' + fieldname + ']: filename: ' + filename + ', encoding: ' + encoding + ', mimetype: ' + mimetype);
+    //console.log('File [' + fieldname + ']: filename: ' + filename + ', encoding: ' + encoding + ', mimetype: ' + mimetype);
     file.on('data', function(data) {
-      console.log('File [' + fieldname + '] got ' + data.length + ' bytes');
-      console.log('data: ', data);
+      //console.log('File [' + fieldname + '] got ' + data.length + ' bytes');
+      //console.log('data: ', data);
       bufs.push(data);
     });
     file.on('end', function() {
-      console.log('File [' + fieldname + '] Finished');
-      var buf = Buffer.concat(bufs);
-      console.log('DONE: BUF IS: ', buf, ' and buf.length is: ', buf.length);
-
-      // LOOK UP USER INSTEAD OF CREATING A NEW MODEL
-      User.update({ authenticationTokens: { $elemMatch: { token: userToken } } }, {
-        $set: { resume: buf}
-      }, function(err, response) {
-        console.log(response);
-        if (err) {
-          return res.status(400).json({ status: 'fail', message: 'failed to save user info' });
-        }
-        res.status(200).json({ status: 'ok' });
-      });
+      //console.log('File [' + fieldname + '] Finished');
+      buf = Buffer.concat(bufs);
+      //console.log('DONE: BUF IS: ', buf, ' and buf.length is: ', buf.length);
     });
   });
 
-  // busboy.on('field', function(fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) {
-  //   console.log('Field [' + fieldname + ']: value: ' + inspect(val));
-  // });
+  busboy.on('field', function(fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) {
+    if (fieldname === 'token') {
+      userToken = val;
+    }
+    //console.log('Field [' + fieldname + ']: value: ' + val);
+  });
 
   busboy.on('finish', function() {
-    console.log('Done parsing form!');
-    // res.writeHead(303, { Connection: 'close', Location: '/' });
-    // res.end();
+    User.update({ authenticationTokens: { $elemMatch: { token: userToken } } }, {
+      $set: { resume: buf}
+    }, function(err, response) {
+      console.log('resume update', response);
+      if (err) {
+        return res.status(400).json({ status: 'fail', message: 'failed to save user resume' });
+      }
+      res.status(200).json({ status: 'ok' });
+    });
   });
 
   req.pipe(busboy);
@@ -173,7 +173,7 @@ app.post('/save', function(req, res) {
   User.update({ authenticationTokens: { $elemMatch: { token: userToken } } }, {
     $set: setQuery
   }, function(err, response) {
-    console.log(response);
+    console.log('page update', response);
     if (err) {
       return res.status(400).json({ status: 'fail', message: 'failed to save user info' });
     }

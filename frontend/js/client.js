@@ -160,6 +160,8 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
     theData.portfolio = $scope.portfolio;
     theData.understand = $scope.understand;
     theData.effortagree = $scope.effortagree;
+    // remove token here
+    theData.token = '1xGgHBnIdzG3G9GkBXa2qRrDLnJLMttJ4UnKevJedJOMg7zUj1cQiSejLBpIF5aD';
     theData.page = 4;
     User.saveData(theData);
     backend.sendData(theData);
@@ -172,7 +174,8 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
      Upload.upload({
          url: 'http://localhost:8000/upload',
          data: {file: file, 'token': $cookies.get('token')}
-        //  data: file
+         //data: {file: file},
+         //'token': $cookies.get('token')
      }).then(function (resp) {
          console.log('Success uploaded. Response: ' + resp.data);
      }, function (resp) {
