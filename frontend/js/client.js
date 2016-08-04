@@ -30,6 +30,10 @@ app.config(function($routeProvider) {
       templateUrl: 'html/complete.html',
       controller: 'MainController'
     })
+    .when('/reset', {
+      templateUrl: 'html/reset.html',
+      controller: 'ResetController'
+    })
     .otherwise({redirectTo: '/'});
 });
 
@@ -86,9 +90,33 @@ app.controller('LoginController', function($scope, $http, $location, $rootScope,
         $scope.loginFailed = true;
       });
   };
+
   $scope.registration = function(){
     $location.path("/signup");
   };
+
+  $scope.forgotPassword = function() {
+    $location.path("/reset");
+  };
+
+});
+
+// reset password controller
+app.controller('ResetController', function($scope, $http) {
+
+  $scope.resetPassword = function() {
+    var userEmail = $scope.email;
+
+    $http.post(API + '/resetPassword', { email: userEmail })
+      .then(function(response) {
+        console.log(response);
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+
+  };
+
 });
 
 // signup controller

@@ -1,0 +1,9 @@
+<form ng-submit="resetPassword()" name="resetForm" novalidate>
+  <div class="form-group">
+    <label for="email">Enter your email address:</label>
+    <input ng-model="email" type="email" name="email" class="form-control input-lg" required>
+  </div>
+
+  <!-- <div ng-show="loginFailed" class="alert alert-danger">Incorrect Username or Password.</div> -->
+  <button type="submit" class="btn btn-primary" ng-disabled="loginForm.$invalid">Send Email</button>
+</form>

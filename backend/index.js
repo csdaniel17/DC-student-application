@@ -210,6 +210,17 @@ app.post('/getHearOptions', function(req, res) {
   });
 });
 
+// handle resetting a user's password
+app.post('/resetPassword', function(req, res) {
+
+  // generate new random password for the user
+  var tempPassword = randtoken.generate(8);
+
+
+  console.log(req.body.email);
+  res.send('ok');
+});
+
 app.listen(8000, function() {
   console.log('Listening on port 8000');
 });
