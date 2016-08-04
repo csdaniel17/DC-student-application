@@ -268,7 +268,7 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
  // upload on file select or drop
  $scope.upload = function (file) {
      Upload.upload({
-         url: 'http://localhost:8000/upload',
+         url: API + '/upload',
          data: {file: file, 'token': $cookies.get('token')}
      }).then(function (resp) {
          console.log('Success uploaded. Response: ' + resp.data);
