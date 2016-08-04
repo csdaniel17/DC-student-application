@@ -44,32 +44,34 @@
     <h3>Which campus will you be attending?</h3>
     <div class="form-group">
       <label class="radio-inline" ng-repeat="city in cityCohorts">
-        <input type="radio" value="{{city}}" ng-model="$parent.city" ng-change="getCohortDates($parent.city)" required>{{city}}
+        <input type="radio" name="city" value="{{city}}" ng-model="$parent.city" ng-required="true">{{city}}
       </label>
     </div>
 
 
-    <h3>For which cohort are you applying?</h3>
-    <div class="form-group">
-      <div class="radio">
-        <label><input type="radio" name="cohort" value="oct31" ng-model="cohort" required>October 31st 2016 - Feb 3rd, 2017</label>
+    <div ng-show="city">
+      <h3>For which cohort are you applying?</h3>
+      <div class="form-group" ng-show="city == 'Atlanta'">
+        <div class="radio" ng-repeat="date in atlantaDates">
+          <label><input type="radio" name="cohort" value="{{date}}" ng-model="$parent.cohort" ng-required="true">{{date}}</label>
+        </div>
       </div>
-      <div class="radio">
-        <label><input type="radio" name="cohort" value="mar20" ng-model="cohort" required>March 20th, 2017 - July 7th, 2017</label>
-      </div>
-      <div class="radio">
-        <label><input type="radio" name="cohort" value="future" ng-model="cohort" required>Future Date</label>
+      <div class="form-group" ng-show="city == 'Houston'">
+        <div class="radio" ng-repeat="date in houstonDates">
+          <label><input type="radio" name="cohort" value="{{date}}" ng-model="$parent.cohort" ng-required="true">{{date}}</label>
+        </div>
       </div>
     </div>
 
-
-    <h3>Will you be relocating to {{ city }} for our program?</h3>
-    <div class="form-group">
-      <div class="radio">
-        <label><input type="radio" name="relocating" value="yes" ng-model="relocating" required>Yes</label>
-      </div>
-      <div class="radio">
-        <label><input type="radio" name="relocating" value="no" ng-model="relocating" required>No</label>
+    <div ng-show="city">
+      <h3>Will you be relocating to {{ city }} for our program?</h3>
+      <div class="form-group">
+        <div class="radio">
+          <label><input type="radio" name="relocating" value="yes" ng-model="relocating" ng-required="!relocating">Yes</label>
+        </div>
+        <div class="radio">
+          <label><input type="radio" name="relocating" value="no" ng-model="relocating" ng-required="!relocating">No</label>
+        </div>
       </div>
     </div>
 

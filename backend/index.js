@@ -241,7 +241,7 @@ app.post('/resetPassword', function(req, res) {
         html: '<p>Here is your temporary password: <b>' + tempPassword +
         '</b><br> Please login with your temporary password at the link ' +
         ' below. After logging in you will be required to change your password ' +
-        'and login again. <br><a href="http://localhost:3000/frontend">Click to Login</a>'
+        'and login again. <br><a href="http://localhost:3000/">Click to Login</a>'
       };
 
       // Email sender

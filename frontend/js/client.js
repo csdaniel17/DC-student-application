@@ -175,10 +175,11 @@ app.controller('SignupController', function($scope, $location, $http, $timeout) 
 
 app.controller('Page2Controller', function($scope, User, $location, Upload, $timeout, $http, backend, $cookies, $filter) {
 
+  // var cityDates;
   // Get value of city radio button
-  $scope.$watch('city', function(value){
-    console.log(value);
-  });
+  // $scope.$watch('city', function(value){
+  //   console.log(value);
+  // });
 
   // load question answers from database
   backend.getAppOptions().then(function(options) {
@@ -192,14 +193,12 @@ app.controller('Page2Controller', function($scope, User, $location, Upload, $tim
     $scope.options = howDidYouHear;
 
     // load options for cohort location
-    var cityCohorts = [];
-    var cohortOptions = options.data.message.cohort_locations;
-    angular.forEach(cohortOptions, function(option) {
-      cityCohorts.push(option);
-    });
-    $scope.cityCohorts = cityCohorts;
+    $scope.cityCohorts = options.data.message.cohort_locations;
 
-    var cohortDates = [];
+    // load options for cohort dates
+    // update code to be more flexible for multiple cities
+    $scope.atlantaDates = options.data.message.atlanta_dates;
+    $scope.houstonDates = options.data.message.houston_dates;
   });
 
   // load data from backend
