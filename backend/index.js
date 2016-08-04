@@ -153,7 +153,6 @@ app.post('/save', function(req, res) {
       relocating: userInfo.relocating,
       howDidYouHear: userInfo.optionsSelected
     };
-    console.log(setQuery);
   } else if (userInfo.page === 3) {
     setQuery = {
       education: userInfo.education,
@@ -173,7 +172,7 @@ app.post('/save', function(req, res) {
       effortagree: userInfo.effortagree
     };
   }
-  
+
   User.update({ authenticationTokens: { $elemMatch: { token: userToken } } }, {
     $set: setQuery
   }, function(err, response) {
