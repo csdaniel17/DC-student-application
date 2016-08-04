@@ -147,7 +147,7 @@ app.controller('Page2Controller', function($scope, User, $location, Upload, $tim
   });
 
 
-  $scope.page2 = function() {
+  $scope.page2 = function(redirect) {
 
     var optionsSelected = [];
     angular.forEach($scope.options, function(option) {
@@ -155,7 +155,7 @@ app.controller('Page2Controller', function($scope, User, $location, Upload, $tim
         optionsSelected.push(option.name);
       }
     });
-    console.log(optionsSelected);
+
     var theData = User.getData();
     theData.firstname = $scope.firstname;
     theData.lastname = $scope.lastname;
@@ -171,6 +171,15 @@ app.controller('Page2Controller', function($scope, User, $location, Upload, $tim
 
     User.saveData(theData);
     backend.sendData(theData);
+
+    if (redirect === 'stay') {
+      $scope.saved = true;
+      $timeout(function() {
+        $scope.saved = false;
+      }, 3000);
+      return true;
+    }
+
     $location.path('/page3');
   };
 
