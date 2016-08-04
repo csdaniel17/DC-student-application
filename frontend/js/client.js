@@ -28,7 +28,7 @@ app.config(function($routeProvider) {
     })
     .when('/complete', {
       templateUrl: 'html/complete.html',
-      controller: 'MainController'
+      controller: 'CompleteController'
     })
     .when('/reset', {
       templateUrl: 'html/reset.html',
@@ -139,7 +139,7 @@ app.controller('ChangeController', function($scope, $http, $location) {
     $http.post(API + '/changepassword', { email: userEmail, password: newPassword })
       .then(function(response) {
         if (response.status === 200) {
-          $location.path('/')
+          $location.path('/');
         }
         console.log(response);
       })
@@ -356,6 +356,21 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
      });
  };
 });
+
+// controller for when application is complete/submitted
+app.controller('CompleteController', function($cookies, $http) {
+
+  // call backend to send the email
+  var userToken = $cookies.get('token');
+  $http.post(API + '/complete', { data: userToken })
+    .then(function(response) {
+      console.log(response);
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+});
+
 
 // saves user answers to the mongodb database
 app.factory('backend', function($http) {

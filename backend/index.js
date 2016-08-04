@@ -100,12 +100,13 @@ app.post('/upload', function(req, res) {
   var bufs = [];
   var buf;
   var userToken;
-
+  var resumeName;
 
   var busboy = new Busboy({ headers: req.headers });
 
   busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
     //console.log('File [' + fieldname + ']: filename: ' + filename + ', encoding: ' + encoding + ', mimetype: ' + mimetype);
+    resumeName = filename;
     file.on('data', function(data) {
       //console.log('File [' + fieldname + '] got ' + data.length + ' bytes');
       //console.log('data: ', data);
@@ -127,7 +128,7 @@ app.post('/upload', function(req, res) {
 
   busboy.on('finish', function() {
     User.update({ authenticationTokens: { $elemMatch: { token: userToken } } }, {
-      $set: { resume: buf}
+      $set: { resume: buf, resumeName: resumeName }
     }, function(err, response) {
       console.log('resume update', response);
       if (err) {
@@ -313,6 +314,74 @@ app.post('/changepassword', function(req, res) {
   });
 
 });
+
+// handle sending emails of completed applications
+app.post('/complete', function(req, res) {
+
+  var userToken = req.body.data;
+  User.findOne({ authenticationTokens: { $elemMatch: { token: userToken } } })
+    .then(function(user) {
+      if (!user) {
+        res.status(400).json({ status: 'fail', message: 'User not found' });
+      }
+      var howdidtheyhear = '';
+      user.howDidYouHear.forEach(function(option) {
+        howdidtheyhear += option + ",";
+      });
+      howdidtheyhear = howdidtheyhear.substring(0, howdidtheyhear.length - 1);
+      console.log(howdidtheyhear);
+
+      var emailBody = '<p>An application has been submitted from ' + user.firstname + ' ' + user.lastname + '</p>' +
+      '<ul>' +
+      '<li>Email: ' + user.email + '</li>' +
+      '<li>Phone: ' + user.phone + '</li>' +
+      '<li>Birthday: ' + user.birthday + '</li>' +
+      '<li>Address: ' + user.address + '</li>' +
+      '<li>Cohort City: ' + user.city + '</li>' +
+      '<li>Cohort Date: ' + user.cohort + '</li>' +
+      '<li>Relocating? ' + user.relocating + '</li>' +
+      '<li>GitHub: ' + user.github + '</li>' +
+      '<li>LinkedIn: ' + user.linkedin + '</li>' +
+      '<li>Portfolio: ' + user.portfolio + '</li>' +
+      '<li>Education: ' + user.education + '</li>' +
+      '<li>Employment: ' + user.employment + '</li>' +
+      '<li>Loan? ' + user.loan + '</li>' +
+      '<li>Programming experience: ' + user.programming + '</li>' +
+      '<li>Interest in program: ' + user.interest + '</li>' +
+      '<li>Plan after graduation: ' + user.plan + '</li>' +
+      '<li>Why is DigitalCrafts the right fit? ' + user.why + '</li>' +
+      '<li>How did they hear? ' + howdidtheyhear + '</li>' +
+      '</ul>' +
+      'Thanks, <br>' +
+      'The Dream Team';
+
+
+      // Email settings
+      var mailOptions = {
+        from: 'dctester@noreply.com',
+        to: 'dcapptesting@gmail.com',
+        subject: 'DigitalCrafts Application Submitted',
+        text: 'TEST',
+        html: emailBody,
+        attachments: [{ filename: user.resumeName, content: user.resume }]
+      };
+
+      // Email sender
+      transporter.sendMail(mailOptions, function(err, info) {
+        if (err) {
+          return console.log(err);
+        }
+        console.log('Message sent: ', info.response);
+      });
+
+    })
+    .catch(function(err) {
+      if (err) {
+        console.log(err);
+      }
+    });
+});
+
 
 app.listen(8000, function() {
   console.log('Listening on port 8000');
