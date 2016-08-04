@@ -214,7 +214,7 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
     $scope.birthday = $filter('date')(date, 'MM/dd/yyyy');
   });
 
-  $scope.page3 = function() {
+  $scope.page3 = function(redirect) {
      var theData = User.getData();
      theData.education = $scope.education;
      theData.employment = $scope.employment;
@@ -227,6 +227,14 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
 
      User.saveData(theData);
      backend.sendData(theData);
+
+     if (redirect === 'stay') {
+       $scope.saved = true;
+       $timeout(function() {
+         $scope.saved = false;
+       }, 3000);
+       return true;
+     }
     $location.path('/page4');
   };
 

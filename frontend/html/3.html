@@ -51,5 +51,9 @@
     <textarea name="why" rows="8" cols="40" class="form-control" required ng-model="why"></textarea>
     <div class="alert alert-danger" ng-show="p3Form.why.$invalid && p3Form.why.$touched">Please tell us why DigitalCrafts is right for you!</div>
   </div>
+
+  <div class="alert alert-success" ng-show="saved">Your application has been saved.</div>
+
+  <button type="button" class="btn btn-default" ng-click="page3('stay')">Save</button>
   <button type="submit" class="btn btn-primary" ng-disabled="p3Form.$invalid">Continue</button>
 </form>
