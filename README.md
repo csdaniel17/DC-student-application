@@ -4,13 +4,21 @@
 * An online application portal for DigitalCrafts. Prospective students can register for an account, login, and save their progress throughout the application process. Should the student forget their password, they can request a temporary password which will be automatically emailed to them. After the student finishes and submits the application, DigitalCrafts will be sent an email containing the application information.
 
 
+## Screenshots
+
+* Login page
+
 ![Login Page](img/login.png)
 
+
+* Application page
 
 ![Application Page](img/app.png)
 
 
-![Reset Email](img/newpassword.png)
+* Reset password email page
+
+![Reset Password Email Page](img/newpassword.png)
 
 
 
