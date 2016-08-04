@@ -26,6 +26,10 @@ app.config(function($routeProvider) {
       templateUrl: 'html/signup.html',
       controller: 'SignupController'
     })
+    .when('/complete', {
+      templateUrl: 'html/complete.html',
+      controller: 'MainController'
+    })
     .otherwise({redirectTo: '/'});
 });
 
@@ -139,7 +143,7 @@ app.controller('Page2Controller', function($scope, User, $location, Upload, $tim
         option.selected = true;
       }
     });
-    console.log('$scope.options: ', $scope.options);
+
   });
 
 
@@ -232,6 +236,8 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
 
     User.saveData(theData);
     backend.sendData(theData);
+
+    $location.path('/complete');
   };
 
 
