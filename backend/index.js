@@ -159,6 +159,7 @@ app.post('/save', function(req, res) {
       relocating: userInfo.relocating,
       howDidYouHear: userInfo.optionsSelected
     };
+    console.log(setQuery);
   } else if (userInfo.page === 3) {
     setQuery = {
       education: userInfo.education,

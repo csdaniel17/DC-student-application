@@ -43,11 +43,8 @@
 
     <h3>Which campus will you be attending?</h3>
     <div class="form-group">
-      <label class="radio-inline">
-        <input type="radio" name="city" value="Atlanta" ng-model="city" required>Atlanta
-      </label>
-      <label class="radio-inline">
-        <input type="radio" name="city" value="Houston" ng-model="city" required>Houston
+      <label class="radio-inline" ng-repeat="city in cityCohorts">
+        <input type="radio" value="{{city}}" ng-model="$parent.city" ng-change="getCohortDates($parent.city)" required>{{city}}
       </label>
     </div>
 
