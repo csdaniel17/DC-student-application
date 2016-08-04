@@ -7,6 +7,7 @@ var bcrypt = require('my-bcrypt');
 var randtoken = require('rand-token');
 
 
+
 mongoose.connect('mongodb://localhost/dc-app');
 
 var User = require("./dcmodel");
@@ -173,6 +174,7 @@ app.post('/save', function(req, res) {
     };
   }
 
+  // update user in db
   User.update({ authenticationTokens: { $elemMatch: { token: userToken } } }, {
     $set: setQuery
   }, function(err, response) {
@@ -184,6 +186,7 @@ app.post('/save', function(req, res) {
   });
 });
 
+// retrieve saved data (if any) for a specific user
 app.post('/getdata', function(req, res) {
   var userToken = req.body.token;
   // find user by the token and get data
@@ -197,6 +200,8 @@ app.post('/getdata', function(req, res) {
 
 // get options for "How did you hear about DigitalCrafts?"
 app.post('/getHearOptions', function(req, res) {
+
+  //57a24198bed744ac55120057 is id of record holding 'how did you hear..' options
   Setting.findById('57a24198bed744ac55120057', function(err, options) {
     if (err) {
       return res.status(400).json({ status: 'fail', message: 'Unable to retrieve options'});
