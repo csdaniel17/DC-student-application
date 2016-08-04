@@ -1,14 +1,14 @@
 # DC Student Application
 
 ## Overview
-* An online application portal for DigitalCrafts. Prospective students can register for an account, login, and save their progress throughout the application process. Should the student forget their password, they can request a temporary password which will be automatically emailed to them. After the student finishes and submits the application, DigitalCrafts will be sent an email containing the application information.
+An online application portal for DigitalCrafts. Prospective students can register for an account, login, and save their progress throughout the application process. Should the student forget their password, they can request a temporary password which will be automatically emailed to them. After the student finishes and submits the application, DigitalCrafts will be sent an email containing the application information.
 
 
 ## Screenshots
 
-Login page
+<!-- Login page -->
 
-![Login Page](img/login.png)
+<!-- ![Login Page](img/login.png) -->
 
 
 Application page
@@ -27,7 +27,7 @@ Reset password email page
 * MongoDB
 * AngularJS
 * Node.js
-* Node modules
+* Node modules:
   * Mongoose
   * Express
   * cors
@@ -39,7 +39,7 @@ Reset password email page
 
 
 ### Contributors
-We utilized mob programming throughout the development of this
+We utilized mob programming throughout the development of this.
 * [Carolyn Daniel](https://github.com/csdaniel17)
 * [Kyle Luck](https://github.com/kyleluck)
 * [Matthew Brimmer](https://github.com/mbrimmer83)
@@ -47,4 +47,4 @@ We utilized mob programming throughout the development of this
 
 ### Live demo
 
-Look for it soon on [DigitalCrafts](http://digitalcrafts.com/)
+Look for it soon on [DigitalCrafts](http://digitalcrafts.com/)!
