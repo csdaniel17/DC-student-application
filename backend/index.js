@@ -213,19 +213,34 @@ app.post('/getHearOptions', function(req, res) {
 // handle resetting a user's password
 app.post('/resetPassword', function(req, res) {
 
+  // attempt to find user by email
+  var userEmail = req.body.email;
+  User.findOne({ email: userEmail }, 'email')
+    .then(function(user) {
+      console.log('user in then: ', user);
+      if (!user) {
+        console.log('in !user.email if');
+        return res.status(400).json({ status: 'fail', message: 'No user found'} );
+      }
+      // user found
+      res.send('ok');
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+
   // generate new random password for the user
   var tempPassword = randtoken.generate(8);
 
   // save temp password and set some flag
   // force to change password if flag is true
 
-  console.log(req.body.email);
-  res.send('ok');
+
 });
 
 // handle users changing password
 app.post('/changepassword', function(req, res) {
-  
+
 });
 
 app.listen(8000, function() {

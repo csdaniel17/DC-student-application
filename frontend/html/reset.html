@@ -4,6 +4,8 @@
     <input ng-model="email" type="email" name="email" class="form-control input-lg" required>
   </div>
 
-  <!-- <div ng-show="loginFailed" class="alert alert-danger">Incorrect Username or Password.</div> -->
-  <button type="submit" class="btn btn-primary" ng-disabled="loginForm.$invalid">Send Email</button>
+  <div class="alert alert-danger" ng-show="resetForm.email.$error.email && resetForm.email.$dirty">Please enter a valid email address.</div>
+  <div ng-show="userNotFound" class="alert alert-danger">No account was found.</div>
+  <div ng-show="checkEmail" class="alert alert-success">Please check your email for your temporary password.</div>
+  <button type="submit" class="btn btn-primary" ng-disabled="resetForm.$invalid">Send Email</button>
 </form>
