@@ -204,7 +204,7 @@ app.post('/getdata', function(req, res) {
 });
 
 // get options for "How did you hear about DigitalCrafts?"
-app.post('/getHearOptions', function(req, res) {
+app.post('/getAppOptions', function(req, res) {
 
   //57a24198bed744ac55120057 is id of record holding 'how did you hear..' options
   Setting.findById('57a24198bed744ac55120057', function(err, options) {
@@ -222,9 +222,7 @@ app.post('/resetPassword', function(req, res) {
   var userEmail = req.body.email;
   User.findOne({ email: userEmail }, 'email')
     .then(function(user) {
-      console.log('user in then: ', user);
       if (!user) {
-        console.log('in !user.email if');
         return res.status(400).json({ status: 'fail', message: 'No user found'} );
       }
       // user found
@@ -233,11 +231,16 @@ app.post('/resetPassword', function(req, res) {
       // Email settings
       var mailOptions = {
         from: 'dctester@noreply.com',
-        to: 'luck.kyle@gmail.com',
-        subject: 'Password reset test email',
-        text: 'Temp Password: ' + tempPassword,
-        html: '<b>Temp Password: ' + tempPassword +
-        '</b><br> <a href="http://localhost:3000/frontend">Click to login with temporary Password</a>'
+        to: userEmail,
+        subject: 'DigitalCrafts Temporary Password',
+        text: 'Here is your temporary password: ' + tempPassword +
+        'Please login with your temporary password. You will then ' +
+        'be required to change your password and login again. ' +
+        'Thanks, DigitalCrafts' ,
+        html: '<p>Here is your temporary password: <b>' + tempPassword +
+        '</b><br> Please login with your temporary password at the link ' +
+        ' below. After logging in you will be required to change your password ' +
+        'and login again. <br><a href="http://localhost:3000/frontend">Click to Login</a>'
       };
 
       // Email sender
@@ -245,7 +248,8 @@ app.post('/resetPassword', function(req, res) {
         if (err) {
           return console.log(err);
         }
-        console.log('Message sent: ', info.response);
+        //console.log('Message sent: ', info.response);
+
         // save temp password and set some flag
         user.forcePasswordReset = true;
         bcrypt.hash(tempPassword, 10, function(err, hash) {
@@ -271,11 +275,6 @@ app.post('/resetPassword', function(req, res) {
     .catch(function(err) {
       console.log(err);
     });
-
-
-
-  // force to change password if flag is true
-
 
 });
 

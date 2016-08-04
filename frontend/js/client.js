@@ -175,14 +175,29 @@ app.controller('SignupController', function($scope, $location, $http, $timeout) 
 
 app.controller('Page2Controller', function($scope, User, $location, Upload, $timeout, $http, backend, $cookies, $filter) {
 
-  // load "How did you hear about us?" options
-  backend.getHowDidYouHear().then(function(options) {
+  // load question answers from database
+  backend.getAppOptions().then(function(options) {
+
+    // load answers/options for "How did you hear about DigitalCrafts?"
     howDidYouHear = [];
     var optionsList = options.data.message.how_did_you_hear;
     angular.forEach(optionsList, function(option) {
       howDidYouHear.push({ name: option });
     });
     $scope.options = howDidYouHear;
+
+    // load options for cohort location
+    var cohorts = [];
+    var cohortOptions = options.data.message.cohort_locations;
+    angular.forEach(cohortOptions, function(option) {
+      /*
+
+      STOPPED Here
+
+      
+      */
+      cohorts.push(option);
+    });
   });
 
   // load data from backend
@@ -359,10 +374,10 @@ app.factory('backend', function($http) {
         data: {token: token}
       });
     },
-    getHowDidYouHear: function() {
+    getAppOptions: function() {
       return $http({
         method: 'POST',
-        url: API + '/getHearOptions'
+        url: API + '/getAppOptions'
       });
     }
   };
