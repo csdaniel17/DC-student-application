@@ -5,8 +5,11 @@ var Busboy = require('busboy');
 var bodyParser = require('body-parser');
 var bcrypt = require('my-bcrypt');
 var randtoken = require('rand-token');
+var creds = require('./creds.json');
+var nodemailer = require('nodemailer');
 
 
+var transporter = nodemailer.createTransport('smtps://dcapptesting%40gmail.com:' + creds.password +'@smtp.gmail.com');
 
 mongoose.connect('mongodb://localhost/dc-app');
 
@@ -62,7 +65,9 @@ app.post('/login', function(req, res) {
     if (!user) {
       return res.status(400).json({ status: "fail", "message": "Incorrect username or password."});
     }
-
+    if (user.forcePasswordReset) {
+      return res.status(300).json({ status: "OK"});
+    }
     bcrypt.compare(password, user.password, function(err, matched) {
 
       if (err) {
@@ -223,16 +228,39 @@ app.post('/resetPassword', function(req, res) {
         return res.status(400).json({ status: 'fail', message: 'No user found'} );
       }
       // user found
+      // generate new random password for the user
+      var tempPassword = randtoken.generate(8);
+      // Email settings
+      var mailOptions = {
+        from: 'dctester@noreply.com',
+        to: 'luck.kyle@gmail.com',
+        subject: 'Password reset test email',
+        text: 'Temp Password: ' + tempPassword,
+        html: '<b>Temp Password: ' + tempPassword +
+        '</b><br> <a href="http://localhost:3000/frontend">Click to login with temporary Password</a>'
+      };
+
+      // Email sender
+      transporter.sendMail(mailOptions, function(err, info) {
+        if (err) {
+          return console.log(err);
+        }
+        console.log('Message sent: ', info.response);
+        // save temp password and set some flag
+        user.forcePasswordReset = true;
+        user.password = tempPassword;
+        user.save(function(err) {
+          console.log("Save could not be performed ", err.message);
+        });
+      });
       res.send('ok');
     })
     .catch(function(err) {
       console.log(err);
     });
 
-  // generate new random password for the user
-  var tempPassword = randtoken.generate(8);
 
-  // save temp password and set some flag
+
   // force to change password if flag is true
 
 

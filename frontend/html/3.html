@@ -1,6 +1,6 @@
 <form ng-submit="page3()" name="p3Form" novalidate>
   <h3>Highest level of education achieved?</h3>
-  <h6>Please include the name of the instituation as well!</h6>
+  <h6>Please include the name of the institution as well!</h6>
   <div class="form-group" ng-class="{ 'has-success': p3Form.education.$valid && !p3Form.education.$pristine, 'has-error': p3Form.education.$invalid && !p3Form.education.$pristine}">
     <textarea name="education" rows="8" cols="40" class="form-control" required ng-model="education"></textarea>
     <div class="alert alert-danger" ng-show="p3Form.education.$invalid && p3Form.education.$touched">Please enter your education.</div>

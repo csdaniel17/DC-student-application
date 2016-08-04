@@ -50,7 +50,7 @@ app.run(function($rootScope, $location, $cookies) {
 
     // if user is going to a restricted area and doesn't have a token stored in a cookie, redirect to the login page
     var token = $cookies.get('token');
-    if (!token && (path === 'page2' || path === 'plage3' || path === 'page4')) {
+    if (!token && (path === 'page2' || path === 'page3' || path === 'page4')) {
       $location.path('/');
     }
 
@@ -87,6 +87,8 @@ app.controller('LoginController', function($scope, $http, $location, $rootScope,
           $cookies.put('token', response.data.token);
           // redirect to beginning of application
           $location.path('/page2');
+        } else if (response.status === 300) {
+          $location.path('/change');
         }
       })
       .catch(function(err) {

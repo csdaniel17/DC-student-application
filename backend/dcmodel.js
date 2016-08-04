@@ -25,7 +25,8 @@ var User = mongoose.model('User', {
   linkedin: String,
   portfolio: String,
   understand: String,
-  effortagree: String
+  effortagree: String,
+  forcePasswordReset: { type: Boolean, default: false }
 });
 
 module.exports = User;
