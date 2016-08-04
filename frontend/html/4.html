@@ -45,5 +45,9 @@
   <div class="radio">
     <label><input type="radio" name="effortagree" value="no" ng-model="effortagree" required>No</label>
   </div>
+
+  <div class="alert alert-success" ng-show="saved">Your application has been saved.</div>
+
+  <button type="button" class="btn btn-default" ng-click="page4('stay')">Save</button>
   <button type="submit" class="btn btn-primary" ng-disabled="p4Form.$invalid">Complete</button>
 </form>

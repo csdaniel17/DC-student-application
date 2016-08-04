@@ -238,7 +238,7 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
     $location.path('/page4');
   };
 
-  $scope.page4 = function() {
+  $scope.page4 = function(redirect) {
     if ($scope.file) {
       $scope.upload($scope.file);
     }
@@ -254,6 +254,13 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
     User.saveData(theData);
     backend.sendData(theData);
 
+    if (redirect === 'stay') {
+      $scope.saved = true;
+      $timeout(function() {
+        $scope.saved = false;
+      }, 3000);
+      return true;
+    }
     $location.path('/complete');
   };
 
