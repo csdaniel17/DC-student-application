@@ -34,6 +34,10 @@ app.config(function($routeProvider) {
       templateUrl: 'html/reset.html',
       controller: 'ResetController'
     })
+    .when('/change', {
+      templateUrl: 'html/changepassword.html',
+      controller: 'ChangeController'
+    })
     .otherwise({redirectTo: '/'});
 });
 
@@ -116,6 +120,11 @@ app.controller('ResetController', function($scope, $http) {
       });
 
   };
+
+});
+
+// change password controller
+app.controller('ChangeController', function($scope) {
 
 });
 

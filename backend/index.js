@@ -216,9 +216,16 @@ app.post('/resetPassword', function(req, res) {
   // generate new random password for the user
   var tempPassword = randtoken.generate(8);
 
+  // save temp password and set some flag
+  // force to change password if flag is true
 
   console.log(req.body.email);
   res.send('ok');
+});
+
+// handle users changing password
+app.post('/changepassword', function(req, res) {
+  
 });
 
 app.listen(8000, function() {
