@@ -6,17 +6,17 @@
 
 ## Screenshots
 
-* Login page
+Login page
 
 ![Login Page](img/login.png)
 
 
-* Application page
+Application page
 
 ![Application Page](img/app.png)
 
 
-* Reset password email page
+Reset password email page
 
 ![Reset Password Email Page](img/newpassword.png)
 
@@ -39,7 +39,7 @@
 
 
 ### Contributors
-* We utilized mob programming throughout the development of this
+We utilized mob programming throughout the development of this
 * [Carolyn Daniel](https://github.com/csdaniel17)
 * [Kyle Luck](https://github.com/kyleluck)
 * [Matthew Brimmer](https://github.com/mbrimmer83)
