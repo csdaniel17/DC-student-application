@@ -66,31 +66,31 @@ app.post('/login', function(req, res) {
       return res.status(400).json({ status: "fail", "message": "Incorrect username or password."});
     }
     if (user.forcePasswordReset) {
-      return res.status(300).json({ status: "OK"});
+      return res.status(201).json({ status: "OK"});
+    } else {
+      bcrypt.compare(password, user.password, function(err, matched) {
+
+        if (err) {
+          console.log(err);
+          res.status(400).json({ status: "fail" });
+        }
+
+        if (matched) {
+          // login successfull
+          var token = randtoken.generate(64);
+          // set token to expire in 10 days
+          user.authenticationTokens.push({ token: token, expiration: Date.now() + 1000 * 60 * 60 * 24 * 10 });
+          user.save(function(err) {
+            if (err) {
+              console.log('Error saving auth token.');
+            }
+            res.status(200).json({ status: "ok", "token": token });
+          });
+        } else {
+          res.status(400).json({ status: "fail", message: "Incorrect username or password."});
+        }
+      });
     }
-    bcrypt.compare(password, user.password, function(err, matched) {
-
-      if (err) {
-        console.log(err);
-        res.status(400).json({ status: "fail" });
-      }
-
-      if (matched) {
-        // login successfull
-        var token = randtoken.generate(64);
-        // set token to expire in 10 days
-        user.authenticationTokens.push({ token: token, expiration: Date.now() + 1000 * 60 * 60 * 24 * 10 });
-        user.save(function(err) {
-          if (err) {
-            console.log('Error saving auth token.');
-          }
-          res.status(200).json({ status: "ok", "token": token });
-        });
-      } else {
-        res.status(400).json({ status: "fail", message: "Incorrect username or password."});
-      }
-
-    });
   });
 });
 
@@ -248,12 +248,25 @@ app.post('/resetPassword', function(req, res) {
         console.log('Message sent: ', info.response);
         // save temp password and set some flag
         user.forcePasswordReset = true;
-        user.password = tempPassword;
-        user.save(function(err) {
-          console.log("Save could not be performed ", err.message);
+        bcrypt.hash(tempPassword, 10, function(err, hash) {
+          if (err) {
+            console.log('error in bcrypt hash:', err.message);
+            return;
+          }
+          user.password = hash;
+          user.save(function(err){
+            if (err) {
+              console.log(err.message);
+              res.status(409).json({
+                status: 'fail',
+                message: "Error saving new password"
+              });
+              return;
+            }
+            res.status(200).json({status: "OK"});
+          });
         });
       });
-      res.send('ok');
     })
     .catch(function(err) {
       console.log(err);
@@ -268,6 +281,36 @@ app.post('/resetPassword', function(req, res) {
 
 // handle users changing password
 app.post('/changepassword', function(req, res) {
+  var userEmail = req.body.email;
+  var newPassword = req.body.password;
+  User.findOne({ email: userEmail }, '-resume')
+  .then(function(user) {
+    if (!user) {
+      return res.status(400).json({ status: 'fail', message: 'No user found'} );
+    }
+    user.forcePasswordReset = false;
+    bcrypt.hash(newPassword, 10, function(err, hash) {
+      if (err) {
+        console.log('error in bcrypt hash:', err.message);
+        return;
+      }
+      user.password = hash;
+      user.save(function(err){
+        if (err) {
+          console.log(err.message);
+          res.status(409).json({
+            status: 'fail',
+            message: "Error saving new password"
+          });
+          return;
+        }
+        res.status(200).json({status: "OK"});
+      });
+    });
+  })
+  .catch(function(err) {
+    console.log(err);
+  });
 
 });
 

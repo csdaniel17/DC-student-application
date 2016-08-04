@@ -87,7 +87,7 @@ app.controller('LoginController', function($scope, $http, $location, $rootScope,
           $cookies.put('token', response.data.token);
           // redirect to beginning of application
           $location.path('/page2');
-        } else if (response.status === 300) {
+        } else if (response.status === 201) {
           $location.path('/change');
         }
       })
@@ -130,7 +130,26 @@ app.controller('ResetController', function($scope, $http) {
 });
 
 // change password controller
-app.controller('ChangeController', function($scope) {
+app.controller('ChangeController', function($scope, $http, $location) {
+
+  $scope.changePassword = function() {
+    var userEmail = $scope.email;
+    var newPassword = $scope.password;
+
+    $http.post(API + '/changepassword', { email: userEmail, password: newPassword })
+      .then(function(response) {
+        if (response.status === 200) {
+          $location.path('/')
+        }
+        console.log(response);
+      })
+      .catch(function(err) {
+        if (err.status === 400) {
+          $scope.userNotFound = true;
+        }
+        console.log(err);
+      });
+  };
 
 });
 
