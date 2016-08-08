@@ -396,16 +396,75 @@ app.post('/testCodeChallenge', function(req, res) {
   var code = req.body.code;
   console.log(code);
 
+  // stack overflow test:
+  // code = 'function test(n) { console.log(test(n + 1)); } test(1);';
+  // code = 'name = "test"; for(true) { console.log("no"); }';
+
+
   var s = new Sandbox();
   s.run(code, function(output) {
     console.log('sandbox output is: ', output.result);
     console.log('--------------------');
     console.log(output);
     /*
+      First check if output.result === 'TimeoutError'. This is the result
+      if an infinite loop exists, for example.
+
+      Syntax error results in output.result = SyntaxError: ...
+
+      output.result === null if no output
+
       Inspect the output of the sandbox. It should be in the format:
-      ['Hello!', ['FirstName', 'LastName'], 'Hello, [name]', integer, 6250000]
+      [ [ 'Kyle Luck', 35 ],
+        'Hello!',
+        [ 'Kyle', 'Luck' ],
+        'Hello, Kyle',
+        36,
+        6250000
+      ]
+
     */
-    
+
+    if (output.result === 'TimeoutError') {
+      // possible infinite loop
+    } else if (output.result.indexOf('SyntaxError') > -1) {
+      // syntax error
+    } else {
+
+      // check that first element in result array is an array of a String and an Integer
+      if (output.console[0].length === 2) {
+        if (typeof output.console[0][0] === 'string') {
+          console.log('name ok');
+        }
+
+        if (typeof output.console[0][1] === 'number') {
+          console.log('age ok');
+        }
+      } else {
+        // challenge failed
+      }
+
+      // check that the second element in the result array is similar to Hello!
+      var secondElement = output.console[1].toLowerCase();
+      if (secondElement.indexOf('hello') > -1) {
+        console.log('outputing Hello! ok');
+      }
+
+      // check that the third element in the array is two elements
+      if (output.console[2].length === 2) {
+        var fullName = output.console[0][0];
+
+        if (output.console[2] === fullName.split(" ")) {
+          console.log('name matches');
+        }
+      } else {
+        // challenge failed
+      }
+
+
+
+    }
+
   });
 
 });
