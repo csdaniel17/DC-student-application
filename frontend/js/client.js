@@ -403,7 +403,7 @@ app.controller('CompleteController', function($cookies, $http, $scope, $location
   CODE CHALLENGE
 */
 
-app.controller('CodeController', function($scope) {
+app.controller('CodeController', function($scope, $http) {
 
   // reroute console messages to the 'result-log' div
   console.log = (function (old_function, div_log) {
@@ -413,7 +413,6 @@ app.controller('CodeController', function($scope) {
       };
   } (console.log.bind(console), document.getElementById("result-log")));
 
-  // $scope.code = 'alert("Hello World")';
 
   $scope.clearConsole = function() {
     document.getElementById("result-log").innerText = '';
@@ -505,58 +504,30 @@ function sum_odd_numbers() {
     `;
 
     $scope.code = initialCode;
-    //_editor.setValue(initialCode);
 
+    $scope.runCode = function() {
+      var code = _editor.getValue();
 
-
-    // Options
-    //_editor.setReadOnly(true);
-    $scope.getCode = function() {
-     var code = _editor.getValue(); // or session.getValue
-
-     /*
-      call repl.it service
-
-      API hostname: api.repl.it
-      API port: 80 (will automatically connect on 443 for https websites)
-      API Secret: l99niagk92hhytq8
-     */
-    //  var token = {"msg_mac":"Vk6b9PZK24+POYgHP4+MKHaT0vIIiSr++JMh3viG3Qw=","time_created":1470665174000};
-    //  var repl = new ReplitClient('api.repl.it', '80', 'nodejs', token);
-     //
-    //  repl.evaluateOnce(
-    //    code, {
-    //    stdout: function(output) {
-    //      // output from the _editor code
-    //      console.log(output);
-    //    }
-    //  }).then(
-    //    function success(result) {
-    //      // The evaluation succeeded. Result will contain `data` or `error`
-    //      // depending on whether the code compiled and ran or if there was an
-    //      // error.
-    //      if (result.error) {
-    //        console.log('Error:', result.error);
-    //      } else {
-    //        console.log('Result', result.data);
-    //        console.log('Entire Result', result);
-    //      }
-    //    },
-    //    function error(error) {
-    //      // There was an error connecting to the service :(
-    //      console.error('Error connecting to repl.it', error);
-    //    }
-    //  );
-
-
-     eval(code);
+      eval(code);
     };
 
-  };
+    $scope.saveCode = function() {
+      var code = _editor.getValue();
 
-   $scope.aceChanged = function(e) {
-     //
-   };
+      $http.post(API + '/testCodeChallenge', { code: code })
+        .then(function(response) {
+          //success
+        })
+        .catch(function(err) {
+          if (err) {
+            console.log('There was an error testing the code challenge: ', err);
+          }
+        });
+    };
+
+  }; // end aceLoaded
+
+
 
 });
 

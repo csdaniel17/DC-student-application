@@ -7,7 +7,7 @@ var bcrypt = require('my-bcrypt');
 var randtoken = require('rand-token');
 var creds = require('./creds.json');
 var nodemailer = require('nodemailer');
-
+var Sandbox = require('sandbox');
 
 var transporter = nodemailer.createTransport('smtps://dcapptesting%40gmail.com:' + creds.password +'@smtp.gmail.com');
 
@@ -389,6 +389,25 @@ app.post('/complete', function(req, res) {
         console.log(err);
       }
     });
+});
+
+// code challenge has been saved and submitted
+app.post('/testCodeChallenge', function(req, res) {
+  var code = req.body.code;
+  console.log(code);
+
+  var s = new Sandbox();
+  s.run(code, function(output) {
+    console.log('sandbox output is: ', output.result);
+    console.log('--------------------');
+    console.log(output);
+    /*
+      Inspect the output of the sandbox. It should be in the format:
+      ['Hello!', ['FirstName', 'LastName'], 'Hello, [name]', integer, 6250000]
+    */
+    
+  });
+
 });
 
 
