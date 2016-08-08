@@ -1,20 +1,23 @@
 <form ng-submit="page4()" novalidate name="p4Form" enctype="multipart/form-data">
   <h3>If you have a Github account, please provide the link here.</h3>
   <h6>Example: https://github.com/alan-turing</h6>
-  <div class="form-group">
+  <div class="form-group" ng-class="{ 'has-success': p4Form.github.$valid && !p4Form.github.$pristine, 'has-error': p4Form.github.$invalid && !p4Form.github.$pristine}">
     <input type="url" name="github" class="form-control input-lg" ng-model="github">
+    <div class="alert alert-danger" ng-show="p4Form.github.$invalid && p4Form.github.$touched">Please enter a valid url such as: https://github.com/alan-turing</div>
   </div>
 
   <h3>If you have a LinkedIn account, please provide the link here.</h3>
   <h6>Example: https://www.linkedin.com/in/alan-turing</h6>
-  <div class="form-group">
+  <div class="form-group" ng-class="{ 'has-success': p4Form.linkedin.$valid && !p4Form.linkedin.$pristine, 'has-error': p4Form.linkedin.$invalid && !p4Form.linkedin.$pristine}">
     <input type="url" name="linkedin" class="form-control input-lg" ng-model="linkedin">
+    <div class="alert alert-danger" ng-show="p4Form.linkedin.$invalid && p4Form.linkedin.$touched">Please enter a valid url such as: https://www.linkedin.com/in/alan-turing</div>
   </div>
 
   <h3>If you have any other URL you would like us to consider along with your application, please enter it here.</h3>
   <h6>This could include an online portfolio, a website you've built, or even a short video you've created. <br>Example: https://www.alanturing.com/portfolio</h6>
-  <div class="form-group">
+  <div class="form-group" ng-class="{ 'has-success': p4Form.portfolio.$valid && !p4Form.portfolio.$pristine, 'has-error': p4Form.portfolio.$invalid && !p4Form.portfolio.$pristine}">
     <input type="url" name="portfolio" class="form-control input-lg" ng-model="portfolio">
+    <div class="alert alert-danger" ng-show="p4Form.portfolio.$invalid && p4Form.portfolio.$touched">Please enter a valid url such as: https://www.alanturing.com/portfolio</div>
   </div>
 
   <h3>If you have a resume, please attach it here.</h3>
@@ -25,7 +28,7 @@
 
   <h3>Acknowledgements:</h3>
   <ul>
-    <li>Each student must supply their own Mac and charger. No Windows PCs please (see our FAQ for more on this policy).
+    <li>Each student must supply their own Mac and charger. No Windows PCs please (see our <a href="http://digitalcrafts.com/faq.html" target="_blank">FAQ</a> for more on this policy).
     <li>For our Atlanta campus, we have limited parking at ATV.  Parking passes are $98/month and are first-come-first-served.  Overflow parking is available for $93/month in the garage next door (4 minute walk).  ATV will provide a $25/month reimbursement for anyone electing to take MARTA.</li>
     <li>If you intend to finance your tuition, you must submit a deposit and get approved for financing to officially secure your seat in class.</li></li>
   </ul>
