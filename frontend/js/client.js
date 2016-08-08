@@ -81,6 +81,12 @@ app.run(function($rootScope, $location, $cookies) {
 
 // login controller
 app.controller('LoginController', function($scope, $http, $location, $rootScope, $cookies, backend) {
+
+  // login page is being loaded. is the user already logged in? If so, redirect
+  if ($cookies.get('token')) {
+    $location.path('/page2');
+  }
+
   $scope.login = function() {
     $http.post(API + '/login', { email: $scope.email, password: $scope.password })
       .then(function(response) {
@@ -209,6 +215,12 @@ app.controller('Page2Controller', function($scope, User, $location, Upload, $tim
   var userToken = $cookies.get('token');
   backend.getData(userToken).then(function(userData) {
     var data = userData.data.message;
+
+    //if application completed, redirect
+    if (data.applicationCompleted) {
+      $location.path('/complete');
+    }
+
     $scope.firstname = data.firstname;
     $scope.lastname = data.lastname;
     $scope.phone = data.phone;
@@ -274,6 +286,12 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
   var userToken = $cookies.get('token');
   backend.getData(userToken).then(function(userData) {
     var data = userData.data.message;
+
+    //if application completed, redirect
+    if (data.applicationCompleted) {
+      $location.path('/complete');
+    }
+
     $scope.firstname = data.firstname;
     $scope.lastname = data.lastname;
     $scope.phone = data.phone;
@@ -360,6 +378,7 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
      });
  };
 });
+
 
 // controller for when application is complete/submitted
 app.controller('CompleteController', function($cookies, $http, $scope, $location) {
