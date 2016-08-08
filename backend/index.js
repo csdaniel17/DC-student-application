@@ -329,6 +329,15 @@ app.post('/complete', function(req, res) {
       // concatenate array of 'how did you hear about us' options into a string
       var howdidtheyhear = user.howDidYouHear.join(', ');
 
+      // update applicationCompleted flag true
+      user.applicationCompleted = true;
+      user.save(function(err) {
+        if (err) {
+          console.log('Unable to save applicationCompleted flag: ', err);
+        }
+      });
+
+      // compose email body
       var emailBody = '<p>An application has been submitted from ' + user.firstname + ' ' + user.lastname + '</p>' +
       '<ul>' +
       '<li>Email: ' + user.email + '</li>' +
