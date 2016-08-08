@@ -27,7 +27,10 @@ var User = mongoose.model('User', {
   portfolio: String,
   understand: String,
   effortagree: String,
-  forcePasswordReset: { type: Boolean, default: false }
+  forcePasswordReset: { type: Boolean, default: false },
+  applicationCompleted: { type: Boolean, default: false },
+  codeChallengeCompleted: { type: Boolean, default: false },
+  interviewScheduled: { type: Boolean, default: false }
 });
 
 module.exports = User;

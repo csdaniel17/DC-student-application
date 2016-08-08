@@ -321,15 +321,13 @@ app.post('/complete', function(req, res) {
   var userToken = req.body.data;
   User.findOne({ authenticationTokens: { $elemMatch: { token: userToken } } })
     .then(function(user) {
+
       if (!user) {
         res.status(400).json({ status: 'fail', message: 'User not found' });
       }
-      var howdidtheyhear = '';
-      user.howDidYouHear.forEach(function(option) {
-        howdidtheyhear += option + ",";
-      });
-      howdidtheyhear = howdidtheyhear.substring(0, howdidtheyhear.length - 1);
-      console.log(howdidtheyhear);
+
+      // concatenate array of 'how did you hear about us' options into a string
+      var howdidtheyhear = user.howDidYouHear.join(', ');
 
       var emailBody = '<p>An application has been submitted from ' + user.firstname + ' ' + user.lastname + '</p>' +
       '<ul>' +
