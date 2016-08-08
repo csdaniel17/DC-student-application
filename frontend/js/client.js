@@ -362,7 +362,7 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
 });
 
 // controller for when application is complete/submitted
-app.controller('CompleteController', function($cookies, $http) {
+app.controller('CompleteController', function($cookies, $http, $scope, $location) {
 
   // call backend to send the email
   var userToken = $cookies.get('token');
@@ -373,6 +373,10 @@ app.controller('CompleteController', function($cookies, $http) {
     .catch(function(err) {
       console.log(err);
     });
+
+  $scope.codeChallenge = function() {
+    $location.path('/codechallenge');
+  };
 });
 
 /*
@@ -396,6 +400,7 @@ app.controller('CodeController', function($scope) {
   };
 
   $scope.aceLoaded = function(_editor) {
+    _editor.$blockScrolling = Infinity;
 
     //set content of editor:
     var initialCode = `

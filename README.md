@@ -13,12 +13,12 @@ An online application portal for DigitalCrafts. Prospective students can registe
 
 Application page
 
-![Application Page](img/app.png)
+![Application Page](frontend/img/app.png)
 
 
 Reset password email page
 
-![Reset Password Email Page](img/newpassword.png)
+![Reset Password Email Page](frontend/img/newpassword.png)
 
 
 

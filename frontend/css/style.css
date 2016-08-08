@@ -40,3 +40,7 @@ form {
   color: #F8F8F2;
   font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
 }
+
+.challengeBtn {
+  margin: 20px auto;
+}
