@@ -30,7 +30,8 @@ var User = mongoose.model('User', {
   forcePasswordReset: { type: Boolean, default: false },
   applicationCompleted: { type: Boolean, default: false },
   codeChallengeCompleted: { type: Boolean, default: false },
-  interviewScheduled: { type: Boolean, default: false }
+  interviewScheduled: { type: Boolean, default: false },
+  pageLastCompleted: { type: Number, default: 0 }
 });
 
 module.exports = User;

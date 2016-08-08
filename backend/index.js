@@ -158,9 +158,9 @@ app.post('/save', function(req, res) {
       city: userInfo.city,
       cohort: userInfo.cohort,
       relocating: userInfo.relocating,
-      howDidYouHear: userInfo.optionsSelected
+      howDidYouHear: userInfo.optionsSelected,
+      pageLastCompleted: 2
     };
-    console.log(setQuery);
   } else if (userInfo.page === 3) {
     setQuery = {
       education: userInfo.education,
@@ -169,7 +169,8 @@ app.post('/save', function(req, res) {
       programming: userInfo.programming,
       interest: userInfo.interest,
       plan: userInfo.plan,
-      why: userInfo.why
+      why: userInfo.why,
+      pageLastCompleted: 3
     };
   } else if (userInfo.page === 4) {
     setQuery = {
@@ -177,7 +178,8 @@ app.post('/save', function(req, res) {
       linkedin: userInfo.linkedin,
       portfolio: userInfo.portfolio,
       understand: userInfo.understand,
-      effortagree: userInfo.effortagree
+      effortagree: userInfo.effortagree,
+      pageLastCompleted: 4
     };
   }
 

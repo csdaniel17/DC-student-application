@@ -241,6 +241,7 @@ app.controller('Page2Controller', function($scope, User, $location, Upload, $tim
   });
 
 
+  // saving data
   $scope.page2 = function(redirect) {
 
     var optionsSelected = [];
