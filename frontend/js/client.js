@@ -1,4 +1,4 @@
-var app = angular.module('DigitalCrafts', ['ngRoute', 'ngFileUpload', 'ngCookies']);
+var app = angular.module('DigitalCrafts', ['ngRoute', 'ngFileUpload', 'ngCookies', 'ui.ace']);
 
 // backend running on port 8000
 var API = "http://localhost:8000";
@@ -37,6 +37,10 @@ app.config(function($routeProvider) {
     .when('/change', {
       templateUrl: 'html/changepassword.html',
       controller: 'ChangeController'
+    })
+    .when('/codechallenge', {
+      templateUrl: 'html/codechallenge.html',
+      controller: 'CodeController'
     })
     .otherwise({redirectTo: '/'});
 });
@@ -369,6 +373,166 @@ app.controller('CompleteController', function($cookies, $http) {
     .catch(function(err) {
       console.log(err);
     });
+});
+
+/*
+  CODE CHALLENGE
+*/
+
+app.controller('CodeController', function($scope) {
+
+  // reroute console messages to the 'result-log' div
+  console.log = (function (old_function, div_log) {
+      return function (text) {
+          old_function(text);
+          div_log.innerText += '> ' + text + '\n';
+      };
+  } (console.log.bind(console), document.getElementById("result-log")));
+
+  // $scope.code = 'alert("Hello World")';
+
+  $scope.clearConsole = function() {
+    document.getElementById("result-log").innerText = '';
+  };
+
+  $scope.aceLoaded = function(_editor) {
+
+    //set content of editor:
+    var initialCode = `
+//////////////////////////////////////////////////////////////////
+///////////////DIGITALCRAFTS ADMISSIONS CHALLENGE/////////////////
+//////////////////////////////////////////////////////////////////
+// INSTRUCTIONS:
+// - Please write the code for each question directly below the question itself.
+// - Hit Run at the top of the page to test your code and execute any functions you've called.
+// - Press "Save" when finished. Press "Share", copy the URL, and return it to hello@digitalcrafts.com.
+// - For this challenge, consider the words "argument" and "parameter" to be interchangable.
+// - All variables and methods are persistent from question to question, so there is no need to redeclare anything!
+// - PLEASE NOTE: You should also take a screenshot of your work (or copy it elsewhere) just in case!!
+
+//////////////////////////PLEASE READ INSTRUCTIONS VERY CAREFULLY!//////////////////////////
+
+// 1) Declare two variables, a string and an integer named "fullName" and "age". Set them equal to your name and age.
+
+
+
+
+// 2) Declare an empty array called "myArray".
+// Add the variables from #1 (fullName and age) to the empty array using the push method.
+// Print to the console.
+
+
+
+
+// 3) Write a simple function that takes no parameters called "sayHello".
+// Make it print "Hello!" to the console when called.
+// Call the function.
+
+
+
+
+// 4) Declare a variable named splitName and set it equal to
+// fullName split into two seperate objects in an array.
+// (In other words, if the variable fullName is equal to "John Smith", then splitName should
+// equal ["John", "Smith"].)
+// Print splitName to the console.
+// HINT: Remember to research the methods and concepts listed in the instructions PDF.
+
+
+
+
+// 5) Write another simple function that takes no parameters called "sayName".
+// When called, this function should print "Hello, ____!" to the console, where the blank is
+// equal to the first value in the splitName array from #4.
+// Call the function.  (In our example, "Hello, John!" would be printed to the console.)
+
+
+
+
+// 6) Write another function named myAge.  This function should take one parameter: the year you
+// were born, and it should print the implied age to the console.
+// Call the function, passing the year you were born as the argument/parameter.
+// HINT: http://www.w3schools.com/js/js_functions.asp
+
+
+
+
+// 7) Using the basic function given below, add code so that sum_odd_numbers will print to the console the sum of all the odd numbers from 1 to 5000.  Don't forget to call the function!
+// HINT: Consider using a 'for loop'.
+
+function sum_odd_numbers() {
+    var sum = 0;
+
+    // Write your code here
+
+
+
+    console.log(sum);
+}
+
+
+
+
+
+//////////////////////////////////////////////////////////////////
+/////////////////////////////THE END!/////////////////////////////
+//////////////////////////////////////////////////////////////////
+    `;
+
+    $scope.code = initialCode;
+    //_editor.setValue(initialCode);
+
+
+
+    // Options
+    //_editor.setReadOnly(true);
+    $scope.getCode = function() {
+     var code = _editor.getValue(); // or session.getValue
+
+     /*
+      call repl.it service
+
+      API hostname: api.repl.it
+      API port: 80 (will automatically connect on 443 for https websites)
+      API Secret: l99niagk92hhytq8
+     */
+    //  var token = {"msg_mac":"Vk6b9PZK24+POYgHP4+MKHaT0vIIiSr++JMh3viG3Qw=","time_created":1470665174000};
+    //  var repl = new ReplitClient('api.repl.it', '80', 'nodejs', token);
+     //
+    //  repl.evaluateOnce(
+    //    code, {
+    //    stdout: function(output) {
+    //      // output from the _editor code
+    //      console.log(output);
+    //    }
+    //  }).then(
+    //    function success(result) {
+    //      // The evaluation succeeded. Result will contain `data` or `error`
+    //      // depending on whether the code compiled and ran or if there was an
+    //      // error.
+    //      if (result.error) {
+    //        console.log('Error:', result.error);
+    //      } else {
+    //        console.log('Result', result.data);
+    //        console.log('Entire Result', result);
+    //      }
+    //    },
+    //    function error(error) {
+    //      // There was an error connecting to the service :(
+    //      console.error('Error connecting to repl.it', error);
+    //    }
+    //  );
+
+
+     eval(code);
+    };
+
+  };
+
+   $scope.aceChanged = function(e) {
+     //
+   };
+
 });
 
 

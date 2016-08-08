@@ -1,0 +1,17 @@
+<div class="col col-xs-12">
+  <div class="editor" ui-ace="{
+    mode: 'javascript',
+    theme: 'monokai',
+    onLoad: aceLoaded,
+    useWrapMode: true
+    }" ng-model="code"></div>
+</div>
+
+<div class="col col-xs-12">
+  <button type="button" name="button" ng-click="getCode()">Run</button>
+  <button type="button" name="button" ng-click="clearConsole()">Clear Console</button>
+</div>
+
+<div class="col col-xs-12">
+  <div id="result-log" class="result-log"></div>
+</div>

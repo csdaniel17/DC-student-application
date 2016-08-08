@@ -26,3 +26,17 @@ form {
   float: right;
   margin-bottom: 10px;
 }
+
+/* CODE CHALLENGE */
+.editor {
+  height: 400px;
+  margin-bottom: 10px;
+}
+
+.result-log {
+  height: 400px;
+  margin-top: 10px;
+  background-color: #272822;
+  color: #F8F8F2;
+  font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+}
