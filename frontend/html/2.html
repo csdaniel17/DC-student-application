@@ -5,19 +5,19 @@
     </div>
     <div class="form-group" ng-class="{ 'has-success': p2Form.firstname.$valid && !p2Form.firstname.$pristine, 'has-error': p2Form.firstname.$invalid && !p2Form.firstname.$pristine}">
       <!-- <label for="firstname">First Name:</label> -->
-      <h3>First Name:</h3>
+      <h3>First Name: *</h3>
       <input type="text" name="firstname" class="form-control input-lg" ng-model="firstname" required>
       <div class="alert alert-danger" ng-show="p2Form.firstname.$invalid && p2Form.firstname.$touched">Please enter your first name.</div>
     </div>
     <div class="form-group" ng-class="{ 'has-success': p2Form.lastname.$valid && !p2Form.lastname.$pristine, 'has-error': p2Form.lastname.$invalid && !p2Form.lastname.$pristine}">
       <!-- <label for="lastname">Last Name:</label> -->
-      <h3>Last Name:</h3>
+      <h3>Last Name: *</h3>
       <input type="text" name="lastname" class="form-control input-lg" ng-model="lastname" required>
       <div class="alert alert-danger" ng-show="p2Form.lastname.$invalid && p2Form.lastname.$touched">Please enter your last name.</div>
     </div>
     <div class="form-group" ng-class="{ 'has-success': p2Form.phone.$valid && !p2Form.phone.$pristine, 'has-error': p2Form.phone.$invalid && !p2Form.phone.$pristine}">
       <!-- <label for="phone">Phone Number:</label> -->
-      <h3>Phone Number:</h3>
+      <h3>Phone Number: *</h3>
       <h6>Example: 770-555-3399</h6>
       <input type="tel"
              name="phone"
@@ -31,24 +31,24 @@
     </div>
     <div class="form-group" ng-class="{ 'has-success': p2Form.birthday.$valid && !p2Form.birthday.$pristine, 'has-error': p2Form.birthday.$invalid && !p2Form.birthday.$pristine}">
       <!-- <label for="birthday">Birthday: Please use this format: 07/04/1776</label> -->
-      <h3>Birthday:</h3>
+      <h3>Birthday: *</h3>
       <h6>Please use this format: 07/04/1776</h6>
       <input type="text" name="birthday" class="form-control input-lg" ng-model="birthday" required>
       <div class="alert alert-danger" ng-show="p2Form.birthday.$error.required && p2Form.birthday.$touched">Please enter your birthday.</div>
     </div>
     <div class="form-group" ng-class="{ 'has-success': p2Form.address.$valid && !p2Form.address.$pristine, 'has-error': p2Form.address.$invalid && !p2Form.address.$pristine}">
       <!-- <label for="address">Address:</label> -->
-      <h3>Address:</h3>
+      <h3>Address: *</h3>
       <h6>Example: 3423 Piedmont Rd NE, Atlanta, GA 30305</h6>
       <input type="text" name="address" class="form-control input-lg" ng-model="address" required>
       <div class="alert alert-danger" ng-show="p2Form.address.$error.required && p2Form.address.$touched">Please enter your address.</div>
     </div>
 
     <!-- <label for="hear">How did you hear about DigitalCrafts?</label> -->
-    <h3>How did you hear about DigitalCrafts?</h3>
+    <h3>How did you hear about DigitalCrafts? *</h3>
     <div class="checkbox" ng-repeat="option in options"><label><input type="checkbox" ng-model="option.selected" value="{{option.name}}" >{{ option.name }}</label></div>
 
-    <h3>Which campus will you be attending?</h3>
+    <h3>Which campus will you be attending? *</h3>
     <div class="form-group">
       <label class="radio-inline" ng-repeat="city in cityCohorts">
         <input type="radio" name="city" value="{{city}}" ng-model="$parent.city" ng-required="true">{{city}}
@@ -57,7 +57,7 @@
 
 
     <div ng-show="city">
-      <h3>For which cohort are you applying?</h3>
+      <h3>For which cohort are you applying? *</h3>
       <div class="form-group" ng-show="city == 'Atlanta'">
         <div class="radio" ng-repeat="date in atlantaDates">
           <label><input type="radio" name="cohort" value="{{date}}" ng-model="$parent.cohort" ng-required="true">{{date}}</label>
@@ -71,7 +71,7 @@
     </div>
 
     <div ng-show="city">
-      <h3>Will you be relocating to {{ city }} for our program?</h3>
+      <h3>Will you be relocating to {{ city }} for our program? *</h3>
       <div class="form-group">
         <div class="radio">
           <label><input type="radio" name="relocating" value="yes" ng-model="relocating" ng-required="!relocating">Yes</label>
