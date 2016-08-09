@@ -27,6 +27,10 @@ form {
   margin-bottom: 10px;
 }
 
+.interviewBtn {
+  margin: 20px 0 30px;
+}
+
 .calendly-iframe {
   width: 100%;
   height: 100%;

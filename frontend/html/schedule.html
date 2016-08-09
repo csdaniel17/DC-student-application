@@ -1,8 +1,16 @@
-<h1>Schedule Interview Page</h1>
+<h3>Schedule an Interview</h3>
+<h5>Now that you've completed the application form and code challenge, click the button below to schedule an interview with one of our campus directors.</h5>
+
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+<button type="button" class="interviewBtn btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
   Schedule Interview
 </button>
+
+<div class="progress">
+  <div class="progress-bar progress-bar-success" role="progressbar" style="width: 33%">Application Form</div>
+  <div class="progress-bar progress-bar-success" role="progressbar" style="border-left: 1px solid black; width: 33%">Code Challenge</div>
+  <div class="progress-bar progress-bar-warning" role="progressbar" style="border-left: 1px solid black; width: 34%">Interview</div>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
