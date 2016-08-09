@@ -461,7 +461,21 @@ app.post('/testCodeChallenge', function(req, res) {
         // challenge failed
       }
 
+      // check that fourth element in the array is similar to hello + output.console[0][0]
+      var fourthElement = output.console[3].toLowerCase();
+      if (fourthElement.indexOf('hello') > -1 && fourthElement.indexOf(fullName)) {
+        console.log('outputing Hello + name! ok');
+      }
 
+      // check that fifth element is equal to output.console[0][1]
+      if (output.console[4] === output.console[0][1]) {
+        console.log('age matches');
+      }
+
+      // check that sixth element equals 6250000
+      if (output.console[5] === 6250000) {
+        console.log('sum odd numbers ok');
+      }
 
     }
 
