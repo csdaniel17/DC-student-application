@@ -367,7 +367,7 @@ app.post('/complete', function(req, res) {
 
       // Email settings
       var mailOptions = {
-        from: 'dctester@noreply.com',
+        from: 'dcapptesting@gmail.com',
         to: 'dcapptesting@gmail.com',
         subject: 'DigitalCrafts Application Submitted',
         text: 'TEST',

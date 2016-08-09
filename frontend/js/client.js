@@ -42,6 +42,10 @@ app.config(function($routeProvider) {
       templateUrl: 'html/codechallenge.html',
       controller: 'CodeController'
     })
+    .when('/schedule', {
+      templateUrl: 'html/schedule.html',
+      controller: 'ScheduleController'
+    })
     .otherwise({redirectTo: '/'});
 });
 
@@ -382,21 +386,36 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
 
 
 // controller for when application is complete/submitted
-app.controller('CompleteController', function($cookies, $http, $scope, $location) {
+app.controller('CompleteController', function($cookies, $http, $scope, $location, backend) {
 
-  // call backend to send the email
+  // load data from backend
   var userToken = $cookies.get('token');
-  $http.post(API + '/complete', { data: userToken })
-    .then(function(response) {
-      console.log(response);
-    })
-    .catch(function(err) {
-      console.log(err);
-    });
+  backend.getData(userToken).then(function(userData) {
+    var data = userData.data.message;
+
+    // if Code Challenge completed, redirect
+    if (data.codeChallengeCompleted) {
+      $location.path('/schedule');
+    }
+
+    // if the user ended back on the complete page after an email
+    // has already been sent, don't send the email again
+    if (!data.applicationCompleted) {
+      // call backend to send the email
+      $http.post(API + '/complete', { data: userToken })
+        .then(function(response) {
+          console.log(response);
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
+    }
+  });
 
   $scope.codeChallenge = function() {
     $location.path('/codechallenge');
   };
+
 });
 
 /*
@@ -586,6 +605,8 @@ function sum_odd_numbers() {
 
 });
 
+app.controller('ScheduleController', function($scope, $http, $timeout, $cookies) {
+});
 
 // saves user answers to the mongodb database
 app.factory('backend', function($http) {
