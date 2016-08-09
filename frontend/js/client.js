@@ -508,8 +508,8 @@ function sum_odd_numbers() {
     $scope.runCode = function() {
       var code = _editor.getValue();
 
-      // replace console.log with postMessage so that webWorker can communicate back
-      code = code.replace(/console.log/g, "postMessage");
+      // replace console.*, alerts, and such with postMessage so that webWorker can communicate back
+      code = code.replace(/console.log|console.dir|console.error|alert|window.alert|document.write/g, "postMessage");
 
       // run client side code in a web worker
       var webWorker;
