@@ -400,9 +400,7 @@ app.post('/testCodeChallenge', function(req, res) {
     .then(function(user) {
       var s = new Sandbox();
       s.run(code, function(output) {
-        console.log('sandbox output is: ', output.result);
-        console.log('--------------------');
-        console.log(output);
+
         /*
           First check if output.result === 'TimeoutError'. This is the result
           if an infinite loop exists, for example.
@@ -430,8 +428,10 @@ app.post('/testCodeChallenge', function(req, res) {
 
         if (output.result === 'TimeoutError') {
           // possible infinite loop
+          user.codeChallengeCompleted = true;
         } else if (output.result.indexOf('SyntaxError') > -1) {
           // syntax error
+          user.codeChallengeCompleted = true;
         } else {
 
           // question 2: check that first element in result array is an array of a String and an Integer
@@ -440,7 +440,6 @@ app.post('/testCodeChallenge', function(req, res) {
               numCorrect += 2;
               user.codeChallengeAnswers[1] = true;
               user.codeChallengeAnswers[2] = true;
-              console.log('name and age ok');
             }
           }
 
@@ -449,22 +448,20 @@ app.post('/testCodeChallenge', function(req, res) {
           if (secondElement.indexOf('hello') > -1) {
             numCorrect++;
             user.codeChallengeAnswers[3] = true;
-            console.log('outputing Hello! ok');
           }
 
           // question 4: check that the third element in the array is two elements
           if (firstLastArray.length === 2) {
-            if (firstLastArray.length !== splitName.length) {
-              console.log('false');
-            }
+            var questionFour = true;
             for (var i = 0; i < firstLastArray.length; i++) {
               if (firstLastArray[i] !== splitName[i]) {
-                console.log('false');
+                questionFour = false;
               }
             }
-            numCorrect++;
-            user.codeChallengeAnswers[4] = true;
-            console.log('true');
+            if (questionFour) {
+              numCorrect++;
+              user.codeChallengeAnswers[4] = true;
+            }
           }
 
           // question 5: check that fourth element in the array is similar to hello + output.console[0][0]
@@ -491,12 +488,39 @@ app.post('/testCodeChallenge', function(req, res) {
           }
           console.log('score is: ', numCorrect);
           user.codeChallengeAnswers.numCorrect = numCorrect;
-          user.save(function(err) {
-            if (err) {
-              console.log(err);
-            }
-          });
+          user.codeChallengeCompleted = true;
+
         }
+        user.save(function(err) {
+          if (err) {
+            console.log(err);
+          }
+        });
+
+        // send email notifying DC of code challenge completion
+
+        // Email settings
+        var emailText = user.firstname + " " + user.lastname +
+          " has completed their code challenge. " +
+          user.codeChallengeAnswers.numCorrect +
+          " out of 7 questions were answered correctly.";
+
+        var mailOptions = {
+          from: 'dcapptesting@gmail.com',
+          to: 'dcapptesting@gmail.com',
+          subject: 'DigitalCrafts Code Challenge Completed',
+          text: emailText,
+          html: emailText
+        };
+
+        // Email sender
+        transporter.sendMail(mailOptions, function(err, info) {
+          if (err) {
+            return console.log(err);
+          }
+          console.log('Message sent: ', info.response);
+        });
+
       });
     })
     .catch(function(err) {
