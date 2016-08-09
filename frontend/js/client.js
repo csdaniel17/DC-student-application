@@ -403,7 +403,7 @@ app.controller('CompleteController', function($cookies, $http, $scope, $location
   CODE CHALLENGE
 */
 
-app.controller('CodeController', function($scope, $http) {
+app.controller('CodeController', function($scope, $http, $timeout) {
 
   // reroute console messages to the 'result-log' div
   console.log = (function (old_function, div_log) {
@@ -514,24 +514,51 @@ function sum_odd_numbers() {
       // run client side code in a web worker
       var webWorker;
       var blob;
+      var numMessagesReceived = 0;
 
       if (typeof(Worker) !== "undefined") { // does the browser support web workers?
+
         if (typeof(webWorker) == "undefined") { //does webWorker already exist?
           blob = new Blob([code], {type: 'application/javascript'});
           webWorker = new Worker(URL.createObjectURL(blob));
         }
+
+        // print console.log from the user's code to our console
         webWorker.onmessage = function(event) {
-          console.log(JSON.stringify(event.data));
-          //document.getElementById("result-log").innerText = '> ' + event.data + '\n';
+          numMessagesReceived++;
+          if (numMessagesReceived > 100) {
+            console.log('Possible stack overflow or infinite loop detected. Terminating.');
+            webWorker.terminate();
+            webWorker = undefined;
+          }
+          $timeout(function() {
+            console.log(JSON.stringify(event.data));
+          }, 100);
         };
+
+        // print any errors that may occur
+        webWorker.onerror = function(event) {
+          console.log(event.message);
+        };
+
+        // terminate webWorker
+        $timeout(function() {
+          if (typeof(webWorker) !== "undefined") {
+            webWorker.terminate();
+            webWorker = undefined;
+          }
+        }, 3000);
+
+
       } else {
+        // unless they're using Opera, this shouldn't occur
         console.log("Sorry, no web worker support");
       }
       //eval(code);
+
     };
 
-    // terminate webWorker
-    // webWorker.terminate();
+
 
     $scope.saveCode = function() {
 

@@ -39,6 +39,7 @@ form {
   background-color: #272822;
   color: #F8F8F2;
   font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+  overflow: scroll;
 }
 
 .challengeBtn {
