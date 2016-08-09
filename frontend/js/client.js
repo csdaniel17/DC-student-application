@@ -511,7 +511,6 @@ function sum_odd_numbers() {
       // replace console.log with postMessage so that webWorker can communicate back
       code = code.replace(/console.log/g, "postMessage");
 
-
       // run client side code in a web worker
       var webWorker;
       var blob;
@@ -522,7 +521,7 @@ function sum_odd_numbers() {
           webWorker = new Worker(URL.createObjectURL(blob));
         }
         webWorker.onmessage = function(event) {
-          console.log(event.data);
+          console.log(JSON.stringify(event.data));
           //document.getElementById("result-log").innerText = '> ' + event.data + '\n';
         };
       } else {
@@ -531,9 +530,11 @@ function sum_odd_numbers() {
       //eval(code);
     };
 
+    // terminate webWorker
+    // webWorker.terminate();
+
     $scope.saveCode = function() {
-      // terminate webWorker
-      webWorker.terminate();
+
 
       var code = _editor.getValue();
 
