@@ -422,7 +422,7 @@ app.controller('CompleteController', function($cookies, $http, $scope, $location
   CODE CHALLENGE
 */
 
-app.controller('CodeController', function($scope, $http, $timeout, $cookies) {
+app.controller('CodeController', function($scope, $http, $timeout, $cookies, $location) {
 
   // reroute console messages to the 'result-log' div
   console.log = (function (old_function, div_log) {
@@ -582,8 +582,6 @@ function sum_odd_numbers() {
 
 
     $scope.saveCode = function() {
-
-
       var code = _editor.getValue();
 
       var token = $cookies.get('token');
@@ -591,6 +589,7 @@ function sum_odd_numbers() {
       $http.post(API + '/testCodeChallenge', { code: code, token: token })
         .then(function(response) {
           //success
+          $location.path('/schedule');
         })
         .catch(function(err) {
           if (err) {
