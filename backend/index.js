@@ -453,10 +453,17 @@ app.post('/testCodeChallenge', function(req, res) {
       // check that the third element in the array is two elements
       if (output.console[2].length === 2) {
         var fullName = output.console[0][0];
+        var splitName = fullName.split(" ");
 
-        if (output.console[2] === fullName.split(" ")) {
-          console.log('name matches');
+        if (output.console[2].length !== splitName.length) {
+          console.log('false');
         }
+        for (var i = 0; i < output.console[2].length; i++) {
+          if (output.console[2][i] !== splitName[i]) {
+            console.log('false');
+          }
+        }
+        console.log('true');
       } else {
         // challenge failed
       }
