@@ -30,6 +30,16 @@ var User = mongoose.model('User', {
   forcePasswordReset: { type: Boolean, default: false },
   applicationCompleted: { type: Boolean, default: false },
   codeChallengeCompleted: { type: Boolean, default: false },
+  codeChallengeAnswers: {
+    '1': Boolean,
+    '2': Boolean,
+    '3': Boolean,
+    '4': Boolean,
+    '5': Boolean,
+    '6': Boolean,
+    '7': Boolean,
+    'numCorrect': Number
+  },
   interviewScheduled: { type: Boolean, default: false },
   pageLastCompleted: { type: Number, default: 0 }
 });

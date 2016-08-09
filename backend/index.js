@@ -394,99 +394,114 @@ app.post('/complete', function(req, res) {
 // code challenge has been saved and submitted
 app.post('/testCodeChallenge', function(req, res) {
   var code = req.body.code;
-  console.log(code);
 
-  // stack overflow test:
-  // code = 'function test(n) { console.log(test(n + 1)); } test(1);';
-  // code = 'name = "test"; for(true) { console.log("no"); }';
+  var userToken = req.body.token;
+  User.findOne({ authenticationTokens: { $elemMatch: { token: userToken } } })
+    .then(function(user) {
+      var s = new Sandbox();
+      s.run(code, function(output) {
+        console.log('sandbox output is: ', output.result);
+        console.log('--------------------');
+        console.log(output);
+        /*
+          First check if output.result === 'TimeoutError'. This is the result
+          if an infinite loop exists, for example.
 
+          Syntax error results in output.result = SyntaxError: ...
 
-  var s = new Sandbox();
-  s.run(code, function(output) {
-    console.log('sandbox output is: ', output.result);
-    console.log('--------------------');
-    console.log(output);
-    /*
-      First check if output.result === 'TimeoutError'. This is the result
-      if an infinite loop exists, for example.
+          output.result === null if no output
 
-      Syntax error results in output.result = SyntaxError: ...
+          Inspect the output of the sandbox. It should be in the format:
+          [ [ 'Kyle Luck', 35 ],
+            'Hello!',
+            [ 'Kyle', 'Luck' ],
+            'Hello, Kyle',
+            36,
+            6250000
+          ]
+        */
 
-      output.result === null if no output
-
-      Inspect the output of the sandbox. It should be in the format:
-      [ [ 'Kyle Luck', 35 ],
-        'Hello!',
-        [ 'Kyle', 'Luck' ],
-        'Hello, Kyle',
-        36,
-        6250000
-      ]
-
-    */
-
-    if (output.result === 'TimeoutError') {
-      // possible infinite loop
-    } else if (output.result.indexOf('SyntaxError') > -1) {
-      // syntax error
-    } else {
-
-      // check that first element in result array is an array of a String and an Integer
-      if (output.console[0].length === 2) {
-        if (typeof output.console[0][0] === 'string') {
-          console.log('name ok');
-        }
-
-        if (typeof output.console[0][1] === 'number') {
-          console.log('age ok');
-        }
-      } else {
-        // challenge failed
-      }
-
-      // check that the second element in the result array is similar to Hello!
-      var secondElement = output.console[1].toLowerCase();
-      if (secondElement.indexOf('hello') > -1) {
-        console.log('outputing Hello! ok');
-      }
-
-      // check that the third element in the array is two elements
-      if (output.console[2].length === 2) {
         var fullName = output.console[0][0];
+        var age = output.console[0][1];
         var splitName = fullName.split(" ");
+        var firstLastArray = output.console[2];
+        var year = new Date().getFullYear();
+        var numCorrect = 0;
 
-        if (output.console[2].length !== splitName.length) {
-          console.log('false');
-        }
-        for (var i = 0; i < output.console[2].length; i++) {
-          if (output.console[2][i] !== splitName[i]) {
-            console.log('false');
+        if (output.result === 'TimeoutError') {
+          // possible infinite loop
+        } else if (output.result.indexOf('SyntaxError') > -1) {
+          // syntax error
+        } else {
+
+          // question 2: check that first element in result array is an array of a String and an Integer
+          if (output.console[0].length === 2) {
+            if (typeof fullName === 'string' && typeof age === 'number') {
+              numCorrect += 2;
+              user.codeChallengeAnswers[1] = true;
+              user.codeChallengeAnswers[2] = true;
+              console.log('name and age ok');
+            }
           }
+
+          // question 3: check that the second element in the result array is similar to Hello!
+          var secondElement = output.console[1].toLowerCase();
+          if (secondElement.indexOf('hello') > -1) {
+            numCorrect++;
+            user.codeChallengeAnswers[3] = true;
+            console.log('outputing Hello! ok');
+          }
+
+          // question 4: check that the third element in the array is two elements
+          if (firstLastArray.length === 2) {
+            if (firstLastArray.length !== splitName.length) {
+              console.log('false');
+            }
+            for (var i = 0; i < firstLastArray.length; i++) {
+              if (firstLastArray[i] !== splitName[i]) {
+                console.log('false');
+              }
+            }
+            numCorrect++;
+            user.codeChallengeAnswers[4] = true;
+            console.log('true');
+          }
+
+          // question 5: check that fourth element in the array is similar to hello + output.console[0][0]
+          var fourthElement = output.console[3].toLowerCase();
+
+          if (fourthElement.indexOf('hello') > -1 && fourthElement.indexOf(splitName[0].toLowerCase()) > -1) {
+            numCorrect++;
+            user.codeChallengeAnswers[5] = true;
+            console.log('outputing Hello + name! ok');
+          }
+
+          // question 6: check that fifth element is equal to output.console[0][1]
+          if (output.console[4] == age || output.console[4] == age + 1 || output.console[4] == age - 1) {
+            numCorrect++;
+            user.codeChallengeAnswers[6] = true;
+            console.log('age matches');
+          }
+
+          // question 7: check that sixth element equals 6250000
+          if (output.console[5] === 6250000) {
+            numCorrect++;
+            user.codeChallengeAnswers[7] = true;
+            console.log('sum odd numbers ok');
+          }
+          console.log('score is: ', numCorrect);
+          user.codeChallengeAnswers.numCorrect = numCorrect;
+          user.save(function(err) {
+            if (err) {
+              console.log(err);
+            }
+          });
         }
-        console.log('true');
-      } else {
-        // challenge failed
-      }
-
-      // check that fourth element in the array is similar to hello + output.console[0][0]
-      var fourthElement = output.console[3].toLowerCase();
-      if (fourthElement.indexOf('hello') > -1 && fourthElement.indexOf(fullName)) {
-        console.log('outputing Hello + name! ok');
-      }
-
-      // check that fifth element is equal to output.console[0][1]
-      if (output.console[4] === output.console[0][1]) {
-        console.log('age matches');
-      }
-
-      // check that sixth element equals 6250000
-      if (output.console[5] === 6250000) {
-        console.log('sum odd numbers ok');
-      }
-
-    }
-
-  });
+      });
+    })
+    .catch(function(err) {
+      res.status(400).json({ status: 'fail', message: 'Invalid token' });
+    });
 
 });
 

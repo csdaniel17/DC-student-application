@@ -403,7 +403,7 @@ app.controller('CompleteController', function($cookies, $http, $scope, $location
   CODE CHALLENGE
 */
 
-app.controller('CodeController', function($scope, $http, $timeout) {
+app.controller('CodeController', function($scope, $http, $timeout, $cookies) {
 
   // reroute console messages to the 'result-log' div
   console.log = (function (old_function, div_log) {
@@ -567,7 +567,9 @@ function sum_odd_numbers() {
 
       var code = _editor.getValue();
 
-      $http.post(API + '/testCodeChallenge', { code: code })
+      var token = $cookies.get('token');
+
+      $http.post(API + '/testCodeChallenge', { code: code, token: token })
         .then(function(response) {
           //success
         })
