@@ -427,12 +427,14 @@ app.controller('CodeController', function($scope, $http, $timeout) {
 ///////////////DIGITALCRAFTS ADMISSIONS CHALLENGE/////////////////
 //////////////////////////////////////////////////////////////////
 // INSTRUCTIONS:
+// - Code is to be written in JavaScript only. You don't need HTML or CSS.
 // - Please write the code for each question directly below the question itself.
-// - Hit Run at the top of the page to test your code and execute any functions you've called.
-// - Press "Save" when finished. Press "Share", copy the URL, and return it to hello@digitalcrafts.com.
+// - Hit Run at the bottom of the editor to test your code and execute any functions you've called.
+// - Press "Save & Continue" when finished.
 // - For this challenge, consider the words "argument" and "parameter" to be interchangable.
 // - All variables and methods are persistent from question to question, so there is no need to redeclare anything!
 // - PLEASE NOTE: You should also take a screenshot of your work (or copy it elsewhere) just in case!!
+// - Please use Chrome!
 
 //////////////////////////PLEASE READ INSTRUCTIONS VERY CAREFULLY!//////////////////////////
 
