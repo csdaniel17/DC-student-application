@@ -508,10 +508,33 @@ function sum_odd_numbers() {
     $scope.runCode = function() {
       var code = _editor.getValue();
 
-      eval(code);
+      // replace console.log with postMessage so that webWorker can communicate back
+      code = code.replace(/console.log/g, "postMessage");
+
+
+      // run client side code in a web worker
+      var webWorker;
+      var blob;
+
+      if (typeof(Worker) !== "undefined") { // does the browser support web workers?
+        if (typeof(webWorker) == "undefined") { //does webWorker already exist?
+          blob = new Blob([code], {type: 'application/javascript'});
+          webWorker = new Worker(URL.createObjectURL(blob));
+        }
+        webWorker.onmessage = function(event) {
+          console.log(event.data);
+          //document.getElementById("result-log").innerText = '> ' + event.data + '\n';
+        };
+      } else {
+        console.log("Sorry, no web worker support");
+      }
+      //eval(code);
     };
 
     $scope.saveCode = function() {
+      // terminate webWorker
+      webWorker.terminate();
+
       var code = _editor.getValue();
 
       $http.post(API + '/testCodeChallenge', { code: code })
