@@ -35,6 +35,9 @@ app.post('/signup', function(req, res) {
       email: userInfo.email,
       password: hash
     });
+    var token = randtoken.generate(64);
+    // set token to expire in 10 days
+    user.authenticationTokens.push({ token: token, expiration: Date.now() + 1000 * 60 * 60 * 24 * 10 });
 
     user.save(function(err){
       if (err) {
@@ -45,9 +48,7 @@ app.post('/signup', function(req, res) {
         });
         return;
       }
-      res.json({
-        status: 'ok'
-      });
+      res.json({ status: 'ok', 'token': token });
     });
   });
 });

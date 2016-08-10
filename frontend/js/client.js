@@ -56,12 +56,13 @@ app.run(function($rootScope, $location, $cookies, backend) {
   // on every location change start, see where the user is attempting to go
   $rootScope.$on('$locationChangeStart', function(event, nextUrl, currentUrl) {
     // get path from url
-    var path = nextUrl.split('/')[5]; // WILL NEED TO CHANGE AFTER DEV - [4];
+    // var path = nextUrl.split('/')[5];
+    var parts = nextUrl.split('/');
+    var path = parts[parts.length-1];
     $rootScope.currentPage = path;
 
     // if user is going to a restricted area and doesn't have a token stored in a cookie, redirect to the login page
     var token = $cookies.get('token');
-
 
     if (path === 'page2' ||
         path === 'page3' ||
@@ -70,13 +71,17 @@ app.run(function($rootScope, $location, $cookies, backend) {
         path === 'schedule' ||
         path === 'codechallenge') {
       // is the token still valid?
-      backend.isTokenExpired(token)
-        .then(function(response) {
-          //do nothing, token is valid
-        })
-        .catch(function(err) {
-          $rootScope.logout();
-        });
+      if (token) {
+        backend.isTokenExpired(token)
+          .then(function(response) {
+            //do nothing, token is valid
+          })
+          .catch(function(err) {
+            $rootScope.logout();
+          });
+      } else {
+        $location.path('/');
+      }
     }
 
     // is the user logged in? used to display login, logout and signup links
@@ -192,7 +197,7 @@ app.controller('ChangeController', function($scope, $http, $location) {
 });
 
 // signup controller
-app.controller('SignupController', function($scope, $location, $http, $timeout) {
+app.controller('SignupController', function($scope, $location, $http, $timeout, $cookies) {
   $scope.signUp = function() {
     $http.post(API + '/signup', { email: $scope.email, password: $scope.password })
       .then(function(response) {
@@ -200,7 +205,12 @@ app.controller('SignupController', function($scope, $location, $http, $timeout) 
           // user successfully created
           $scope.registered = true;
           $timeout(function() {
-            $location.path('/');
+            $scope.loginFailed = false;
+            // set a cookie with the token from the database response
+            $cookies.put('token', response.data.token);
+            // redirect to beginning of application
+            $location.path('/page2');
+            // $location.path('/');
           }, 3000);
         }
       })
@@ -241,32 +251,34 @@ app.controller('Page2Controller', function($scope, User, $location, Upload, $tim
 
   // load data from backend
   var userToken = $cookies.get('token');
-  backend.getData(userToken).then(function(userData) {
-    var data = userData.data.message;
+  if (userToken) {
+    backend.getData(userToken).then(function(userData) {
+      var data = userData.data.message;
 
-    //if application completed, redirect
-    if (data.applicationCompleted) {
-      $location.path('/complete');
-    }
-
-    $scope.firstname = data.firstname;
-    $scope.lastname = data.lastname;
-    $scope.phone = data.phone;
-    $scope.address = data.address;
-    $scope.city = data.city;
-    $scope.cohort = data.cohort;
-    $scope.relocating = data.relocating;
-    var date = data.birthday;
-    $scope.birthday = $filter('date')(date, 'MM/dd/yyyy');
-
-    // show previously selected "How did you hear about us" options:
-    angular.forEach($scope.options, function(option) {
-      if (data.howDidYouHear.indexOf(option.name) > -1) {
-        option.selected = true;
+      //if application completed, redirect
+      if (data.applicationCompleted) {
+        $location.path('/complete');
       }
-    });
 
-  });
+      $scope.firstname = data.firstname;
+      $scope.lastname = data.lastname;
+      $scope.phone = data.phone;
+      $scope.address = data.address;
+      $scope.city = data.city;
+      $scope.cohort = data.cohort;
+      $scope.relocating = data.relocating;
+      var date = data.birthday;
+      $scope.birthday = $filter('date')(date, 'MM/dd/yyyy');
+
+      // show previously selected "How did you hear about us" options:
+      angular.forEach($scope.options, function(option) {
+        if (data.howDidYouHear.indexOf(option.name) > -1) {
+          option.selected = true;
+        }
+      });
+
+    });
+  }
 
 
   // saving data
