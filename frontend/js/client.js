@@ -319,6 +319,8 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
     //if application completed, redirect
     if (data.applicationCompleted) {
       $location.path('/complete');
+    } else if (data.pageLastCompleted !== 2) {
+      $location.path('/page2');
     }
 
     $scope.firstname = data.firstname;
@@ -420,6 +422,8 @@ app.controller('CompleteController', function($cookies, $http, $scope, $location
     // if Code Challenge completed, redirect
     if (data.codeChallengeCompleted) {
       $location.path('/schedule');
+    } else if (data.pageLastCompleted !== 4) {
+      $location.path('/page2');
     }
 
     // if the user ended back on the complete page after an email
@@ -446,7 +450,16 @@ app.controller('CompleteController', function($cookies, $http, $scope, $location
   CODE CHALLENGE
 */
 
-app.controller('CodeController', function($scope, $http, $timeout, $cookies, $location) {
+app.controller('CodeController', function($scope, $http, $timeout, $cookies, $location, backend) {
+
+  // load data from backend
+  var userToken = $cookies.get('token');
+  backend.getData(userToken).then(function(userData) {
+    var data = userData.data.message;
+    if (!data.applicationCompleted) {
+      $location.path('/page2');
+    }
+  });
 
   // reroute console messages to the 'result-log' div
   console.log = (function (old_function, div_log) {
