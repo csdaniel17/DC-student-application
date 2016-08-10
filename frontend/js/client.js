@@ -49,17 +49,27 @@ app.config(function($routeProvider) {
     .when('/finish', {
       templateUrl: 'html/finish.html'
     })
+    .when('/admin', {
+      templateUrl: 'html/admin.html',
+      controller: 'AdminController'
+    })
     .otherwise({redirectTo: '/'});
 });
 
 app.run(function($rootScope, $location, $cookies, backend) {
+
   // on every location change start, see where the user is attempting to go
   $rootScope.$on('$locationChangeStart', function(event, nextUrl, currentUrl) {
-    // get path from url
-    // var path = nextUrl.split('/')[5];
+
+    // get path user is going to from url
     var parts = nextUrl.split('/');
     var path = parts[parts.length-1];
     $rootScope.currentPage = path;
+
+    // get path user is coming from
+    var fromParts = currentUrl.split('/');
+    var fromPath = fromParts[fromParts.length-1];
+    $rootScope.fromPage = fromPath;
 
     // if user is going to a restricted area and doesn't have a token stored in a cookie, redirect to the login page
     var token = $cookies.get('token');
@@ -678,6 +688,23 @@ app.controller('ScheduleController', function($scope, $http, $cookies, $location
 
 });
 
+// controller for admin page
+app.controller('AdminController', function($scope, $cookies, $rootScope, $location, $http, backend) {
+
+  var token = $cookies.get('token');
+  backend.isAdmin(token)
+    .then(function(response) {
+      return $http.post(API + '/adminData');
+    })
+    .then(function(response) {
+      console.log(response);
+    })
+    .catch(function(err) {
+      $location.path($rootScope.fromPage);
+    });
+
+});
+
 
 // saves user answers to the mongodb database
 app.factory('backend', function($http) {
@@ -713,6 +740,13 @@ app.factory('backend', function($http) {
       return $http({
         method: 'POST',
         url: API + '/isTokenExpired',
+        data: { token: token }
+      });
+    },
+    isAdmin: function(token) {
+      return $http({
+        method: 'POST',
+        url: API + '/admin',
         data: { token: token }
       });
     }

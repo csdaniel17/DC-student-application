@@ -592,6 +592,95 @@ app.post('/isTokenExpired', function(req, res) {
 
 });
 
+// verify user is an admin
+app.post('/admin', authRequired, function(req, res) {
+
+  var user = req.user;
+  if (!user.administrator) {
+    res.status(401).json({ status: 'fail' });
+  }
+  res.status(200).json({ status: 'ok' });
+
+});
+
+// get admin portal data
+app.post('/adminData', function(req, res) {
+  User.find({ administrator: false })
+    .then(function(users) {
+      // roll up user data:
+
+      var numInProgress = 0,
+          numAtChallenge = 0,
+          numAtInterview = 0,
+          questions = [0, 0, 0, 0, 0, 0, 0];
+
+      users.forEach(function(user) {
+
+        // number of applications in process
+        if (!user.applicationCompleted) {
+          numInProgress++;
+        }
+
+        // number on code challenge
+        if (user.applicationCompleted && !user.codeChallengeCompleted) {
+          numAtChallenge++;
+        }
+
+        // number on interview
+        if (user.codeChallengeCompleted && !user.interviewScheduled) {
+          numAtInterview++;
+        }
+        // average # of code challenge answers correct
+        if (user.codeChallengeCompleted) {
+          if (user.codeChallengeAnswers[1]) {
+            questions[0]++;
+          }
+          if (user.codeChallengeAnswers[2]) {
+            questions[1]++;
+          }
+          if (user.codeChallengeAnswers[3]) {
+            questions[2]++;
+          }
+          if (user.codeChallengeAnswers[4]) {
+            questions[3]++;
+          }
+          if (user.codeChallengeAnswers[5]) {
+            questions[4]++;
+          }
+          if (user.codeChallengeAnswers[6]) {
+            questions[5]++;
+          }
+          if (user.codeChallengeAnswers[7]) {
+            questions[6]++;
+          }
+        }
+
+
+        // most missed code challenge question
+
+        // most popular referral
+      });
+      //var answerMostOftenCorrect = Math.max.apply(null, questions) + 1;
+      var answerMostOftenCorrect = Math.max(...questions) + 1;
+
+      //console.log(users);
+      res.status(200).json({
+        status: 'ok',
+        data: {
+          numInProgress: numInProgress,
+          numAtChallenge: numAtChallenge,
+          numAtInterview: numAtInterview,
+          answerMostOftenCorrect: answerMostOftenCorrect
+        }
+      });
+    })
+    .catch(function(err) {
+      console.log(err);
+      res.status(400).json({ status: 'fail', message: err });
+    });
+});
+
+
 // function to handle authentication
 function authRequired(req, res, next) {
   // assign token variable
