@@ -505,12 +505,16 @@ app.post('/testCodeChallenge', function(req, res) {
           user.codeChallengeAnswers.numCorrect +
           " out of 7 questions were answered correctly.";
 
+        var codeFilename = user.firstname + "_" + user.lastname +
+        "_code_challenge.txt";
+
         var mailOptions = {
           from: 'dcapptesting@gmail.com',
           to: 'dcapptesting@gmail.com',
           subject: 'DigitalCrafts Code Challenge Completed',
           text: emailText,
-          html: emailText
+          html: emailText,
+          attachments: [{ filename: codeFilename, content: code }]
         };
 
         // Email sender
@@ -534,7 +538,7 @@ app.post('/testCodeChallenge', function(req, res) {
 app.post('/interviewScheduled', function(req, res) {
 
   var userToken = req.body.token;
-  
+
   User.findOne({ authenticationTokens: { $elemMatch: { token: userToken } } }, '-resume -password -authenticationTokens')
     .then(function(user) {
       user.interviewScheduled = true;
