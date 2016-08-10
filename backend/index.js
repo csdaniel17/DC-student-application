@@ -364,6 +364,11 @@ app.post('/complete', function(req, res) {
       '</ul>';
 
 
+      // only attach user resume if exists
+      var resume = [];
+      if (user.resume) {
+        resume.push({ filename: user.resumeName, content: user.resume });
+      }
       // Email settings
       var mailOptions = {
         from: 'dcapptesting@gmail.com',
@@ -371,7 +376,7 @@ app.post('/complete', function(req, res) {
         subject: 'DigitalCrafts Application Submitted',
         text: 'TEST',
         html: emailBody,
-        attachments: [{ filename: user.resumeName, content: user.resume }]
+        attachments: resume
       };
 
       // Email sender
