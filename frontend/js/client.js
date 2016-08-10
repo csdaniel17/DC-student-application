@@ -61,6 +61,16 @@ app.run(function($rootScope, $location, $cookies, backend) {
 
     // if user is going to a restricted area and doesn't have a token stored in a cookie, redirect to the login page
     var token = $cookies.get('token');
+
+    // is the token still valid?
+    backend.isTokenExpired(token)
+      .then(function(response) {
+        //do nothing, token is valid
+      })
+      .catch(function(err) {
+        $rootScope.logout();
+      });
+
     if (!token && (path === 'page2' || path === 'page3' || path === 'page4')) {
       $location.path('/');
     }
@@ -74,7 +84,7 @@ app.run(function($rootScope, $location, $cookies, backend) {
       $cookies.remove('token');
       backend.deleteToken(token)
         .then(function(response) {
-          console.log(response);
+          // do nothing
         })
         .catch(function(err) {
           console.log(err);
@@ -665,6 +675,13 @@ app.factory('backend', function($http) {
       return $http({
         method: 'POST',
         url: API + '/deleteToken',
+        data: { token: token }
+      });
+    },
+    isTokenExpired: function(token) {
+      return $http({
+        method: 'POST',
+        url: API + '/isTokenExpired',
         data: { token: token }
       });
     }

@@ -566,6 +566,25 @@ app.post('/deleteToken', function(req, res) {
     });
 });
 
+app.post('/isTokenExpired', function(req, res) {
+
+  var token = req.body.token;
+
+  User.findOne(
+    //check if token exists and hasn't expired
+    { authenticationTokens: { $elemMatch: { token: token, expiration: { $gt: Date.now() } } } })
+    .then(function(user) {
+      if (user) {
+        res.status(200).json({ status: 'ok' });
+      } else {
+        res.status(401).json({ "status": "fail", "message": "Session expired." });
+      }
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+
+});
 
 // function to handle authentication
 function authRequired(req, res, next) {
