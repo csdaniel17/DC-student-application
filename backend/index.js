@@ -535,25 +535,59 @@ app.post('/testCodeChallenge', function(req, res) {
 });
 
 // interview has been scheduled for this user, update the db
-app.post('/interviewScheduled', function(req, res) {
+app.post('/interviewScheduled', authRequired, function(req, res) {
 
   var userToken = req.body.token;
+  var user = req.user;
 
-  User.findOne({ authenticationTokens: { $elemMatch: { token: userToken } } }, '-resume -password -authenticationTokens')
+  user.interviewScheduled = true;
+  user.save(function(err) {
+    if (err) {
+      return res.status(400).json({ status: 'fail', message: 'Failed to save that user completed their interview.' });
+    }
+    res.status(200).json({ status: 'ok' });
+  });
+
+});
+
+app.post('/deleteToken', function(req, res) {
+
+  var token = req.body.token;
+
+  // remove token from authenticationTokens array
+  User.update(
+    { authenticationTokens: { $elemMatch: { token: token } } },
+    { $pull: { authenticationTokens: {token: token } } } )
     .then(function(user) {
-      user.interviewScheduled = true;
-      user.save(function(err) {
-        if (err) {
-          return res.status(400).json({ status: 'fail', message: 'Failed to save that user completed their interview.' });
-        }
-        res.status(200).json({ status: 'ok' });
-      });
+      res.status(200).json({ status: 'ok' });
     })
     .catch(function(err) {
       console.log(err);
-      res.status(400).json({ status: 'fail', message: 'User not found.' });
     });
 });
+
+
+// function to handle authentication
+function authRequired(req, res, next) {
+  // assign token variable
+  var token = req.body.token;
+  User.findOne(
+    //check if token exists and hasn't expired
+    { authenticationTokens: { $elemMatch: { token: token, expiration: { $gt: Date.now() } } } })
+    .then(function(user) {
+      if (user) {
+        req.user = user;
+        next();
+      } else {
+        res.status(401).json({ "status": "fail", "message": "Session expired. Please sign in again." });
+      }
+      return null;
+    })
+    .catch(function(err) {
+      //if there was an error finding the user by authenticationToken
+      res.status(400).json({ "status": "fail", "message": err.errors });
+    });
+}
 
 app.listen(8000, function() {
   console.log('Listening on port 8000');

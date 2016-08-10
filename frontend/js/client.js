@@ -52,7 +52,7 @@ app.config(function($routeProvider) {
     .otherwise({redirectTo: '/'});
 });
 
-app.run(function($rootScope, $location, $cookies) {
+app.run(function($rootScope, $location, $cookies, backend) {
   // on every location change start, see where the user is attempting to go
   $rootScope.$on('$locationChangeStart', function(event, nextUrl, currentUrl) {
     // get path from url
@@ -72,6 +72,13 @@ app.run(function($rootScope, $location, $cookies) {
 
     $rootScope.logout = function() {
       $cookies.remove('token');
+      backend.deleteToken(token)
+        .then(function(response) {
+          console.log(response);
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
       $location.path('/');
     };
 
@@ -607,7 +614,7 @@ function sum_odd_numbers() {
 
 });
 
-app.controller('ScheduleController', function($scope, $http, $cookies, $location) {
+app.controller('ScheduleController', function($scope, $http, $cookies, $location, $timeout, $rootScope) {
 
   var userToken = $cookies.get('token');
 
@@ -617,16 +624,19 @@ app.controller('ScheduleController', function($scope, $http, $cookies, $location
       .then(function(response) {
         if (response.status === 200) {
           $location.path('/finish');
-        } else {
-          // show an error and have the user retry
         }
       })
       .catch(function(err) {
-        console.log(err);
+        // show an error and have the user retry
+        $scope.loginExpired = true;
+        $timeout(function() {
+          $rootScope.logout();
+        }, 3000);
       });
   };
 
 });
+
 
 // saves user answers to the mongodb database
 app.factory('backend', function($http) {
@@ -642,13 +652,20 @@ app.factory('backend', function($http) {
       return $http({
         method: 'POST',
         url: API + '/getdata',
-        data: {token: token}
+        data: { token: token }
       });
     },
     getAppOptions: function() {
       return $http({
         method: 'POST',
         url: API + '/getAppOptions'
+      });
+    },
+    deleteToken: function(token) {
+      return $http({
+        method: 'POST',
+        url: API + '/deleteToken',
+        data: { token: token }
       });
     }
   };

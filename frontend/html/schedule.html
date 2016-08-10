@@ -13,6 +13,10 @@
     Schedule Interview
   </button>
 
+  <div class="alert alert-danger" ng-show="loginExpired">
+    Your session has expired. Redirecting to login page...
+  </div>
+  
   <div class="checkbox">
     <label>
       <input type="checkbox" name="interviewScheduled" value="" ng-model="intScheduleComplete" ng-change="interviewScheduled()">Check when you've scheduled your interview
