@@ -62,17 +62,21 @@ app.run(function($rootScope, $location, $cookies, backend) {
     // if user is going to a restricted area and doesn't have a token stored in a cookie, redirect to the login page
     var token = $cookies.get('token');
 
-    // is the token still valid?
-    backend.isTokenExpired(token)
-      .then(function(response) {
-        //do nothing, token is valid
-      })
-      .catch(function(err) {
-        $rootScope.logout();
-      });
 
-    if (!token && (path === 'page2' || path === 'page3' || path === 'page4')) {
-      $location.path('/');
+    if (path === 'page2' ||
+        path === 'page3' ||
+        path === 'page4' ||
+        path === 'complete' ||
+        path === 'schedule' ||
+        path === 'codechallenge') {
+      // is the token still valid?
+      backend.isTokenExpired(token)
+        .then(function(response) {
+          //do nothing, token is valid
+        })
+        .catch(function(err) {
+          $rootScope.logout();
+        });
     }
 
     // is the user logged in? used to display login, logout and signup links
