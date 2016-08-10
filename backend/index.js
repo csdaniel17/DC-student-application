@@ -13,7 +13,7 @@ var transporter = nodemailer.createTransport('smtps://dcapptesting%40gmail.com:'
 
 mongoose.connect('mongodb://localhost/dc-app');
 
-var User = require("./dcmodel");
+var User = require('./dcmodel');
 var Setting = mongoose.model('Setting', {});
 
 app.use(cors());
@@ -41,12 +41,12 @@ app.post('/signup', function(req, res) {
         console.log(err.message);
         res.status(409).json({
           status: 'fail',
-          message: "Username has been taken"
+          message: 'Username has been taken'
         });
         return;
       }
       res.json({
-        status: "OK"
+        status: 'ok'
       });
     });
   });
@@ -60,19 +60,19 @@ app.post('/login', function(req, res) {
 
   User.findOne({ email: email }, function(err, user) {
     if (err) {
-      return res.status(400).json({ status: "fail", "message": "System error. Please try again."});
+      return res.status(400).json({ status: 'fail', message: 'System error. Please try again.' });
     }
     if (!user) {
-      return res.status(400).json({ status: "fail", "message": "Incorrect username or password."});
+      return res.status(400).json({ status: 'fail', message: 'Incorrect username or password.' });
     }
     if (user.forcePasswordReset) {
-      return res.status(201).json({ status: "OK"});
+      return res.status(201).json({ status: 'ok' });
     } else {
       bcrypt.compare(password, user.password, function(err, matched) {
 
         if (err) {
           console.log(err);
-          res.status(400).json({ status: "fail" });
+          res.status(400).json({ status: 'fail' });
         }
 
         if (matched) {
@@ -84,10 +84,10 @@ app.post('/login', function(req, res) {
             if (err) {
               console.log('Error saving auth token.');
             }
-            res.status(200).json({ status: "ok", "token": token });
+            res.status(200).json({ status: 'ok', 'token': token });
           });
         } else {
-          res.status(400).json({ status: "fail", message: "Incorrect username or password."});
+          res.status(400).json({ status: 'fail', message: 'Incorrect username or password.' });
         }
       });
     }
@@ -201,7 +201,7 @@ app.post('/getdata', function(req, res) {
   // find user by the token and get data
   User.findOne({ authenticationTokens: { $elemMatch: { token: userToken } } }, '-resume -password -authenticationTokens', function(err, user) {
     if (err) {
-      return res.status(400).json({ status: 'fail', message: 'Unable to retrieve data'});
+      return res.status(400).json({ status: 'fail', message: 'Unable to retrieve data' });
     }
     res.status(200).json({ status: 'ok', message: user });
   });
@@ -213,7 +213,7 @@ app.post('/getAppOptions', function(req, res) {
   //57a24198bed744ac55120057 is id of record holding 'how did you hear..' options
   Setting.findById('57a24198bed744ac55120057', function(err, options) {
     if (err) {
-      return res.status(400).json({ status: 'fail', message: 'Unable to retrieve options'});
+      return res.status(400).json({ status: 'fail', message: 'Unable to retrieve options' });
     }
     res.status(200).json({ status: 'ok', message: options });
   });
@@ -227,7 +227,7 @@ app.post('/resetPassword', function(req, res) {
   User.findOne({ email: userEmail }, 'email')
     .then(function(user) {
       if (!user) {
-        return res.status(400).json({ status: 'fail', message: 'No user found'} );
+        return res.status(400).json({ status: 'fail', message: 'No user found' });
       }
       // user found
       // generate new random password for the user
@@ -267,11 +267,11 @@ app.post('/resetPassword', function(req, res) {
               console.log(err.message);
               res.status(409).json({
                 status: 'fail',
-                message: "Error saving new password"
+                message: 'Error saving new password'
               });
               return;
             }
-            res.status(200).json({status: "OK"});
+            res.status(200).json({ status: 'ok' });
           });
         });
       });
@@ -289,7 +289,7 @@ app.post('/changepassword', function(req, res) {
   User.findOne({ email: userEmail }, '-resume')
   .then(function(user) {
     if (!user) {
-      return res.status(400).json({ status: 'fail', message: 'No user found'} );
+      return res.status(400).json({ status: 'fail', message: 'No user found' });
     }
     user.forcePasswordReset = false;
     bcrypt.hash(newPassword, 10, function(err, hash) {
@@ -303,11 +303,11 @@ app.post('/changepassword', function(req, res) {
           console.log(err.message);
           res.status(409).json({
             status: 'fail',
-            message: "Error saving new password"
+            message: 'Error saving new password'
           });
           return;
         }
-        res.status(200).json({status: "OK"});
+        res.status(200).json({ status: 'ok' });
       });
     });
   })
@@ -577,7 +577,7 @@ app.post('/isTokenExpired', function(req, res) {
       if (user) {
         res.status(200).json({ status: 'ok' });
       } else {
-        res.status(401).json({ "status": "fail", "message": "Session expired." });
+        res.status(401).json({ status: 'fail', message: 'Session expired.' });
       }
     })
     .catch(function(err) {
@@ -598,13 +598,13 @@ function authRequired(req, res, next) {
         req.user = user;
         next();
       } else {
-        res.status(401).json({ "status": "fail", "message": "Session expired. Please sign in again." });
+        res.status(401).json({ status: 'fail', message: 'Session expired. Please sign in again.' });
       }
       return null;
     })
     .catch(function(err) {
       //if there was an error finding the user by authenticationToken
-      res.status(400).json({ "status": "fail", "message": err.errors });
+      res.status(400).json({ status: 'fail', message: err.errors });
     });
 }
 
