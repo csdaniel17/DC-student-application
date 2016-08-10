@@ -361,9 +361,7 @@ app.post('/complete', function(req, res) {
       '<li>Plan after graduation: ' + user.plan + '</li>' +
       '<li>Why is DigitalCrafts the right fit? ' + user.why + '</li>' +
       '<li>How did they hear? ' + howdidtheyhear + '</li>' +
-      '</ul>' +
-      'Thanks, <br>' +
-      'The Dream Team';
+      '</ul>';
 
 
       // Email settings
@@ -379,8 +377,9 @@ app.post('/complete', function(req, res) {
       // Email sender
       transporter.sendMail(mailOptions, function(err, info) {
         if (err) {
-          return console.log(err);
+          return res.status(100).json({ status: 'fail', message: 'Unable to send email.' });
         }
+        res.status(200).json({ status: 'ok' });
         console.log('Message sent: ', info.response);
       });
 
@@ -521,8 +520,9 @@ app.post('/testCodeChallenge', function(req, res) {
         // Email sender
         transporter.sendMail(mailOptions, function(err, info) {
           if (err) {
-            return console.log(err);
+            return res.status(100).json({ status: 'fail', message: 'Unable to send email.' });
           }
+          res.status(200).json({ status: 'ok' });
           console.log('Message sent: ', info.response);
         });
 
