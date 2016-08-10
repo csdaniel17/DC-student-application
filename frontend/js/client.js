@@ -321,7 +321,7 @@ app.controller('Page2Controller', function($scope, User, $location, Upload, $tim
 
 
 // main controller
-app.controller('MainController', function($scope, User, $location, Upload, $timeout, $http, backend, $cookies, $filter) {
+app.controller('MainController', function($scope, $rootScope, User, $location, Upload, $timeout, $http, backend, $cookies, $filter) {
 
   // load data from backend
   var userToken = $cookies.get('token');
@@ -331,8 +331,10 @@ app.controller('MainController', function($scope, User, $location, Upload, $time
     //if application completed, redirect
     if (data.applicationCompleted) {
       $location.path('/complete');
-    } else if (data.pageLastCompleted !== 2) {
+    } else if ($rootScope.currentPage === 3 && data.pageLastCompleted !== 2) {
       $location.path('/page2');
+    } else if ($rootScope.currentPage === 4 && data.pageLastCompleted !== 3) {
+      $location.path('/page3');
     }
 
     $scope.firstname = data.firstname;
