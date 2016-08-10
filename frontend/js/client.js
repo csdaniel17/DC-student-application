@@ -331,9 +331,9 @@ app.controller('MainController', function($scope, $rootScope, User, $location, U
     //if application completed, redirect
     if (data.applicationCompleted) {
       $location.path('/complete');
-    } else if ($rootScope.currentPage === 3 && data.pageLastCompleted !== 2) {
+    } else if ($rootScope.currentPage === 'page3' && data.pageLastCompleted !== 2) {
       $location.path('/page2');
-    } else if ($rootScope.currentPage === 4 && data.pageLastCompleted !== 3) {
+    } else if ($rootScope.currentPage === 'page4' && data.pageLastCompleted !== 3) {
       $location.path('/page3');
     }
 
@@ -436,7 +436,7 @@ app.controller('CompleteController', function($cookies, $http, $scope, $location
     // if Code Challenge completed, redirect
     if (data.codeChallengeCompleted) {
       $location.path('/schedule');
-    } else if (data.pageLastCompleted !== 4) {
+    } else if (data.pageLastCompleted !== 4 && !data.applicationCompleted) {
       $location.path('/page2');
     }
 
