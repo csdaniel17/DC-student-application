@@ -31,14 +31,14 @@ var User = mongoose.model('User', {
   applicationCompleted: { type: Boolean, default: false },
   codeChallengeCompleted: { type: Boolean, default: false },
   codeChallengeAnswers: {
-    '1': Boolean,
-    '2': Boolean,
-    '3': Boolean,
-    '4': Boolean,
-    '5': Boolean,
-    '6': Boolean,
-    '7': Boolean,
-    'numCorrect': Number
+    '1': { type: Boolean, default: false },
+    '2': { type: Boolean, default: false },
+    '3': { type: Boolean, default: false },
+    '4': { type: Boolean, default: false },
+    '5': { type: Boolean, default: false },
+    '6': { type: Boolean, default: false },
+    '7': { type: Boolean, default: false },
+    'numCorrect': { type: Number, default: 0 }
   },
   interviewScheduled: { type: Boolean, default: false },
   pageLastCompleted: { type: Number, default: 0 }
