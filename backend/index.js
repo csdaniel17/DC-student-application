@@ -530,6 +530,26 @@ app.post('/testCodeChallenge', function(req, res) {
 
 });
 
+// interview has been scheduled for this user, update the db
+app.post('/interviewScheduled', function(req, res) {
+
+  var userToken = req.body.token;
+  
+  User.findOne({ authenticationTokens: { $elemMatch: { token: userToken } } }, '-resume -password -authenticationTokens')
+    .then(function(user) {
+      user.interviewScheduled = true;
+      user.save(function(err) {
+        if (err) {
+          return res.status(400).json({ status: 'fail', message: 'Failed to save that user completed their interview.' });
+        }
+        res.status(200).json({ status: 'ok' });
+      });
+    })
+    .catch(function(err) {
+      console.log(err);
+      res.status(400).json({ status: 'fail', message: 'User not found.' });
+    });
+});
 
 app.listen(8000, function() {
   console.log('Listening on port 8000');

@@ -46,6 +46,9 @@ app.config(function($routeProvider) {
       templateUrl: 'html/schedule.html',
       controller: 'ScheduleController'
     })
+    .when('/finish', {
+      templateUrl: 'html/finish.html'
+    })
     .otherwise({redirectTo: '/'});
 });
 
@@ -604,7 +607,25 @@ function sum_odd_numbers() {
 
 });
 
-app.controller('ScheduleController', function($scope, $http, $timeout, $cookies) {
+app.controller('ScheduleController', function($scope, $http, $cookies, $location) {
+
+  var userToken = $cookies.get('token');
+
+  $scope.interviewScheduled = function() {
+
+    $http.post(API + '/interviewScheduled', { token: userToken, intScheduled: true })
+      .then(function(response) {
+        if (response.status === 200) {
+          $location.path('/finish');
+        } else {
+          // show an error and have the user retry
+        }
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+  };
+
 });
 
 // saves user answers to the mongodb database
