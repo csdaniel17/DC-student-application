@@ -1,16 +1,26 @@
-<div class="progress">
-  <div class="progress-bar progress-bar-success" role="progressbar" style="width: 33%">Application Form</div>
-  <div class="progress-bar progress-bar-success" role="progressbar" style="border-left: 1px solid black; width: 33%">Code Challenge</div>
-  <div class="progress-bar progress-bar-warning" role="progressbar" style="border-left: 1px solid black; width: 34%">Interview</div>
-</div>
+<form method="post">
+  <div class="progress">
+    <div class="progress-bar progress-bar-success" role="progressbar" style="width: 33%">Application Form</div>
+    <div class="progress-bar progress-bar-success" role="progressbar" style="border-left: 1px solid black; width: 33%">Code Challenge</div>
+    <div class="progress-bar progress-bar-warning" role="progressbar" style="border-left: 1px solid black; width: 34%">Interview</div>
+  </div>
 
-<h3>Schedule an Interview</h3>
-<h5>Now that you've completed the application form and code challenge, click the button below to schedule an interview with one of our campus directors.</h5>
+  <h3>Schedule an Interview</h3>
+  <h5>Now that you've completed the application form and code challenge, click the button below to schedule an interview with one of our campus directors.</h5>
 
-<!-- Button trigger modal -->
-<button type="button" class="interviewBtn btn btn-primary" data-toggle="modal" data-target="#myModal">
-  Schedule Interview
-</button>
+  <!-- Button trigger modal -->
+  <button type="button" class="interviewBtn btn btn-primary" data-toggle="modal" data-target="#myModal">
+    Schedule Interview
+  </button>
+
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" name="interviewScheduled" value="" ng-model="interviewScheduled" ng-change="interviewScheduled()">Check when you've scheduled your interview
+    </label>
+  </div>
+</form>
+
+
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -20,7 +30,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </div>
       <div class="modal-body">
-        <iframe src="https://calendly.com/digitalcrafts" class="calendly-iframe" frameBorder="0"></iframe>
+        <iframe src="https://calendly.com/digitalcrafts" class="calendly-iframe" frameborder="0"></iframe>
       </div>
     </div>
   </div>
