@@ -530,8 +530,6 @@ app.post('/testCodeChallenge', function(req, res) {
           res.status(200).json({ status: 'ok' });
           console.log('Message sent: ', info.response);
         });
-
-        res.status(200).json({ status: 'ok' });
       });
     })
     .catch(function(err) {
