@@ -49,5 +49,35 @@
     <script src="js/services/user.js"></script>
     <script src="js/vendor/jquery/jquery-2.2.4.min.js"></script>
     <script src="js/vendor/bootstrap/bootstrap.min.js"></script>
+    <script>
+        console.log('blah blah blah');
+
+        // window.passData = function(passed, failed) {
+        //   console.log('passed: ', passed);
+        //   console.log('failed: ', failed);
+        // };
+
+        //
+        document.addEventListener("DOMContentLoaded", function(event) {
+        //
+        //   var iframe = document.getElementById('result-log');
+        //   console.log(iframe);
+        //
+
+          var passed = document.getElementById('jasmine').contentWindow.document.getElementsByClassName('jasmine-passed');
+          var testy =  document.getElementById('jasmine').contentWindow.document.getElementById('spec_spec0');
+        //
+          console.log('PASSED!: ', passed);
+          console.log('TESTY: ', testy);
+        //
+          setTimeout(function() {
+            var passed = document.getElementById('jasmine').contentWindow.document.getElementsByClassName('jasmine-passed');
+            console.log('PASSED!: ', passed);
+          }, 2000);
+        //
+        });
+
+
+    </script>
   </body>
 </html>
