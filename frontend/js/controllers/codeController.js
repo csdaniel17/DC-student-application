@@ -212,7 +212,13 @@ app.controller('CodeController', function($scope, $http, $timeout, $cookies, $lo
     // });
 
   //}; // end aceLoaded
-
+  $scope.saveCode = function() {
+    console.log('saveCode called');
+    setTimeout(function() {
+      var passed = document.getElementById('jasmine').contentWindow.document.getElementsByClassName('jasmine-passed');
+      console.log('PASSED!: ', passed);
+    }, 2000);
+  };
 
 
 });

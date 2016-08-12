@@ -6,7 +6,7 @@ myArray.push(ageAtDeath);
 console.log(myArray);
 
 function sayHello() {
-  return "Hello!"
+  return "now!";
 }
 sayHello();
 

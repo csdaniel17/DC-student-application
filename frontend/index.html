@@ -57,6 +57,13 @@
         //   console.log('failed: ', failed);
         // };
 
+        function getTestResults() {
+          var passed = document.getElementById('jasmine').contentWindow.document.getElementsByClassName('jasmine-passed');
+          var testy =  document.getElementById('jasmine').contentWindow.document.getElementById('spec_spec0');
+
+          // console.log('PASSED!: ', passed);
+          // console.log('TESTY: ', testy);
+        }
         //
         document.addEventListener("DOMContentLoaded", function(event) {
         //
@@ -64,16 +71,12 @@
         //   console.log(iframe);
         //
 
-          var passed = document.getElementById('jasmine').contentWindow.document.getElementsByClassName('jasmine-passed');
-          var testy =  document.getElementById('jasmine').contentWindow.document.getElementById('spec_spec0');
+
         //
-          console.log('PASSED!: ', passed);
-          console.log('TESTY: ', testy);
-        //
-          setTimeout(function() {
-            var passed = document.getElementById('jasmine').contentWindow.document.getElementsByClassName('jasmine-passed');
-            console.log('PASSED!: ', passed);
-          }, 2000);
+          // setTimeout(function() {
+          //   var passed = document.getElementById('jasmine').contentWindow.document.getElementsByClassName('jasmine-passed');
+          //   console.log('PASSED!: ', passed);
+          // }, 2000);
         //
         });
 
