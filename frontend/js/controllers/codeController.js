@@ -2,7 +2,7 @@
   CODE CHALLENGE
 */
 
-app.controller('CodeController', function($scope, $http, $timeout, $cookies, $location, backend) {
+app.controller('CodeController', function($scope, $http, $timeout, $cookies, $location, backend, $rootScope) {
 
   // load data from backend
   var userToken = $cookies.get('token');
@@ -173,6 +173,8 @@ function sum_odd_numbers() {
       // reload jasmine spec runner
       var ifr = document.getElementById('jasmine');
       ifr.src = ifr.src;
+
+      console.log('jasmine results in saveCode(): ', $rootScope.jasmineResults);
 
       // $http.post(API + '/testCodeChallenge', { code: code, token: token })
       //   .then(function(response) {
