@@ -3,7 +3,6 @@ app.run(function($rootScope, $location, $cookies, backend, $window) {
   // listen for messages from jasmine spec runner
   $window.addEventListener("message", function(event) {
     $rootScope.jasmineResults = event.data;
-    console.log("GOT A MESSAGE IN ANGULAR ", event.data);
   });
 
   // on every location change start, see where the user is attempting to go

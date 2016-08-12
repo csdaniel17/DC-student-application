@@ -35,6 +35,8 @@ app.controller('CodeController', function($scope, $http, $timeout, $cookies, $lo
 // - All variables and methods are persistent from question to question, so there is no need to redeclare anything!
 // - PLEASE NOTE: You should also take a screenshot of your work (or copy it elsewhere) just in case!!
 // - Please use Chrome!
+// - You may use console.log to test/debug your work. The result of a console.log() call will display below the code editor.
+//    - Example: console.log(yourFunction());
 
 //////////////////////////PLEASE READ INSTRUCTIONS VERY CAREFULLY!//////////////////////////
 
@@ -51,7 +53,7 @@ app.controller('CodeController', function($scope, $http, $timeout, $cookies, $lo
 
 
 // 3) Write a simple function that takes no parameters called "sayHello".
-// Make it print "Hello!" to the console when called.
+// Make it return "Hello!".
 // Call the function.
 
 
@@ -68,7 +70,7 @@ app.controller('CodeController', function($scope, $http, $timeout, $cookies, $lo
 
 
 // 5) Write another simple function that takes no parameters called "sayName".
-// When called, this function should print "Hello, [name]!" to the console, where the name is
+// When called, this function should return "Hello, [name]!", where the name is
 // equal to the first value in the splitName array from #4.
 // Call the function.
 
@@ -76,14 +78,14 @@ app.controller('CodeController', function($scope, $http, $timeout, $cookies, $lo
 
 
 // 6) Write another function named linusAge.  This function should take one parameter: the year Linus
-// was born, and it should print the implied age to the console.
+// was born, and it should return the implied age.
 // Call the function, passing the year Linus was born as the argument/parameter.
 // HINT: http://www.w3schools.com/js/js_functions.asp
 
 
 
 
-// 7) Using the basic function given below, add code so that sum_odd_numbers will print to the console the sum of all the odd numbers from 1 to 5000.  Don't forget to call the function!
+// 7) Using the basic function given below, add code to return the sum of all the odd numbers from 1 to 5000.  Don't forget to call the function!
 // HINT: Consider using a 'for loop'.
 
 function sum_odd_numbers() {
@@ -93,12 +95,13 @@ function sum_odd_numbers() {
 
 
 
-    console.log(sum);
+    return sum;
 }
 
 
 
 
+// That's it! After you're satisfied, click "Save & Continue"
 
 //////////////////////////////////////////////////////////////////
 /////////////////////////////THE END!/////////////////////////////
@@ -167,6 +170,15 @@ function sum_odd_numbers() {
 
     $scope.saveCode = function() {
       var code = _editor.getValue();
+
+      // attempt to save code from ACE in localstorage
+      if (typeof(Storage) !== "undefined") {
+        // Store
+        localStorage.setItem("code", code);
+      } else {
+          // Sorry! No Web Storage support..
+          alert('Please use Chrome to complete the code challenge!');
+      }
 
       var token = $cookies.get('token');
 
