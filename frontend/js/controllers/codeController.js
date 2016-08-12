@@ -116,6 +116,7 @@ function sum_odd_numbers() {
       var webWorker;
       var blob;
       var numMessagesReceived = 0;
+      var resultLog = document.getElementById("result-log");
 
       if (typeof(Worker) !== "undefined") { // does the browser support web workers?
 
@@ -128,20 +129,20 @@ function sum_odd_numbers() {
         webWorker.onmessage = function(event) {
           numMessagesReceived++;
           if (numMessagesReceived > 100) {
-            document.getElementById("result-log").innerText += '> Possible stack overflow or infinite loop detected. Terminating.\n';
+            resultLog.innerText += '> Possible stack overflow or infinite loop detected. Terminating.\n';
             console.log('Possible stack overflow or infinite loop detected. Terminating.');
             webWorker.terminate();
             webWorker = undefined;
           }
           $timeout(function() {
-            document.getElementById("result-log").innerText += '> ' + JSON.stringify(event.data) + '\n';
+            resultLog.innerText += '> ' + JSON.stringify(event.data) + '\n';
             console.log(JSON.stringify(event.data));
           }, 100);
         };
 
         // print any errors that may occur
         webWorker.onerror = function(event) {
-          document.getElementById("result-log").innerText += '> ' + JSON.stringify(event.message) + '\n';
+          resultLog.innerText += '> ' + JSON.stringify(event.message) + '\n';
           console.log(event.message);
         };
 
@@ -158,7 +159,14 @@ function sum_odd_numbers() {
         // unless they're using Opera, this shouldn't occur
         console.log("Sorry, no web worker support");
       }
-      //eval(code);
+
+      // remind the user if they forgot to console.log()
+      $timeout(function() {
+        if (resultLog.textContent === "") {
+          resultLog.innerText += '> Use console.log() if you want output to display here.\n';
+        }
+      }, 1000);
+
 
     };
 
