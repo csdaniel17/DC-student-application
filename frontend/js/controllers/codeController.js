@@ -46,39 +46,35 @@ app.controller('CodeController', function($scope, $http, $timeout, $cookies, $lo
 
 
 // 2) Declare an empty array called "myArray".
-// Add the variables from #1 (fullName and yearBorn) to the empty array using the push method.
+// Add the variables from the question above (fullName and yearBorn) to the empty array using the push method.
 // Print to the console.
 
 
 
 
-// 3) Write a simple function that takes no parameters called "sayHello".
+// 3) Write a simple function called "sayHello" that takes no parameters.
 // Make it return "Hello!".
 // Call the function.
 
 
 
 
-// 4) Declare a variable named splitName and set it equal to
-// fullName split into two seperate objects in an array.
-// (In other words, the variable fullName is equal to "Linus Torvalds", then splitName should
-// equal ["Linus", "Torvalds"].)
+// 4) Declare a variable named splitName and set it equal to fullName split into two seperate elements in an array.
+// (In other words, the variable fullName is equal to "Linus Torvalds", then splitName should equal ["Linus", "Torvalds"].)
 // Print splitName to the console.
 // HINT: Remember to research the methods and concepts listed in the instructions PDF.
 
 
 
 
-// 5) Write another simple function that takes no parameters called "sayName".
-// When called, this function should return "Hello, [name]!", where the name is
-// equal to the first value in the splitName array from #4.
+// 5) Write another function called "sayName" that takes no parameters.
+// When called, this function should return "Hello, [name]!", where the name is equal to the first value in the splitName array from #4.
 // Call the function.
 
 
 
 
-// 6) Write another function named linusAge.  This function should take one parameter: the year Linus
-// was born, and it should return the implied age.
+// 6) Write another function named linusAge.  This function should take one parameter: the year Linus was born, and it should return the implied age.
 // Call the function, passing the year Linus was born as the argument/parameter.
 // HINT: http://www.w3schools.com/js/js_functions.asp
 
