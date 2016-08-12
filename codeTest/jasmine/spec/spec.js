@@ -1,33 +1,35 @@
 describe("Code Challenge", function() {
-  it("should have fullName set to Alan Turing", function() {
-    expect(fullName.toLowerCase()).toBe("alan turing");
+  it("should have fullName set to Linus Torvalds", function() {
+    expect(fullName.toLowerCase()).toBe("linus torvalds");
   });
-  it("should have ageAtDeath set to 41", function() {
-    expect(ageAtDeath).toEqual(41);
+  it("should have yearBorn set to 1969", function() {
+    expect(yearBorn).toEqual(1969);
   });
-  it("should have myArray containing full name and age", function() {
-    expect(myArray).toContain(fullName, ageAtDeath);
+  it("should have myArray containing full name and yearBorn", function() {
+    expect(myArray).toContain(fullName, yearBorn);
   });
   it("should return hello", function() {
     expect(sayHello().toLowerCase()).toContain("hello");
   });
-  it("should have splitName array with first element Alan", function() {
-    expect(splitName[0].toLowerCase()).toBe("alan");
+  it("should have splitName array with first element Linus", function() {
+    expect(splitName[0].toLowerCase()).toBe("linus");
   });
-  it("should have splitName array with second element Turing", function() {
-    expect(splitName[1].toLowerCase()).toBe("turing");
+  it("should have splitName array with second element Torvalds", function() {
+    expect(splitName[1].toLowerCase()).toBe("torvalds");
   });
-  it("should have sayName say Hello, Alan!", function() {
+  it("should have sayName say Hello, Linus!", function() {
     expect(sayName().toLowerCase()).toContain("hello");
   });
-  it("should have sayName say Hello, Alan!", function() {
+  it("should have sayName say Hello, Linus!", function() {
     expect(sayName().toLowerCase()).toContain(splitName[0].toLowerCase());
   });
-  it("should have sayName say Hello, Alan!", function() {
+  it("should have sayName say Hello, Linus!", function() {
     expect(sayName().toLowerCase()).not.toContain(splitName[1].toLowerCase());
   });
-  it("should have alanAgeNow to be 104", function() {
-    expect(alanAgeNow(1912)).toEqual(104);
+  it("should have linusAge to be his age", function() {
+    // var baseTime = new Date()
+    var age = new Date().getFullYear() - 1969;
+    expect(linusAge(1969)).toEqual(age);
   });
   it("should have sum_odd_numbers equal to 6250000", function() {
     expect(sum_odd_numbers()).toEqual(6250000);

@@ -27,7 +27,7 @@ app.controller('CodeController', function($scope, $http, $timeout, $cookies, $lo
 ///////////////DIGITALCRAFTS ADMISSIONS CHALLENGE/////////////////
 //////////////////////////////////////////////////////////////////
 // INSTRUCTIONS:
-// - Code is to be written in JavaScript only. You don't need HTML or CSS.
+// - Code is to be written in JavaScript only. You won't need HTML or CSS.
 // - Please write the code for each question directly below the question itself.
 // - Hit Run at the bottom of the editor to test your code and execute any functions you've called.
 // - Press "Save & Continue" when finished.
@@ -38,13 +38,13 @@ app.controller('CodeController', function($scope, $http, $timeout, $cookies, $lo
 
 //////////////////////////PLEASE READ INSTRUCTIONS VERY CAREFULLY!//////////////////////////
 
-// 1) Declare two variables, a string and an integer named "fullName" and "age". Set them equal to your name and age.
+// 1) Declare two variables, a string and an integer named "fullName" and "yearBorn". Set them equal to Linus Torvalds's name and the year he was born.
 
 
 
 
 // 2) Declare an empty array called "myArray".
-// Add the variables from #1 (fullName and age) to the empty array using the push method.
+// Add the variables from #1 (fullName and yearBorn) to the empty array using the push method.
 // Print to the console.
 
 
@@ -59,8 +59,8 @@ app.controller('CodeController', function($scope, $http, $timeout, $cookies, $lo
 
 // 4) Declare a variable named splitName and set it equal to
 // fullName split into two seperate objects in an array.
-// (In other words, if the variable fullName is equal to "John Smith", then splitName should
-// equal ["John", "Smith"].)
+// (In other words, the variable fullName is equal to "Linus Torvalds", then splitName should
+// equal ["Linus", "Torvalds"].)
 // Print splitName to the console.
 // HINT: Remember to research the methods and concepts listed in the instructions PDF.
 
@@ -68,16 +68,16 @@ app.controller('CodeController', function($scope, $http, $timeout, $cookies, $lo
 
 
 // 5) Write another simple function that takes no parameters called "sayName".
-// When called, this function should print "Hello, ____!" to the console, where the blank is
+// When called, this function should print "Hello, [name]!" to the console, where the name is
 // equal to the first value in the splitName array from #4.
-// Call the function.  (In our example, "Hello, John!" would be printed to the console.)
+// Call the function.
 
 
 
 
-// 6) Write another function named myAge.  This function should take one parameter: the year you
-// were born, and it should print the implied age to the console.
-// Call the function, passing the year you were born as the argument/parameter.
+// 6) Write another function named linusAge.  This function should take one parameter: the year Linus
+// was born, and it should print the implied age to the console.
+// Call the function, passing the year Linus was born as the argument/parameter.
 // HINT: http://www.w3schools.com/js/js_functions.asp
 
 
