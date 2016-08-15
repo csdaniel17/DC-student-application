@@ -1,1 +1,38 @@
 <h1>ADMIN VIEW</h1>
+
+<ul>
+  <li>Num in progress: {{numInProgress}}</li>
+  <li>Num at challenge: {{numAtChallenge}}</li>
+  <li>Num at interview: {{numAtInterview}}</li>
+  <li>Num scheduled interview: {{numScheduled}}</li>
+</ul>
+
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Phone Number</th>
+      <th>Application Completed?</th>
+      <th>Code Challenge Completed?</th>
+      <th>Interview Scheduled?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="user in users | orderBy: 'applicationCompleted'">
+      <td>{{user.firstname}}</td>
+      <td>{{user.lastname}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.phone}}</td>
+      <td>{{user.applicationCompleted}}</td>
+      <td>{{user.codeChallengeCompleted}}</td>
+      <td>{{user.interviewScheduled}}</td>
+    </tr>
+  </tbody>
+
+</table>
+
+<div>
+  <canvas id="pie" class="chart chart-pie" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick"></canvas>
+</div>

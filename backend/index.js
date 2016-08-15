@@ -432,7 +432,7 @@ app.post('/testCodeChallenge', function(req, res) {
       });
       user.codeChallengeAnswers.numCorrect = numCorrect;
       user.codeChallengeCompleted = true;
-      
+
       // save updated user
       user.save(function(err) {
         if (err) {
@@ -550,6 +550,7 @@ app.post('/adminData', function(req, res) {
       var numInProgress = 0,
           numAtChallenge = 0,
           numAtInterview = 0,
+          numScheduled = 0,
           questions = [0, 0, 0, 0, 0, 0, 0];
 
       users.forEach(function(user) {
@@ -568,6 +569,12 @@ app.post('/adminData', function(req, res) {
         if (user.codeChallengeCompleted && !user.interviewScheduled) {
           numAtInterview++;
         }
+
+        // number scheduled interview
+        if (user.codeChallengeCompleted && user.interviewScheduled) {
+          numScheduled++;
+        }
+
         // average # of code challenge answers correct
         if (user.codeChallengeCompleted) {
           if (user.codeChallengeAnswers[1]) {
@@ -605,9 +612,11 @@ app.post('/adminData', function(req, res) {
       res.status(200).json({
         status: 'ok',
         data: {
+          users: users,
           numInProgress: numInProgress,
           numAtChallenge: numAtChallenge,
           numAtInterview: numAtInterview,
+          numScheduled: numScheduled,
           answerMostOftenCorrect: answerMostOftenCorrect
         }
       });

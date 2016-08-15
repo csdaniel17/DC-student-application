@@ -1,4 +1,4 @@
-var app = angular.module('DigitalCrafts', ['ngRoute', 'ngFileUpload', 'ngCookies', 'ui.ace']);
+var app = angular.module('DigitalCrafts', ['ngRoute', 'ngFileUpload', 'ngCookies', 'ui.ace', 'chart.js']);
 
 // backend running on port 8000
 var API = "http://localhost:8000";
