@@ -20,6 +20,7 @@ form {
 .logo {
   max-width: 125px;
   float: left;
+  margin-bottom: 20px;
 }
 
 .nav-pills {
