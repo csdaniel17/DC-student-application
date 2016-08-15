@@ -334,6 +334,7 @@ app.post('/complete', function(req, res) {
 
       // update applicationCompleted flag true
       user.applicationCompleted = true;
+      user.applicationCompletedDate = Date.now();
       user.save(function(err) {
         if (err) {
           console.log('Unable to save applicationCompleted flag: ', err);
@@ -432,6 +433,7 @@ app.post('/testCodeChallenge', function(req, res) {
       });
       user.codeChallengeAnswers.numCorrect = numCorrect;
       user.codeChallengeCompleted = true;
+      user.codeChallengeCompletedDate = Date.now();
 
       // save updated user
       user.save(function(err) {
@@ -485,6 +487,7 @@ app.post('/interviewScheduled', authRequired, function(req, res) {
   var user = req.user;
 
   user.interviewScheduled = true;
+  user.interviewScheduledDate = Date.now();
   user.save(function(err) {
     if (err) {
       return res.status(400).json({ status: 'fail', message: 'Failed to save that user completed their interview.' });
