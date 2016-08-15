@@ -535,7 +535,7 @@ app.post('/admin', authRequired, function(req, res) {
 
   var user = req.user;
   if (!user.administrator) {
-    res.status(401).json({ status: 'fail' });
+    return res.status(401).json({ status: 'fail' });
   }
   res.status(200).json({ status: 'ok' });
 

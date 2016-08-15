@@ -42,7 +42,11 @@ app.controller('AdminController', function($scope, $cookies, $rootScope, $locati
       // };
     })
     .catch(function(err) {
-      $location.path($rootScope.fromPage);
+      if ($rootScope.fromPage !== 'admin') {
+        $location.path($rootScope.fromPage);
+      } else {
+        $location.path('/');
+      }
     });
 
 });
