@@ -431,7 +431,8 @@ app.post('/testCodeChallenge', function(req, res) {
         }
       });
       user.codeChallengeAnswers.numCorrect = numCorrect;
-
+      user.codeChallengeCompleted = true;
+      
       // save updated user
       user.save(function(err) {
         if (err) {
