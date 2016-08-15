@@ -399,142 +399,81 @@ app.post('/complete', function(req, res) {
 // code challenge has been saved and submitted
 app.post('/testCodeChallenge', function(req, res) {
   var code = req.body.code;
-
+  var results = req.body.results;
   var userToken = req.body.token;
+  var numCorrect = 0;
+
+  console.log('results: ', results);
+
   User.findOne({ authenticationTokens: { $elemMatch: { token: userToken } } })
     .then(function(user) {
-      var s = new Sandbox();
-      s.run(code, function(output) {
 
-        /*
-          First check if output.result === 'TimeoutError'. This is the result
-          if an infinite loop exists, for example.
 
-          Syntax error results in output.result = SyntaxError: ...
-
-          output.result === null if no output
-
-          Inspect the output of the sandbox. It should be in the format:
-          [ [ 'Kyle Luck', 35 ],
-            'Hello!',
-            [ 'Kyle', 'Luck' ],
-            'Hello, Kyle',
-            36,
-            6250000
-          ]
-        */
-
-        var fullName = output.console[0][0];
-        var age = output.console[0][1];
-        var splitName = fullName.split(" ");
-        var firstLastArray = output.console[2];
-        var year = new Date().getFullYear();
-        var numCorrect = 0;
-
-        if (output.result === 'TimeoutError') {
-          // possible infinite loop
-          user.codeChallengeCompleted = true;
-        } else if (output.result.indexOf('SyntaxError') > -1) {
-          // syntax error
-          user.codeChallengeCompleted = true;
-        } else {
-
-          // question 2: check that first element in result array is an array of a String and an Integer
-          if (output.console[0].length === 2) {
-            if (typeof fullName === 'string' && typeof age === 'number') {
-              numCorrect += 2;
-              user.codeChallengeAnswers[1] = true;
-              user.codeChallengeAnswers[2] = true;
-            }
-          }
-
-          // question 3: check that the second element in the result array is similar to Hello!
-          var secondElement = output.console[1].toLowerCase();
-          if (secondElement.indexOf('hello') > -1) {
-            numCorrect++;
+      // analyze which code challenge answers were correct / Incorrect
+      results.forEach(function(result) {
+        if (result.status === 'passed') {
+          numCorrect++;
+          if (result.id === 'spec0') {
+            user.codeChallengeAnswers[1] = true;
+          } else if (result.id === 'spec1') {
+            user.codeChallengeAnswers[2] = true;
+          } else if (result.id === 'spec2') {
             user.codeChallengeAnswers[3] = true;
-          }
-
-          // question 4: check that the third element in the array is two elements
-          if (firstLastArray.length === 2) {
-            var questionFour = true;
-            for (var i = 0; i < firstLastArray.length; i++) {
-              if (firstLastArray[i] !== splitName[i]) {
-                questionFour = false;
-              }
-            }
-            if (questionFour) {
-              numCorrect++;
-              user.codeChallengeAnswers[4] = true;
-            }
-          }
-
-          // question 5: check that fourth element in the array is similar to hello + output.console[0][0]
-          var fourthElement = output.console[3].toLowerCase();
-
-          if (fourthElement.indexOf('hello') > -1 && fourthElement.indexOf(splitName[0].toLowerCase()) > -1) {
-            numCorrect++;
+          } else if (result.id === 'spec3') {
+            user.codeChallengeAnswers[4] = true;
+          } else if (result.id === 'spec4') {
             user.codeChallengeAnswers[5] = true;
-            console.log('outputing Hello + name! ok');
-          }
-
-          // question 6: check that fifth element is equal to output.console[0][1]
-          if (output.console[4] == age || output.console[4] == age + 1 || output.console[4] == age - 1) {
-            numCorrect++;
+          } else if (result.id === 'spec5') {
             user.codeChallengeAnswers[6] = true;
-            console.log('age matches');
-          }
-
-          // question 7: check that sixth element equals 6250000
-          if (output.console[5] === 6250000) {
-            numCorrect++;
+          } else if (result.id === 'spec6') {
             user.codeChallengeAnswers[7] = true;
-            console.log('sum odd numbers ok');
           }
-          console.log('score is: ', numCorrect);
-          user.codeChallengeAnswers.numCorrect = numCorrect;
-          user.codeChallengeCompleted = true;
-
         }
-        user.save(function(err) {
-          if (err) {
-            console.log(err);
-          }
-        });
-
-        // send email notifying DC of code challenge completion
-
-        // Email settings
-        var emailText = user.firstname + " " + user.lastname +
-          " has completed their code challenge. " +
-          user.codeChallengeAnswers.numCorrect +
-          " out of 7 questions were answered correctly.";
-
-        var codeFilename = user.firstname + "_" + user.lastname +
-        "_code_challenge.txt";
-
-        var mailOptions = {
-          from: 'dcapptesting@gmail.com',
-          to: 'dcapptesting@gmail.com',
-          subject: 'DigitalCrafts Code Challenge Completed',
-          text: emailText,
-          html: emailText,
-          attachments: [{ filename: codeFilename, content: code }]
-        };
-
-        // Email sender
-        transporter.sendMail(mailOptions, function(err, info) {
-          if (err) {
-            return res.status(100).json({ status: 'fail', message: 'Unable to send email.' });
-          }
-          res.status(200).json({ status: 'ok' });
-          console.log('Message sent: ', info.response);
-        });
       });
+      user.codeChallengeAnswers.numCorrect = numCorrect;
+
+      // save updated user
+      user.save(function(err) {
+        if (err) {
+          console.log(err);
+        }
+      });
+
+      // send email notifying DC of code challenge completion
+
+      // Email settings
+      var emailText = user.firstname + " " + user.lastname +
+        " has completed their code challenge. " +
+        user.codeChallengeAnswers.numCorrect +
+        " out of 7 questions were answered correctly.";
+
+      var codeFilename = user.firstname + "_" + user.lastname +
+      "_code_challenge.txt";
+
+      var mailOptions = {
+        from: 'dcapptesting@gmail.com',
+        to: 'dcapptesting@gmail.com',
+        subject: 'DigitalCrafts Code Challenge Completed',
+        text: emailText,
+        html: emailText,
+        attachments: [{ filename: codeFilename, content: code }]
+      };
+
+      // Email sender
+      transporter.sendMail(mailOptions, function(err, info) {
+        if (err) {
+          return res.status(100).json({ status: 'fail', message: 'Unable to send email.' });
+        }
+        res.status(200).json({ status: 'ok' });
+        console.log('Message sent: ', info.response);
+      });
+
     })
     .catch(function(err) {
       res.status(400).json({ status: 'fail', message: 'Invalid token' });
     });
+
+
 
 });
 

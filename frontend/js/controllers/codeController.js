@@ -177,6 +177,10 @@ function sum_odd_numbers() {
 
       // attempt to save code from ACE in localstorage
       if (typeof(Storage) !== "undefined") {
+        // if code already exists in localStorage, delete it firstname
+        if (localStorage.getItem("code")) {
+          localStorage.removeItem("code");
+        }
         // Store
         localStorage.setItem("code", code);
       } else {
@@ -192,16 +196,19 @@ function sum_odd_numbers() {
 
       console.log('jasmine results in saveCode(): ', $rootScope.jasmineResults);
 
-      // $http.post(API + '/testCodeChallenge', { code: code, token: token })
-      //   .then(function(response) {
-      //     //success
-      //     $location.path('/schedule');
-      //   })
-      //   .catch(function(err) {
-      //     if (err) {
-      //       console.log('There was an error testing the code challenge: ', err);
-      //     }
-      //   });
+      $timeout(function() {
+        $http.post(API + '/testCodeChallenge', { code: code, token: token, results: $rootScope.jasmineResults })
+          .then(function(response) {
+            //success
+            $location.path('/schedule');
+          })
+          .catch(function(err) {
+            if (err) {
+              console.log('There was an error testing the code challenge: ', err);
+            }
+          });
+      }, 1000);
+
     };
   };
 });
