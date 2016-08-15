@@ -1,12 +1,12 @@
-var fullName = "Alan Turing";
-var ageAtDeath = 41;
+var fullName = "Linus Torvalds";
+var yearBorn = 1969;
 var myArray = [];
 myArray.push(fullName);
-myArray.push(ageAtDeath);
-console.log(myArray);
+myArray.push(yearBorn);
+// console.log(myArray);
 
 function sayHello() {
-  return "Hello!"
+  return "Hello!";
 }
 sayHello();
 
@@ -16,7 +16,7 @@ function sayName() {
   return 'Hello, ' + splitName[0];
 }
 
-function alanAgeNow(yearBorn) {
+function linusAge(yearBorn) {
   return new Date().getFullYear() - yearBorn;
 }
 
