@@ -13,7 +13,7 @@
 <table class="table table-striped table-hover">
   <thead>
     <tr>
-      <th>First Name</th>
+      <th><a href="" ng-click="sortType = 'firstname'; sortReverse = !sortReverse">First Name<span ng-show="sortType == 'firstname' && !sortReverse" class="glyphicon glyphicon-triangle-top"></span><span ng-show="sortType == 'firstname' && sortReverse" class="glyphicon glyphicon-triangle-bottom"></span></a></th>
       <th>Last Name</th>
       <th>Email</th>
       <th>Phone Number</th>
@@ -25,7 +25,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="user in users | filter: dateRangeFilter(appCompleteStart, appCompleteEnd) | orderBy: 'applicationCompleted'" ng-class="{success: user.applicationCompleted && user.codeChallengeCompleted && user.interviewScheduled}">
+    <tr ng-repeat="user in users | filter: dateRangeFilter(appCompleteStart, appCompleteEnd) | orderBy:sortType:sortReverse" ng-class="{success: user.applicationCompleted && user.codeChallengeCompleted && user.interviewScheduled}">
       <td>{{user.firstname}}</td>
       <td>{{user.lastname}}</td>
       <td>{{user.email}}</td>

@@ -41,4 +41,7 @@ app.controller('AdminController', function($scope, $cookies, $rootScope, $locati
       return false;
     }
   }
+
+  $scope.sortType = 'firstname';
+  $scope.sortReverse = false;
 });
