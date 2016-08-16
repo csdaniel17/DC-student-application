@@ -64,6 +64,10 @@ app.run(function($rootScope, $location, $cookies, backend, $window) {
       return $cookies.get('token');
     };
 
+    $rootScope.admin = function() {
+      $location.path('/admin');
+    };
+
     $rootScope.logout = function() {
       $cookies.remove('token');
       backend.deleteToken(token)
