@@ -59,7 +59,7 @@ app.post('/login', function(req, res) {
   email = req.body.email;
   password = req.body.password;
 
-  User.findOne({ email: email }, function(err, user) {
+  User.findOne({ email: email }, '-resume', function(err, user) {
     if (err) {
       return res.status(400).json({ status: 'fail', message: 'System error. Please try again.' });
     }
@@ -406,7 +406,7 @@ app.post('/testCodeChallenge', function(req, res) {
 
   console.log('results: ', results);
 
-  User.findOne({ authenticationTokens: { $elemMatch: { token: userToken } } })
+  User.findOne({ authenticationTokens: { $elemMatch: { token: userToken } } }, '-resume -password -authenticationTokens')
     .then(function(user) {
 
 
@@ -519,7 +519,7 @@ app.post('/isTokenExpired', function(req, res) {
 
   User.findOne(
     //check if token exists and hasn't expired
-    { authenticationTokens: { $elemMatch: { token: token, expiration: { $gt: Date.now() } } } })
+    { authenticationTokens: { $elemMatch: { token: token, expiration: { $gt: Date.now() } } } }, '-resume -password -authenticationTokens')
     .then(function(user) {
       if (user) {
         res.status(200).json({ status: 'ok' });
@@ -546,7 +546,7 @@ app.post('/admin', authRequired, function(req, res) {
 
 // get admin portal data
 app.post('/adminData', function(req, res) {
-  User.find({ administrator: false })
+  User.find({ administrator: false }, '-resume -password -authenticationTokens')
     .then(function(users) {
       // roll up user data:
 
@@ -637,7 +637,7 @@ function authRequired(req, res, next) {
   var token = req.body.token;
   User.findOne(
     //check if token exists and hasn't expired
-    { authenticationTokens: { $elemMatch: { token: token, expiration: { $gt: Date.now() } } } })
+    { authenticationTokens: { $elemMatch: { token: token, expiration: { $gt: Date.now() } } } }, '-resume -password -authenticationTokens')
     .then(function(user) {
       if (user) {
         req.user = user;

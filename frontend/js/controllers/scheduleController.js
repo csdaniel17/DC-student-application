@@ -1,6 +1,15 @@
-app.controller('ScheduleController', function($scope, $http, $cookies, $location, $timeout, $rootScope) {
+app.controller('ScheduleController', function($scope, $http, $cookies, $location, $timeout, $rootScope, backend) {
 
   var userToken = $cookies.get('token');
+
+  // load data from backend
+  var userToken = $cookies.get('token');
+  backend.getData(userToken).then(function(userData) {
+    var data = userData.data.message;
+    if (data.interviewScheduled) {
+      $location.path('/finish');
+    }
+  });
 
   $scope.interviewScheduled = function() {
 
