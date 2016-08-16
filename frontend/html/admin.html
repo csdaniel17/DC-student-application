@@ -14,14 +14,14 @@
   <thead>
     <tr>
       <th><a href="" ng-click="sortType = 'firstname'; sortReverse = !sortReverse">First Name<span ng-show="sortType == 'firstname' && !sortReverse" class="glyphicon glyphicon-triangle-top"></span><span ng-show="sortType == 'firstname' && sortReverse" class="glyphicon glyphicon-triangle-bottom"></span></a></th>
-      <th>Last Name</th>
-      <th>Email</th>
-      <th>Phone Number</th>
-      <th>Application Completed?</th>
-      <th>Code Challenge Completed?</th>
-      <th>Interview Scheduled?</th>
-      <th>Campus</th>
-      <th>Cohort Date</th>
+      <th><a href="" ng-click="sortType = 'lastname'; sortReverse = !sortReverse">Last Name<span ng-show="sortType == 'lastname' && !sortReverse" class="glyphicon glyphicon-triangle-top"></span><span ng-show="sortType == 'lastname' && sortReverse" class="glyphicon glyphicon-triangle-bottom"></span></a></th>
+      <th><a href="" ng-click="sortType = 'email'; sortReverse = !sortReverse">Email<span ng-show="sortType == 'email' && !sortReverse" class="glyphicon glyphicon-triangle-top"></span><span ng-show="sortType == 'email' && sortReverse" class="glyphicon glyphicon-triangle-bottom"></span></a></th>
+      <th><a href="" ng-click="sortType = 'phone'; sortReverse = !sortReverse">Phone Number<span ng-show="sortType == 'phone' && !sortReverse" class="glyphicon glyphicon-triangle-top"></span><span ng-show="sortType == 'phone' && sortReverse" class="glyphicon glyphicon-triangle-bottom"></span></a></th>
+      <th><a href="" ng-click="sortType = 'applicationCompleted'; sortReverse = !sortReverse">Application Completed?<span ng-show="sortType == 'applicationCompleted' && !sortReverse" class="glyphicon glyphicon-triangle-top"></span><span ng-show="sortType == 'applicationCompleted' && sortReverse" class="glyphicon glyphicon-triangle-bottom"></span></a></th>
+      <th><a href="" ng-click="sortType = 'codeChallengeCompleted'; sortReverse = !sortReverse">Code Challenge Completed?<span ng-show="sortType == 'codeChallengeCompleted' && !sortReverse" class="glyphicon glyphicon-triangle-top"></span><span ng-show="sortType == 'codeChallengeCompleted' && sortReverse" class="glyphicon glyphicon-triangle-bottom"></span></a></th>
+      <th><a href="" ng-click="sortType = 'interviewScheduled'; sortReverse = !sortReverse">Interview Scheduled?<span ng-show="sortType == 'interviewScheduled' && !sortReverse" class="glyphicon glyphicon-triangle-top"></span><span ng-show="sortType == 'interviewScheduled' && sortReverse" class="glyphicon glyphicon-triangle-bottom"></span></a></th>
+      <th><a href="" ng-click="sortType = 'city'; sortReverse = !sortReverse">Campus<span ng-show="sortType == 'city' && !sortReverse" class="glyphicon glyphicon-triangle-top"></span><span ng-show="sortType == 'city' && sortReverse" class="glyphicon glyphicon-triangle-bottom"></span></a></th>
+      <th><a href="" ng-click="sortType = 'cohort'; sortReverse = !sortReverse">Cohort Date<span ng-show="sortType == 'cohort' && !sortReverse" class="glyphicon glyphicon-triangle-top"></span><span ng-show="sortType == 'cohort' && sortReverse" class="glyphicon glyphicon-triangle-bottom"></span></a></th>
     </tr>
   </thead>
   <tbody>
@@ -37,7 +37,6 @@
       <td>{{user.cohort}}</td>
     </tr>
   </tbody>
-
 </table>
 
 <h3 class="text-center">Applicant Progress</h3>

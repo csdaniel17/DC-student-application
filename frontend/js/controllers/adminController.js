@@ -42,6 +42,6 @@ app.controller('AdminController', function($scope, $cookies, $rootScope, $locati
     }
   }
 
-  $scope.sortType = 'firstname';
+  $scope.sortType = 'applicationCompleted';
   $scope.sortReverse = false;
 });
