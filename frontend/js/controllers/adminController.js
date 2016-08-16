@@ -29,7 +29,6 @@ app.controller('AdminController', function($scope, $cookies, $rootScope, $locati
 
   $scope.dateRangeFilter = function(startDate, endDate) {
 
-
     return function (item) {
       if (item.applicationCompletedDate === null) {
         return false;
@@ -40,6 +39,36 @@ app.controller('AdminController', function($scope, $cookies, $rootScope, $locati
       }
       return false;
     }
+  }
+
+  $scope.filter = {
+    applicationCompleted: false,
+    codeChallengeCompleted: false,
+    interviewScheduled: false
+  };
+  $scope.filterResults = function(user) {
+    console.log('filter is: ', $scope.filter);
+
+    if (!$scope.filter.applicationCompleted && !$scope.filter.codeChallengeCompleted && !$scope.filter.interviewScheduled) {
+      return true;
+    }
+    else if ($scope.filter.applicationCompleted && user.applicationCompleted) {
+      displayUser = true;
+    } else if ($scope.filter.codeChallengeCompleted && user.codeChallengeCompleted) {
+      displayUser = true;
+    } else if ($scope.filter.interviewScheduled && user.interviewScheduled) {
+      displayUser = true;
+    } else {
+      displayUser = false;
+    }
+
+    return displayUser;
+  };
+
+  function noFilter(filterObj) {
+    return Object.
+      keys(filterObj).
+      every(function (key) { return !filterObj[key]; });
   }
 
   $scope.sortType = 'applicationCompleted';
