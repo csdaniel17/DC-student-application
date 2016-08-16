@@ -19,7 +19,7 @@ app.controller('CompleteController', function($cookies, $http, $scope, $location
       // call backend to send the email
       $http.post(API + '/complete', { data: userToken })
         .then(function(response) {
-          console.log(response);
+
         })
         .catch(function(err) {
           console.log(err);

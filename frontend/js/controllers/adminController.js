@@ -9,7 +9,7 @@ app.controller('AdminController', function($scope, $cookies, $rootScope, $locati
     .then(function(response) {
       $scope.users = response.data.data.users;
       var adminData = response.data.data;
-      console.log(adminData);
+
       $scope.numInProgress = adminData.numInProgress;
       $scope.numAtChallenge = adminData.numAtChallenge;
       $scope.numAtInterview = adminData.numAtInterview;
@@ -47,7 +47,6 @@ app.controller('AdminController', function($scope, $cookies, $rootScope, $locati
     interviewScheduled: false
   };
   $scope.filterResults = function(user) {
-    console.log('filter is: ', $scope.filter);
 
     if (!$scope.filter.applicationCompleted && !$scope.filter.codeChallengeCompleted && !$scope.filter.interviewScheduled) {
       return true;

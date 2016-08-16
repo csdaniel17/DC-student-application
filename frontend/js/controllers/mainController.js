@@ -93,7 +93,6 @@ app.controller('MainController', function($scope, $rootScope, User, $location, U
          url: API + '/upload',
          data: {file: file, 'token': $cookies.get('token')}
      }).then(function (resp) {
-         console.log('Success uploaded. Response: ' + resp.data);
      }, function (resp) {
          console.log('Error status: ' + resp.status);
      }, function (evt) {

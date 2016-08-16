@@ -1,11 +1,5 @@
 app.controller('Page2Controller', function($scope, User, $location, Upload, $timeout, $http, backend, $cookies, $filter) {
 
-  // var cityDates;
-  // Get value of city radio button
-  // $scope.$watch('city', function(value){
-  //   console.log(value);
-  // });
-
   // load question answers from database
   backend.getAppOptions().then(function(options) {
 

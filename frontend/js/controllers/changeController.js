@@ -10,13 +10,11 @@ app.controller('ChangeController', function($scope, $http, $location) {
         if (response.status === 200) {
           $location.path('/');
         }
-        console.log(response);
       })
       .catch(function(err) {
         if (err.status === 400) {
           $scope.userNotFound = true;
         }
-        console.log(err);
       });
   };
 

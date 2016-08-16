@@ -194,8 +194,6 @@ function sum_odd_numbers() {
       var ifr = document.getElementById('jasmine');
       ifr.src = ifr.src;
 
-      console.log('jasmine results in saveCode(): ', $rootScope.jasmineResults);
-
       $timeout(function() {
         $http.post(API + '/testCodeChallenge', { code: code, token: token, results: $rootScope.jasmineResults })
           .then(function(response) {
