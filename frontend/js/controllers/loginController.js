@@ -2,8 +2,8 @@
 app.controller('LoginController', function($scope, $http, $location, $rootScope, $cookies, backend) {
 
   // reset admin status at login
-  $rootScope.admin = undefined;
-  
+  $rootScope.userIsAdmin = undefined;
+
   // login page is being loaded. is the user already logged in? If so, redirect
   if ($cookies.get('token')) {
     $location.path('/page2');

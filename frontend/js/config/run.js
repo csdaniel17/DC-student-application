@@ -43,13 +43,13 @@ app.run(function($rootScope, $location, $cookies, backend, $window) {
 
     // check if user is an admin in order to show 'admin dashboard' link in nav
     function isAdmin() {
-      if ($rootScope.admin === undefined) {
+      if ($rootScope.userIsAdmin === undefined) {
         backend.isAdmin(token)
           .then(function(response) {
-            $rootScope.admin = true;
+            $rootScope.userIsAdmin = true;
           })
           .catch(function(err) {
-            $rootScope.admin = false;
+            $rootScope.userIsAdmin = false;
           });
       }
     }
