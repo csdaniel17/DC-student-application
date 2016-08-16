@@ -41,6 +41,24 @@ app.run(function($rootScope, $location, $cookies, backend, $window) {
       }
     }
 
+    // check if user is an admin in order to show 'admin dashboard' link in nav
+    function isAdmin() {
+      if ($rootScope.admin === undefined) {
+        backend.isAdmin(token)
+          .then(function(response) {
+            $rootScope.admin = true;
+          })
+          .catch(function(err) {
+            $rootScope.admin = false;
+          });
+      }
+    }
+    var checkAdmin = isAdmin();
+
+    $rootScope.adminDash = function() {
+      $location.path('/admin');
+    };
+
     // is the user logged in? used to display login, logout and signup links
     $rootScope.isLoggedIn = function() {
       return $cookies.get('token');

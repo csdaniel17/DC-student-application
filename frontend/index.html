@@ -15,7 +15,7 @@
           <li><a href="" ng-click="login()" ng-hide="isLoggedIn() || currentPage == ''">Login</a></li>
           <li><a href="" ng-click="signup()" ng-hide="isLoggedIn() || currentPage == 'signup'">Register</a></li>
           <li><a href="" ng-click="logout()" ng-show="isLoggedIn()">Logout</a></li>
-          <li><a href="" ng-show="isAdmin">Admin Dashboard</a></li>
+          <li><a href="" ng-click="adminDash()" ng-show="admin">Admin Dashboard</a></li>
         </ul>
       </div>
 
