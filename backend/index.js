@@ -11,7 +11,7 @@ var Sandbox = require('sandbox');
 
 var transporter = nodemailer.createTransport('smtps://dcapptesting%40gmail.com:' + creds.password +'@smtp.gmail.com');
 
-mongoose.connect('mongodb://localhost/dc-app');
+mongoose.connect('mongodb://' + creds.dbusername + ':' + creds.dbpassword + '@ds161495.mlab.com:61495/dc-app-portal');
 
 var User = require('./dcmodel');
 var Setting = mongoose.model('Setting', {});
