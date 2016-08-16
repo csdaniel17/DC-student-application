@@ -113,6 +113,8 @@ function sum_odd_numbers() {
     $scope.runCode = function() {
       var code = _editor.getValue();
 
+      saveLocally(code);
+
       // replace console.*, alerts, and such with postMessage so that webWorker can communicate back
       code = code.replace(/console.log|console.dir|console.error|alert|window.alert|document.write/g, "postMessage");
 
@@ -171,7 +173,17 @@ function sum_odd_numbers() {
         }
       }, 1000);
 
-    saveLocally(code);
+
+    var ifr = document.getElementById('jasmine');
+    ifr.src = ifr.src;
+
+    // reload jasmine spec runner
+    $timeout(function() {
+
+      console.log($rootScope.jasmineResults);
+
+    }, 1000);
+
 
     };
 
