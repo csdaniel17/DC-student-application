@@ -11,6 +11,13 @@ app.controller('LoginController', function($scope, $http, $location, $rootScope,
       .then(function(response) {
         // if login is a success, redirect
         if (response.status === 200) {
+          // is the user an admin?
+          if (response.data.isAdmin) {
+            $rootScope.isAdmin = true;
+          } else {
+            $rootScope.isAdmin = false;
+          }
+          
           $scope.loginFailed = false;
           // set a cookie with the token from the database response
           $cookies.put('token', response.data.token);
