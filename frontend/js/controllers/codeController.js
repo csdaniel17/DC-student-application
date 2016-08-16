@@ -104,7 +104,11 @@ function sum_odd_numbers() {
 //////////////////////////////////////////////////////////////////
     `;
 
-    $scope.code = initialCode;
+    if (localStorage.getItem('code')) {
+      $scope.code = localStorage.getItem('code');
+    } else {
+      $scope.code = initialCode;
+    }
 
     $scope.runCode = function() {
       var code = _editor.getValue();
@@ -167,6 +171,7 @@ function sum_odd_numbers() {
         }
       }, 1000);
 
+    saveLocally(code);
 
     };
 
@@ -175,18 +180,7 @@ function sum_odd_numbers() {
     $scope.saveCode = function() {
       var code = _editor.getValue();
 
-      // attempt to save code from ACE in localstorage
-      if (typeof(Storage) !== "undefined") {
-        // if code already exists in localStorage, delete it firstname
-        if (localStorage.getItem("code")) {
-          localStorage.removeItem("code");
-        }
-        // Store
-        localStorage.setItem("code", code);
-      } else {
-          // Sorry! No Web Storage support..
-          alert('Please use Chrome to complete the code challenge!');
-      }
+      saveLocally(code);
 
       var token = $cookies.get('token');
 
@@ -208,5 +202,21 @@ function sum_odd_numbers() {
       }, 1000);
 
     };
-  };
+  }; // ends aceLoaded
+
+  function saveLocally(code) {
+    // attempt to save code from ACE in localstorage
+    if (typeof(Storage) !== "undefined") {
+      // if code already exists in localStorage, delete it firstname
+      if (localStorage.getItem("code")) {
+        localStorage.removeItem("code");
+      }
+      // Store
+      localStorage.setItem("code", code);
+    } else {
+        // Sorry! No Web Storage support..
+        alert('Please use Chrome to complete the code challenge!');
+    }
+  }
+
 });
