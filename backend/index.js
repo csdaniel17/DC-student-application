@@ -7,7 +7,6 @@ var bcrypt = require('my-bcrypt');
 var randtoken = require('rand-token');
 var creds = require('./creds.json');
 var nodemailer = require('nodemailer');
-var Sandbox = require('sandbox');
 
 var transporter = nodemailer.createTransport('smtps://dcapptesting%40gmail.com:' + creds.password +'@smtp.gmail.com');
 
