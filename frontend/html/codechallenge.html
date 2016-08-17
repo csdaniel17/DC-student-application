@@ -12,10 +12,19 @@
   <button type="button" name="button" ng-click="runCode()">Run & Save</button>
   <button type="button" name="button" ng-click="clearConsole()">Clear Console</button>
   <button type="button" name="button" ng-click="saveCode()">Submit & Continue</button>
+  <!-- ng-if="numCorrect == 7" -->
 </div>
 
 <div class="col col-xs-12">
   <div id="result-log" class="result-log"></div>
+</div>
+
+<div>
+  <p>You got {{ numCorrect }} out of 7 questions correct.</p>
+  <p>Below are your results:</p>
+  <ol>
+    <li ng-repeat="answer in answers">{{ answer }}</li>
+  </ol>
 </div>
 
 <iframe src="codeTest/jasmine/SpecRunner.html" width="1" height="1" id="jasmine" style="visibility: hidden;"></iframe>

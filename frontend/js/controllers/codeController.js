@@ -173,19 +173,47 @@ function sum_odd_numbers() {
         }
       }, 1000);
 
+      // reload jasmine spec runner
+      var ifr = document.getElementById('jasmine');
+      ifr.src = ifr.src;
 
-    var ifr = document.getElementById('jasmine');
-    ifr.src = ifr.src;
+      // display test results to the user
+      $timeout(function() {
+        var results = $rootScope.jasmineResults;
+        $scope.numCorrect = 0,
+        $scope.answers = {
+          question1: "Failed",
+          question2: "Failed",
+          question3: "Failed",
+          question4: "Failed",
+          question5: "Failed",
+          question6: "Failed",
+          question7: "Failed"
+        };
 
-    // reload jasmine spec runner
-    $timeout(function() {
+        results.forEach(function(result) {
 
-      console.log($rootScope.jasmineResults);
-
-    }, 1000);
-
-
-    };
+          if (result.status === 'passed') {
+            $scope.numCorrect++;
+            if (result.id === 'spec0') {
+              $scope.answers.question1 = "Passed";
+            } else if (result.id === 'spec1') {
+              $scope.answers.question2 = "Passed";
+            } else if (result.id === 'spec2') {
+              $scope.answers.question3 = "Passed";
+            } else if (result.id === 'spec3') {
+              $scope.answers.question4 = "Passed";
+            } else if (result.id === 'spec4') {
+              $scope.answers.question5 = "Passed";
+            } else if (result.id === 'spec5') {
+              $scope.answers.question6 = "Passed";
+            } else if (result.id === 'spec6') {
+              $scope.answers.question7 = "Passed";
+            }
+          }
+        }); // end results.forEach
+      }, 1000);
+    }; // end runCode function
 
 
 
