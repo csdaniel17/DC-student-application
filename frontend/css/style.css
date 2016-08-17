@@ -4,8 +4,10 @@ DigitalCrafts colors:
   blue: #5697CF
   orange: #F8941D
 */
+
 body {
   margin-top: 20px;
+  font-family: 'PT Sans', sans-serif;
 }
 
 form {
@@ -57,7 +59,9 @@ form {
 /* CODE CHALLENGE */
 .editor {
   height: 380px;
-  /*margin-bottom: 10px;*/
+}
+.ace_content {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
 }
 
 .result-log {
