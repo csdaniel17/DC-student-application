@@ -66,6 +66,7 @@ app.controller('CodeController', function($scope, $http, $timeout, $cookies, $lo
 
 /*
 7) Using the basic function given below, add code to return the sum of all the odd numbers from 1 to 5000.  Don't forget to call the function! HINT: Consider using a 'for loop'.
+*/
 
 function sum_odd_numbers() {
     var sum = 0;
@@ -75,11 +76,11 @@ function sum_odd_numbers() {
 
     return sum;
 }
-*/
 
 
+// That's it! After you're satisfied, click "Save & Continue"
 
-// That's it! After you're satisfied, click "Save & Continue"`;
+`;
 
     if (localStorage.getItem('code')) {
       $scope.code = localStorage.getItem('code');

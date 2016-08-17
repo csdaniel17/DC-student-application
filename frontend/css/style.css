@@ -81,6 +81,12 @@ form {
   margin: 15px 0;
 }
 
+.resultBox {
+  border: 2px solid black;
+  min-height: 380px;
+  padding: 5px;
+}
+
 .challengeBtn {
   margin: 20px auto;
 }

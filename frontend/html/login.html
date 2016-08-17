@@ -1,14 +1,21 @@
-<form ng-submit="login()" name="loginForm" novalidate>
-  <div class="form-group">
-    <label for="email">Email:</label>
-    <input ng-model="email" type="email" name="email" class="form-control input-lg" required>
-  </div>
-  <div class="form-group">
-    <label for="password">Password:</label>
-    <input ng-model="password" type="password" name="password" class="form-control input-lg" required>
-  </div>
-  <div ng-show="loginFailed" class="alert alert-danger">Incorrect Username or Password.</div>
-  <button type="submit" class="btn btn-primary" ng-disabled="loginForm.$invalid">Login</button>
-  <div class="alert alert-info">Don't have an account? <button class="btn btn-primary" ng-click="registration()" type="button">Register</button></div>
-  <div class="alert alert-warning">Forgot Password? <button class="btn btn-primary" ng-click="forgotPassword()" type="button">Reset Password</button></div>
-</form>
+<div class="col col-md-6 col-md-offset-3">
+  <h1 class="text-center">Login to start or continue the application process.</h1>
+  <h5 class="text-center">If you do not already have an account, click Register to create one.</h5>
+  <br>
+  <form ng-submit="login()" name="loginForm" novalidate>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input ng-model="email" type="email" name="email" class="form-control input-lg" required>
+    </div>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input ng-model="password" type="password" name="password" class="form-control input-lg" required>
+    </div>
+    <div ng-show="loginFailed" class="alert alert-danger">Incorrect Username or Password.</div>
+    <button type="submit" class="btn btn-primary" ng-disabled="loginForm.$invalid">Login</button>
+    <button class="btn btn-default" ng-click="forgotPassword()" type="button">Forgot Password?</button>
+    <div class="alert alert-info">Don't have an account? <button class="btn btn-primary" ng-click="registration()" type="button">Register</button></div>
+    
+  </form>
+
+</div>
