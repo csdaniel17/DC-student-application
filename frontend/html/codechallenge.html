@@ -1,5 +1,28 @@
+<div class="jumbotron">
 <h3 class="text-center">DigitalCrafts' Code Challenge</h3>
-<div class="col col-xs-12">
+
+INSTRUCTIONS:
+<ul>
+  <li>Code is to be written in JavaScript only. You won't need HTML or CSS.</li>
+  <li>Please write the code for each question directly below the question itself.</li>
+  <li>You may use console.log to test/debug your work. The result of a console.log() call will display below the code editor.</li>
+    <ul>
+      <li>Example: console.log(yourFunction());</li>
+    </ul>
+  <li>Hit Run at the bottom of the editor to test your code and execute any functions you've called.</li>
+  <li>Press "Save & Continue" when finished.</li>
+  <li>For this challenge, consider the words "argument" and "parameter" to be interchangable.</li>
+  <li>All variables and methods are persistent from question to question, so there is no need to redeclare anything!</li>
+  <li>Please use Chrome!</li>
+
+</ul>
+
+PLEASE READ INSTRUCTIONS VERY CAREFULLY!
+
+</div>
+
+<div class="col col-xs-12 col-md-8">
+  <h4>Code Editor:</h4>
   <div class="editor" ui-ace="{
     mode: 'javascript',
     theme: 'monokai',
@@ -8,7 +31,25 @@
     }" ng-model="code"></div>
 </div>
 
-<div class="col col-xs-12">
+<div class="col col-xs-12 col-md-4">
+  <h4>Results:</h4>
+  <div>
+    <p>You got {{ numCorrect }} out of 7 questions correct.</p>
+    <p>Below are your results:</p>
+    <div class="questions">
+      <ol class="list-group">
+        <li class="list-group-item" ng-class="answer == 'Passed' ? 'list-group-item-success' : 'list-group-item-danger'" ng-repeat="answer in answers">
+          <span class="glyphicon" ng-class="answer == 'Passed' ? 'glyphicon-ok' : 'glyphicon-remove'"></span>
+          {{ answer }}</li>
+      </ol>
+    </div>
+
+  </div>
+</div>
+
+<div class="clearfix"></div>
+
+<div class="codeChallengeBtns col col-xs-12">
   <button type="button" name="button" ng-click="runCode()">Run & Save</button>
   <button type="button" name="button" ng-click="clearConsole()">Clear Console</button>
   <button type="button" name="button" ng-click="saveCode()">Submit & Continue</button>
@@ -16,15 +57,9 @@
 </div>
 
 <div class="col col-xs-12">
+  <h4>Console:</h4>
   <div id="result-log" class="result-log"></div>
 </div>
 
-<div>
-  <p>You got {{ numCorrect }} out of 7 questions correct.</p>
-  <p>Below are your results:</p>
-  <ol>
-    <li ng-repeat="answer in answers">{{ answer }}</li>
-  </ol>
-</div>
 
 <iframe src="codeTest/jasmine/SpecRunner.html" width="1" height="1" id="jasmine" style="visibility: hidden;"></iframe>

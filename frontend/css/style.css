@@ -56,17 +56,29 @@ form {
 
 /* CODE CHALLENGE */
 .editor {
-  height: 400px;
-  margin-bottom: 10px;
+  height: 380px;
+  /*margin-bottom: 10px;*/
 }
 
 .result-log {
-  height: 400px;
-  margin-top: 10px;
+  height: 300px;
+  /*margin-top: 10px;*/
   background-color: #272822;
   color: #F8F8F2;
   font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
   overflow: scroll;
+}
+
+.list-group-item {
+  display: list-item;
+}
+
+.questions {
+  padding: 10px 50px;
+}
+
+.codeChallengeBtns {
+  margin: 15px 0;
 }
 
 .challengeBtn {
