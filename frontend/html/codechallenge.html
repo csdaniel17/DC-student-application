@@ -34,9 +34,9 @@ PLEASE READ INSTRUCTIONS VERY CAREFULLY!
 <div class="col col-xs-12 col-md-4">
   <h4>Results:</h4>
   <div>
-    <p>You got {{ numCorrect }} out of 7 questions correct.</p>
-    <p>Below are your results:</p>
-    <div class="questions">
+    <p ng-show="showResults">You got {{ numCorrect }} out of 7 questions correct.</p>
+    <p ng-show="showResults">Below are your results:</p>
+    <div ng-show="showResults" class="questions">
       <ol class="list-group">
         <li class="list-group-item" ng-class="answer == 'Passed' ? 'list-group-item-success' : 'list-group-item-danger'" ng-repeat="answer in answers">
           <span class="glyphicon" ng-class="answer == 'Passed' ? 'glyphicon-ok' : 'glyphicon-remove'"></span>

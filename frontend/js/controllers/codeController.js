@@ -87,6 +87,9 @@ function sum_odd_numbers() {
       $scope.code = initialCode;
     }
 
+    // don't display jasmine results, until runCode is executed once
+    $scope.showResults = false;
+
     $scope.runCode = function() {
       var code = _editor.getValue();
 
@@ -153,6 +156,9 @@ function sum_odd_numbers() {
       // reload jasmine spec runner
       var ifr = document.getElementById('jasmine');
       ifr.src = ifr.src;
+
+      // don't display results, until runCode is executed once
+      $scope.showResults = true;
 
       // display test results to the user
       $timeout(function() {
