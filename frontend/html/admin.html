@@ -1,8 +1,25 @@
 <h1>Administrator Dashboard</h1>
 
+<h3 class="text-center">Applicant Progress</h3>
+<div class="col col-sm-5 col-sm-offset-1">
+  <ul>
+    <li>Application forms in progress: {{numInProgress}}</li>
+    <li>Applicants working on code challenge: {{numAtChallenge}}</li>
+    <li>Applicants needing to schedule interview: {{numAtInterview}}</li>
+    <li>Applicants who scheduled interview: {{numScheduled}}</li>
+  </ul>
+</div>
+
+
+<div class="col col-sm-5">
+  <canvas id="pie" class="chart chart-pie" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick"></canvas>
+</div>
+
+<div class="clearfix"></div>
+
 <h3>Filter results:</h3>
 <div>
-  
+
   <div class="checkbox">
     <label>
       <input type="checkbox" ng-model="filter.applicationCompleted">Show Applicants with Applications Completed
@@ -57,18 +74,3 @@
     </tr>
   </tbody>
 </table>
-
-<h3 class="text-center">Applicant Progress</h3>
-<div class="col col-sm-5 col-sm-offset-1">
-  <ul>
-    <li>Application forms in progress: {{numInProgress}}</li>
-    <li>Applicants working on code challenge: {{numAtChallenge}}</li>
-    <li>Applicants needing to schedule interview: {{numAtInterview}}</li>
-    <li>Applicants who scheduled interview: {{numScheduled}}</li>
-  </ul>
-</div>
-
-
-<div class="col col-sm-5">
-  <canvas id="pie" class="chart chart-pie" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick"></canvas>
-</div>
