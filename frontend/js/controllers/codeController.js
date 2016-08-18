@@ -196,7 +196,7 @@ function sum_odd_numbers() {
             }
           }
         }); // end results.forEach
-      }, 1000);
+      }, 500);
     }; // end runCode function
 
 
