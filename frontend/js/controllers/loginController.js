@@ -18,8 +18,15 @@ app.controller('LoginController', function($scope, $http, $location, $rootScope,
           $scope.loginFailed = false;
           // set a cookie with the token from the database response
           $cookies.put('token', response.data.token);
-          // redirect to beginning of application
-          $location.path('/page2');
+
+          // if user is an admin, redirect to admin page2
+          if (response.data.isAdmin) {
+            $location.path('/admin');
+          } else {
+            // redirect to beginning of application
+            $location.path('/page2');
+          }
+
         } else if (response.status === 201) {
           $location.path('/change');
         }

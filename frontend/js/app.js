@@ -3,6 +3,7 @@ var app = angular.module('DigitalCrafts', ['ngRoute', 'ngFileUpload', 'ngCookies
 // backend running on port 8000
 //var API = "http://localhost:8000";
 
-//var API = "https://digitalcrafts-cmrsvozlui.now.sh";
+// backend before index.js change to respond with isAdmin in /login
+//var API = "https://digitalcrafts-vfnzygrgfi.now.sh";
 
-var API = "https://digitalcrafts-vfnzygrgfi.now.sh";
+var API = "https://digitalcrafts-lojmtrngrc.now.sh";

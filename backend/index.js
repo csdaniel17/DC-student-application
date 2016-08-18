@@ -84,7 +84,7 @@ app.post('/login', function(req, res) {
             if (err) {
               console.log('Error saving auth token.');
             }
-            res.status(200).json({ status: 'ok', 'token': token });
+            res.status(200).json({ status: 'ok', 'token': token, isAdmin: user.administrator });
           });
         } else {
           res.status(400).json({ status: 'fail', message: 'Incorrect username or password.' });
