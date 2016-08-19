@@ -39,7 +39,7 @@ If the user has administrative rights, they are redirected to the Admin Dashboar
 
 
 
-## Screenshots
+### Screenshots
 
 Login page
 
@@ -72,6 +72,9 @@ Administrator Dashboard
 ![Administrator Dashboard](frontend/img/admin.png)
 
 
+
+### Demo video
+[![Application Portal Demo Video](http://img.youtube.com/vi/9bM60jWP5yU/0.jpg)](http://www.youtube.com/watch?v=9bM60jWP5yU "DigitalCrafts Application Portal")
 
 ### Contributors
 We utilized mob programming throughout the development of this.
