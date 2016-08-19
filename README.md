@@ -74,8 +74,7 @@ Administrator Dashboard
 
 
 ### Demo video
-<a target="_blank" href="http://www.youtube.com/watch?v=9bM60jWP5yU"><img src="http://img.youtube.com/vi/9bM60jWP5yU/0.jpg"></a>
-<!--[![Application Portal Demo Video](http://img.youtube.com/vi/9bM60jWP5yU/0.jpg)](http://www.youtube.com/watch?v=9bM60jWP5yU "DigitalCrafts Application Portal")-->
+[![Application Portal Demo Video](http://img.youtube.com/vi/9bM60jWP5yU/0.jpg)](http://www.youtube.com/watch?v=9bM60jWP5yU "DigitalCrafts Application Portal")
 
 ### Contributors
 We utilized mob programming throughout the development of this.
